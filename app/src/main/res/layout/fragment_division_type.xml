@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     tools:context="com.sabaindomedika.stscustomer.MainActivity"
     >
@@ -16,51 +17,54 @@
       android:orientation="vertical"
       android:padding="@dimen/activity_vertical_margin"
       >
+
+
     <TextView
-        android:id="@+id/txtOpenTicket"
+        android:id="@+id/txtEngineer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Open Ticket"
+        android:text="Engineer"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
 
     <TextView
-        android:id="@+id/txtNotification"
+        android:id="@+id/txtAplikasi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Notification"
+        android:text="Aplikasi"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
 
     <TextView
-        android:id="@+id/txtStatusTicket"
+        android:id="@+id/txtIT"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Status Ticket"
+        android:text="IT"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
 
     <TextView
-        android:id="@+id/txtProfile"
+        android:id="@+id/txtHanter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Profile"
+        android:text="Hanter"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
+
   </LinearLayout>
 </LinearLayout>

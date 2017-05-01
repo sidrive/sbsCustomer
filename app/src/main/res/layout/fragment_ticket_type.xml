@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
-    tools:context="com.sabaindomedika.stscustomer.MainActivity"
     >
 
   <include layout="@layout/toolbar"/>
@@ -17,50 +16,40 @@
       android:padding="@dimen/activity_vertical_margin"
       >
     <TextView
-        android:id="@+id/txtOpenTicket"
+        android:id="@+id/txtService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Open Ticket"
+        android:text="Service"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
 
     <TextView
-        android:id="@+id/txtNotification"
+        android:id="@+id/txtOther"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Notification"
+        android:text="Other"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
 
     <TextView
-        android:id="@+id/txtStatusTicket"
+        android:id="@+id/txtComplaint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:background="@drawable/bg_blue_rounded"
         android:gravity="center"
-        android:text="Status Ticket"
+        android:text="Complaint"
         android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
         />
 
-    <TextView
-        android:id="@+id/txtProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
-        android:text="Profile"
-        android:textColor="@android:color/white"
-        tools:ignore="ContentDescription"
-        />
   </LinearLayout>
 </LinearLayout>
