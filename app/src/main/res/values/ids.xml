@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <item name="inpMessage" type="id"/>
+  <item name="inpName" type="id"/>
+  <item name="inpPhone" type="id"/>
+  <item name="inpPriority" type="id"/>
+</resources>

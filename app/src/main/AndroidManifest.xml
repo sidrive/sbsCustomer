@@ -3,18 +3,36 @@
     package="com.sabaindomedika.stscustomer">
 
   <application
+      android:name=".StsApp"
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
+      android:screenOrientation="portrait"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity">
+    <activity
+        android:name=".MainActivity"
+        android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+
+    <activity
+        android:name=".features.ticket.StatusTicketActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".features.ticket.OpenTicketActivity"
+        android:screenOrientation="portrait"/>
+    <activity
+        android:name=".features.profile.ProfileActivity"
+        android:screenOrientation="portrait"/>
+
+    <activity
+        android:name=".features.notification.NotificationActivity"
+        android:screenOrientation="portrait"/>
   </application>
 
 </manifest>
