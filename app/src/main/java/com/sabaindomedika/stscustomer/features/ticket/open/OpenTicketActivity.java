@@ -1,4 +1,4 @@
-package com.sabaindomedika.stscustomer.features.ticket;
+package com.sabaindomedika.stscustomer.features.ticket.open;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -6,10 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
-import com.sabaindomedika.stscustomer.features.ticket.service.ServiceFormFragment;
+import com.sabaindomedika.stscustomer.features.ticket.DivisionTypeFragment;
+import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
+import com.sabaindomedika.stscustomer.features.ticket.open.service.ServiceFormFragment;
 
 /**
  * Created by Fajar Rianda on 01/05/2017.
@@ -37,7 +38,7 @@ public class OpenTicketActivity extends BaseActivity implements FragmentManager.
   public void navigateToDivisionType(){
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.add(R.id.frameContainer,DivisionTypeFragment.newInstance()).commit();
+    fragmentTransaction.add(R.id.frameContainer, DivisionTypeFragment.newInstance()).commit();
     getFragmentManager().addOnBackStackChangedListener(this);
   }
 

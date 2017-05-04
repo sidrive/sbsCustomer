@@ -4,4 +4,11 @@
   <item name="inpName" type="id"/>
   <item name="inpPhone" type="id"/>
   <item name="inpPriority" type="id"/>
+
+  <item name="progressBar" type="id"/>
+  <item name="txtNoContent" type="id"/>
+  <item name="swipeRefresh" type="id"/>
+  <item name="lvContent" type="id"/>
+  <item name="txtContent" type="id"/>
+  <item name="txtTicketNumber" type="id"/>
 </resources>

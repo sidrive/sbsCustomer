@@ -1,4 +1,4 @@
-package com.sabaindomedika.stscustomer.features.notification;
+package com.sabaindomedika.stscustomer.features.ticket.status;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,27 +11,27 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
-import com.sabaindomedika.stscustomer.model.Notification;
+import com.sabaindomedika.stscustomer.model.Ticket;
 import java.util.List;
 
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
-public class NotificationActivity extends BaseMvpActivity<NotificationView, NotificationPresenter>
-    implements NotificationView {
+public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, TicketStatusPresenter>
+    implements TicketStatusView {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.lvContent) ListView lvContent;
-  NotificationAdapter adapter;
+  TicketStatusAdapater adapter;
 
   public static void start(Context context) {
-    Intent intent = new Intent(context, NotificationActivity.class);
+    Intent intent = new Intent(context, TicketStatusActivity.class);
     context.startActivity(intent);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_notification);
+    setContentView(R.layout.activity_ticket_status);
     ButterKnife.bind(this);
     init();
     setupToolbar();
@@ -41,26 +41,21 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setDisplayShowTitleEnabled(false);
-    toolbar.setTitle("Notification");
+    toolbar.setTitle("Status Tiket");
   }
 
   private void init() {
-    adapter = new NotificationAdapter(this);
+    adapter = new TicketStatusAdapater(this);
     lvContent.setAdapter(adapter);
     presenter.loadData();
   }
-
   /* Presenter */
-  @NonNull @Override public NotificationPresenter createPresenter() {
-    return new NotificationPresenter();
+  @NonNull @Override public TicketStatusPresenter createPresenter() {
+    return new TicketStatusPresenter();
   }
 
-  @Override public void showContent(List<Notification> notification) {
-    adapter.pushData(notification);
-  }
-
-  @Override public void showLoading(boolean isFirstLoad, boolean isRefresh) {
-
+  @Override public void showContent(List<Ticket> tickets) {
+      adapter.pushData(tickets);
   }
 
   /* Menu */

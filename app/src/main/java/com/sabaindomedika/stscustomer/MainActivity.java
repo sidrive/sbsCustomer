@@ -6,8 +6,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
-import com.sabaindomedika.stscustomer.features.ticket.OpenTicketActivity;
-import com.sabaindomedika.stscustomer.features.ticket.StatusTicketActivity;
+import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @OnClick(R.id.txtStatusTicket) public void OnStatusTicket(){
-    StatusTicketActivity.start(this);
+    TicketStatusActivity.start(this);
   }
 
   @OnClick(R.id.txtProfile) public void onProfile(){

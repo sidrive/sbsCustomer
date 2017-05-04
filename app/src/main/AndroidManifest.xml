@@ -21,10 +21,10 @@
     </activity>
 
     <activity
-        android:name=".features.ticket.StatusTicketActivity"
+        android:name=".features.ticket.status.TicketStatusActivity"
         android:screenOrientation="portrait"/>
     <activity
-        android:name=".features.ticket.OpenTicketActivity"
+        android:name=".features.ticket.open.OpenTicketActivity"
         android:screenOrientation="portrait"/>
     <activity
         android:name=".features.profile.ProfileActivity"

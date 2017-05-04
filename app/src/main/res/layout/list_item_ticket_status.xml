@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:id="@id/txtTicketNumber"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="3453563"
+      />
+
+  <TextView
+      android:id="@id/txtContent"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/txtTicketNumber"
+      tools:text="Lorem Ipsum"
+      />
+
+  <Spinner
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:entries="@array/action"
+      android:layout_alignParentEnd="true"
+      android:layout_alignParentRight="true"
+      android:spinnerMode="dropdown"
+      />
+
+</RelativeLayout>
