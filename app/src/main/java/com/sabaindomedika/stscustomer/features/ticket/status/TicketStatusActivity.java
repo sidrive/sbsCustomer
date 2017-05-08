@@ -49,6 +49,7 @@ public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, Tick
     lvContent.setAdapter(adapter);
     presenter.loadData();
   }
+
   /* Presenter */
   @NonNull @Override public TicketStatusPresenter createPresenter() {
     return new TicketStatusPresenter();

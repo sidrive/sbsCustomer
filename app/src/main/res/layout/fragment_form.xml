@@ -64,6 +64,6 @@
       android:padding="8dp"
       android:text="@string/open_tiket"
       android:textAppearance="?android:attr/textAppearanceMedium"
-      style="@style/Button"
+      style="@style/ButtonMain"
       />
 </LinearLayout>

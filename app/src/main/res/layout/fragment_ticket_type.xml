@@ -13,18 +13,16 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:padding="@dimen/activity_vertical_margin"
+      android:padding="@dimen/padding_32"
       >
     <TextView
         android:id="@+id/txtService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="Service"
-        android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
+        style="@style/ButtonMain"
         />
 
     <TextView
@@ -32,11 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="Other"
-        android:textColor="@android:color/white"
         tools:ignore="ContentDescription"
+        style="@style/ButtonMain"
         />
 
     <TextView
@@ -44,10 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="Complaint"
-        android:textColor="@android:color/white"
+        style="@style/ButtonMain"
         tools:ignore="ContentDescription"
         />
 

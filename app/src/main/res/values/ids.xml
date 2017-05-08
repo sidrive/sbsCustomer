@@ -11,4 +11,6 @@
   <item name="lvContent" type="id"/>
   <item name="txtContent" type="id"/>
   <item name="txtTicketNumber" type="id"/>
+  <item name="spnPriority" type="id"/>
+  <item name="spnContent" type="id"/>
 </resources>

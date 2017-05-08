@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical"
     >
@@ -21,21 +20,31 @@
         android:orientation="vertical"
         >
 
-      <RelativeLayout
-          android:layout_width="match_parent"
+      <CheckBox
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:background="@drawable/bg_rounded_border_black"
-          >
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:entries="@array/priority"
-            android:padding="4dp"
-            android:spinnerMode="dropdown"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
-      </RelativeLayout>
+          android:text="TSO/APL"
+          />
+      <CheckBox
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="SCM"
+          />
+      <CheckBox
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Sales"
+          />
+      <CheckBox
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="IT/Hanter"
+          />
+      <CheckBox
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Finance"
+          />
 
       <include layout="@layout/fragment_form"/>
     </LinearLayout>

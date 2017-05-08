@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:orientation="vertical"
     >
@@ -21,21 +20,29 @@
         android:orientation="vertical"
         >
 
-      <RelativeLayout
-          android:layout_width="match_parent"
+      <RadioButton
+          android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:background="@drawable/bg_rounded_border_black"
-          >
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:entries="@array/priority"
-            android:padding="4dp"
-            android:spinnerMode="dropdown"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
-      </RelativeLayout>
+          android:checked="false"
+          android:text="Visit"
+          style="@style/RadioButton"
+          />
+
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:checked="false"
+          android:text="Refresh Training"
+          style="@style/RadioButton"
+          />
+
+      <RadioButton
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:checked="false"
+          android:text="PM"
+          style="@style/RadioButton"
+          />
 
       <include layout="@layout/fragment_form"/>
     </LinearLayout>

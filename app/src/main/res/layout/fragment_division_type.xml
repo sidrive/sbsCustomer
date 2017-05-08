@@ -15,7 +15,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      android:padding="@dimen/activity_vertical_margin"
+      android:padding="@dimen/padding_32"
       >
 
 
@@ -24,10 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="Engineer"
-        android:textColor="@android:color/white"
+        style="@style/ButtonMain"
         tools:ignore="ContentDescription"
         />
 
@@ -36,10 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="Aplikasi"
-        android:textColor="@android:color/white"
+        style="@style/ButtonMain"
         tools:ignore="ContentDescription"
         />
 
@@ -48,10 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="IT"
-        android:textColor="@android:color/white"
+        style="@style/ButtonMain"
         tools:ignore="ContentDescription"
         />
 
@@ -59,10 +53,8 @@
         android:id="@+id/txtHanter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_blue_rounded"
-        android:gravity="center"
         android:text="Hanter"
-        android:textColor="@android:color/white"
+        style="@style/ButtonMain"
         tools:ignore="ContentDescription"
         />
 
