@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
       return new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
           .writeTimeout(60, TimeUnit.SECONDS)
           .connectTimeout(60, TimeUnit.SECONDS)
-          .addInterceptor(new HttpLoggingInterceptor())
+          .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
           .build();
     } catch (Exception e) {
       e.printStackTrace();

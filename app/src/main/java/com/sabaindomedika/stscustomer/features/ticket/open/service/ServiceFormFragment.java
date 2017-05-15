@@ -1,5 +1,6 @@
 package com.sabaindomedika.stscustomer.features.ticket.open.service;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -20,6 +21,10 @@ public class ServiceFormFragment extends BaseFragment {
 
   public static ServiceFormFragment newInstance() {
     return new ServiceFormFragment();
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

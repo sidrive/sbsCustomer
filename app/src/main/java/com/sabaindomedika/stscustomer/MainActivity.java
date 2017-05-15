@@ -1,22 +1,23 @@
 package com.sabaindomedika.stscustomer;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
   }
-
 
   @OnClick(R.id.txtOpenTicket) public void onOpenTicket(){
     OpenTicketActivity.start(this);

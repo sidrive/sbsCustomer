@@ -5,5 +5,7 @@ package com.sabaindomedika.stscustomer.constant;
  */
 public class URLCons {
 
-  public static final String URL_BASE ="";
+  public static final String URL_BASE = "http://saba.dev.komuri.co.id/";
+  public static final String URL_TICKET_TYPES = "api/ticket_types/";
+  public static final String URL_DEPARTMENTS = "api/departments";
 }

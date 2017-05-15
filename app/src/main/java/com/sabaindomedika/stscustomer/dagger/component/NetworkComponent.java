@@ -2,6 +2,7 @@ package com.sabaindomedika.stscustomer.dagger.component;
 
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
 import com.sabaindomedika.stscustomer.dagger.module.NetworkModule;
+import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
 import dagger.Component;
 
 /**
@@ -10,4 +11,5 @@ import dagger.Component;
 @PerActivity @Component(modules = { NetworkModule.class }, dependencies = { AppComponent.class })
 public interface NetworkComponent {
 
+  void inject(TicketTypeFragment ticketTypeFragment);
 }

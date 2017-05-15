@@ -1,5 +1,6 @@
 package com.sabaindomedika.stscustomer.features.ticket;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -22,6 +23,10 @@ public class DivisionTypeFragment extends BaseFragment {
 
   public static DivisionTypeFragment newInstance() {
     return new DivisionTypeFragment();
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,

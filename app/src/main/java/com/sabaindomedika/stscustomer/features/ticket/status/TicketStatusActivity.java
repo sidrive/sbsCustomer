@@ -45,7 +45,7 @@ public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, Tick
   }
 
   private void init() {
-    adapter = new TicketStatusAdapater(this);
+    adapter = new TicketStatusAdapater(this,getBaseFragmentManager());
     lvContent.setAdapter(adapter);
     presenter.loadData();
   }
