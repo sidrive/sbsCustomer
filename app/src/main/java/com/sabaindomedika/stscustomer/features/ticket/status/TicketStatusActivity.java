@@ -12,6 +12,7 @@ import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
 import com.sabaindomedika.stscustomer.model.Ticket;
+import com.sabaindomedika.stscustomer.model.TicketOld;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, Tick
 
   /* Presenter */
   @NonNull @Override public TicketStatusPresenter createPresenter() {
-    return new TicketStatusPresenter();
+    return new TicketStatusPresenter(this);
   }
 
   @Override public void showContent(List<Ticket> tickets) {

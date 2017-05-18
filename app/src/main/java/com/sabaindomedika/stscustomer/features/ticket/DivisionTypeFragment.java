@@ -21,8 +21,12 @@ public class DivisionTypeFragment extends BaseFragment {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
 
-  public static DivisionTypeFragment newInstance() {
-    return new DivisionTypeFragment();
+  public static DivisionTypeFragment newInstance(String ticketType) {
+    Bundle bundle = new Bundle();
+    bundle.putString(String.class.getSimpleName(), ticketType);
+    DivisionTypeFragment fragment = new DivisionTypeFragment();
+    fragment.setArguments(bundle);
+    return fragment;
   }
 
   @Override public void onAttach(Context context) {
@@ -50,18 +54,25 @@ public class DivisionTypeFragment extends BaseFragment {
     });
   }
 
-  @OnClick({ R.id.txtEngineer, R.id.txtAplikasi }) public void OnEngineer() {
-    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
-    activity.navigateToForm();
+  @OnClick(R.id.txtEngineer) public void onEngineer() {
+    navigatetoForm("1");
+  }
+
+  @OnClick(R.id.txtApplication) public void OnApplication() {
+    navigatetoForm("2");
   }
 
   @OnClick(R.id.txtIT) public void OnIT() {
-    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
-    activity.navigateToForm();
+    navigatetoForm("3");
   }
 
   @OnClick(R.id.txtHanter) public void OnHanter() {
+    navigatetoForm("4");
+  }
+
+  private void navigatetoForm(String divisioType) {
+    String ticketType = getArguments().getString(String.class.getSimpleName());
     OpenTicketActivity activity = (OpenTicketActivity) getActivity();
-    activity.navigateToForm();
+    activity.navigateToForm(ticketType,divisioType);
   }
 }

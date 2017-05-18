@@ -4,11 +4,12 @@ import android.content.Context;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
+import com.sabaindomedika.stscustomer.utils.helper.network.CustomAuthenticator;
+import com.sabaindomedika.stscustomer.utils.helper.network.HttpLoggingInterceptor;
 import dagger.Module;
 import dagger.Provides;
 import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,7 +34,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
       return new OkHttpClient.Builder().readTimeout(60, TimeUnit.SECONDS)
           .writeTimeout(60, TimeUnit.SECONDS)
           .connectTimeout(60, TimeUnit.SECONDS)
-          .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+          .authenticator(new CustomAuthenticator(context))
+          .addInterceptor(
+              new HttpLoggingInterceptor(context).setLevel(HttpLoggingInterceptor.Level.BODY))
           .build();
     } catch (Exception e) {
       e.printStackTrace();

@@ -1,4 +1,4 @@
-package com.sabaindomedika.stscustomer.features.ticket.open.service;
+package com.sabaindomedika.stscustomer.features.ticket.open.complaint;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.Bind;
 import com.sabaindomedika.stscustomer.R;
-import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormPresenter;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormView;
@@ -19,12 +18,13 @@ import static butterknife.ButterKnife.bind;
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
-public class ServiceFormFragment extends BaseMvpFragment<FormView,FormPresenter> implements FormView {
+public class ComplaintFormFragment extends BaseMvpFragment<FormView, FormPresenter>
+    implements FormView {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
 
-  public static ServiceFormFragment newInstance() {
-    return new ServiceFormFragment();
+  public static ComplaintFormFragment newInstance() {
+    return new ComplaintFormFragment();
   }
 
   @Override public void onAttach(Context context) {
@@ -33,7 +33,7 @@ public class ServiceFormFragment extends BaseMvpFragment<FormView,FormPresenter>
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_service_form, container, false);
+    View view = inflater.inflate(R.layout.fragment_complaint_form, container, false);
     bind(this, view);
     return view;
   }

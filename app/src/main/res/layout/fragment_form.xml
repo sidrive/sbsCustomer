@@ -1,69 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     >
 
-  <EditText
-      android:id="@+id/textArea_information"
+  <include layout="@layout/toolbar"/>
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginBottom="16dp"
-      android:background="@drawable/bg_rounded_border_black"
-      android:gravity="top|left"
-      android:hint="@string/memo"
-      android:minLines="6"
-      android:padding="4dp"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      />
-
-  <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="16dp"
-      android:background="@drawable/bg_rounded_border_black"
-      android:hint="@string/nama_analisis_dokter"
-      android:inputType="textPersonName"
-      android:padding="4dp"
-      android:singleLine="true"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      />
-
-  <EditText
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="16dp"
-      android:background="@drawable/bg_rounded_border_black"
-      android:hint="@string/no_hp_analisis"
-      android:inputType="phone"
-      android:padding="4dp"
-      android:singleLine="true"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      />
-
-  <RelativeLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="16dp"
-      android:background="@drawable/bg_rounded_border_black"
+      android:orientation="vertical"
+      android:padding="@dimen/padding_32"
+      android:background="@android:color/white"
       >
-    <Spinner
+    <EditText
+        android:id="@id/inpDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/priority"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_rounded_border_black"
+        android:gravity="top|left"
+        android:hint="@string/memo"
+        android:minLines="6"
         android:padding="4dp"
-        android:spinnerMode="dropdown"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         />
-  </RelativeLayout>
-  <Button
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:padding="8dp"
-      android:text="@string/open_tiket"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      style="@style/ButtonMain"
-      />
+
+    <EditText
+        android:id="@id/inpName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_rounded_border_black"
+        android:hint="@string/nama_analisis_dokter"
+        android:inputType="textPersonName"
+        android:padding="4dp"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <EditText
+        android:id="@id/inpPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_rounded_border_black"
+        android:hint="@string/no_hp_analisis"
+        android:inputType="phone"
+        android:padding="4dp"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_rounded_border_black"
+        >
+      <Spinner
+          android:id="@id/spnPriority"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:entries="@array/priority"
+          android:padding="4dp"
+          android:spinnerMode="dropdown"
+          android:textAppearance="?android:attr/textAppearanceLarge"
+          />
+    </RelativeLayout>
+
+    <Button
+        android:id="@id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:text="@string/open_tiket"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        style="@style/ButtonMain"
+        />
+  </LinearLayout>
 </LinearLayout>

@@ -70,17 +70,20 @@ public class TicketTypeFragment extends BaseFragment {
   }
 
   @OnClick(R.id.txtService) public void onService() {
-    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
-    activity.navigateToDivisionType();
+   navigateToDivisionType("1");
   }
 
   @OnClick(R.id.txtOther) public void onOther() {
-    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
-    activity.navigateToDivisionType();
+    navigateToDivisionType("2");
   }
 
   @OnClick(R.id.txtComplaint) public void onComplaint() {
-    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
-    activity.navigateToDivisionType();
+    navigateToDivisionType("3");
   }
+
+  private void navigateToDivisionType(String ticketType){
+    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
+    activity.navigateToDivisionType(ticketType);
+  }
+
 }

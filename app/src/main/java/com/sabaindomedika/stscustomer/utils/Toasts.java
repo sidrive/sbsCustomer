@@ -15,6 +15,14 @@ public class Toasts {
   public Toasts() {
   }
 
+  public static void show(@StringRes int text) {
+    show(ContextProvider.get(), ContextProvider.get().getString(text));
+  }
+
+  public static void show(String text) {
+    show(ContextProvider.get(), text);
+  }
+
   public static void show(Context context, @StringRes int text) {
     show(context, context.getString(text));
   }

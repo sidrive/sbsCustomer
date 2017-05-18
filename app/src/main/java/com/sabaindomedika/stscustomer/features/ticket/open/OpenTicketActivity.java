@@ -35,17 +35,17 @@ public class OpenTicketActivity extends BaseActivity implements FragmentManager.
     fragmentTransaction.replace(R.id.frameContainer, TicketTypeFragment.newInstance()).commit();
   }
 
-  public void navigateToDivisionType(){
+  public void navigateToDivisionType(String ticketType){
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.add(R.id.frameContainer, DivisionTypeFragment.newInstance()).commit();
+    fragmentTransaction.add(R.id.frameContainer, DivisionTypeFragment.newInstance(ticketType)).commit();
     getFragmentManager().addOnBackStackChangedListener(this);
   }
 
-  public void navigateToForm(){
+  public void navigateToForm(String ticketType, String divisioType){
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.add(R.id.frameContainer, ServiceFormFragment.newInstance()).commit();
+    fragmentTransaction.add(R.id.frameContainer, FormFragment.newInstance(ticketType,divisioType)).commit();
     getFragmentManager().addOnBackStackChangedListener(this);
   }
 

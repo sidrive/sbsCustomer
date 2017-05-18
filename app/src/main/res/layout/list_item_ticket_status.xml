@@ -8,7 +8,7 @@
     >
 
   <TextView
-      android:id="@id/txtTicketNumber"
+      android:id="@id/txtTicketId"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       tools:text="3453563"
@@ -18,7 +18,7 @@
       android:id="@id/txtContent"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_below="@id/txtTicketNumber"
+      android:layout_below="@id/txtTicketId"
       tools:text="Lorem Ipsum"
       android:layout_marginTop="@dimen/padding_8"
       />

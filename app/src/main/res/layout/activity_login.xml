@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
+    android:background="@android:color/white"
     android:fitsSystemWindows="true"
     android:gravity="center"
     android:orientation="vertical"
@@ -16,17 +16,14 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="8dp"
       android:layout_marginTop="8dp"
-      android:textColorHint="@android:color/white"
       >
     <EditText
-        android:id="@+id/inpEmail"
+        android:id="@+id/inpUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
+        android:text="support1@example.com"
         />
   </android.support.design.widget.TextInputLayout>
 
@@ -36,17 +33,14 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="8dp"
       android:layout_marginTop="8dp"
-      android:textColorHint="@android:color/white"
       >
     <EditText
         android:id="@+id/inpPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/white"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
+        android:text="12345678"
         />
   </android.support.design.widget.TextInputLayout>
 

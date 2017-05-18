@@ -31,6 +31,10 @@ public class Preferences {
     getEditor().remove(key).apply();
   }
 
+  /* --------------------------------------------------- */
+  /* > End Convenience */
+  /* --------------------------------------------------- */
+
   public static Token getToken() {
     return returnObjectOrNull(Token.class, getPreferences().getString(TOKEN, null));
   }

@@ -20,6 +20,7 @@ public class ContextProvider {
   private void init(Context context){
     this.context = context;
   }
+
   private Context getContext(){
     if (this.context == null){
       throw new IllegalStateException("Must call init first before getContext()");

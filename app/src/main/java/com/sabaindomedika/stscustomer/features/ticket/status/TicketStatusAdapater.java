@@ -13,6 +13,7 @@ import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
 import com.sabaindomedika.stscustomer.basecommon.BaseViewHolder;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.model.Ticket;
+import com.sabaindomedika.stscustomer.model.TicketOld;
 
 /**
  * Created by Fajar Rianda on 04/05/2017.
@@ -35,13 +36,13 @@ public class TicketStatusAdapater extends BaseListAdapter<Ticket> {
       viewHolder = (TicketStatusViewHolder) convertView.getTag();
     }
     Ticket ticket = listData.get(position);
-    viewHolder.txtTicketNumber.setText(ticket.getTicketNumber());
-    viewHolder.txtContent.setText(ticket.getContent());
+    viewHolder.txtTicketId.setText(ticket.getId());
+    viewHolder.txtContent.setText(ticket.getDescription());
     viewHolder.spnContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        String ticketId = getItem(position).getTicketNumber();
+        String ticketId = getItem(position).getId();
         if (position == 1){
           CloseTicketFragment closeTicketFragment = CloseTicketFragment.newInstance();
           closeTicketFragment.show(fragmentManager, CloseTicketFragment.class.getSimpleName());
@@ -59,7 +60,7 @@ public class TicketStatusAdapater extends BaseListAdapter<Ticket> {
 
   static class TicketStatusViewHolder extends BaseViewHolder {
 
-    @Bind(R.id.txtTicketNumber) TextView txtTicketNumber;
+    @Bind(R.id.txtTicketId) TextView txtTicketId;
     @Bind(R.id.txtContent) TextView txtContent;
     @Bind(R.id.spnContent) Spinner spnContent;
 
