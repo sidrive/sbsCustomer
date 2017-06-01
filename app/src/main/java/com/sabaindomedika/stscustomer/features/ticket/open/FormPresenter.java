@@ -6,6 +6,7 @@ import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.model.Ticket;
+import com.sabaindomedika.stscustomer.utils.Preferences;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,5 +48,28 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
         });
   }
 
-  ;
+  public void loadRequestDivisions(String divisionId) {
+    apiService.getRequestDivisions(divisionId)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(listResponses -> {
+        }, error -> {
+        });
+  }
+
+  public void loadDepartment() {
+    if (Preferences.getDepartment() == null) {
+      apiService.getDepartments()
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(object -> {
+            Preferences.setDepartment(object.getData());
+            getView().showDepartment(object.getData());
+          }, error -> {
+            ErrorHelper.thrown(error);
+          });
+    } else {
+      getView().showDepartment(Preferences.getDepartment());
+    }
+  }
 }

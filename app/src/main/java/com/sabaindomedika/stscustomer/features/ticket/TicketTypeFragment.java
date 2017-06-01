@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +12,9 @@ import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
-import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
-import com.sabaindomedika.stscustomer.utils.Logger;
 import javax.inject.Inject;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import static butterknife.ButterKnife.bind;
 
@@ -78,7 +73,8 @@ public class TicketTypeFragment extends BaseFragment {
   }
 
   @OnClick(R.id.txtComplaint) public void onComplaint() {
-    navigateToDivisionType("3");
+    OpenTicketActivity activity = (OpenTicketActivity) getActivity();
+    activity.navigateToFormComplaint("3");
   }
 
   private void navigateToDivisionType(String ticketType){

@@ -10,7 +10,6 @@ import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.features.ticket.DivisionTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
-import com.sabaindomedika.stscustomer.features.ticket.open.service.ServiceFormFragment;
 
 /**
  * Created by Fajar Rianda on 01/05/2017.
@@ -42,10 +41,17 @@ public class OpenTicketActivity extends BaseActivity implements FragmentManager.
     getFragmentManager().addOnBackStackChangedListener(this);
   }
 
-  public void navigateToForm(String ticketType, String divisioType){
+  public void navigateToForm(String ticketType, String divisioType,String divisionName){
     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
     fragmentTransaction.addToBackStack(null);
-    fragmentTransaction.add(R.id.frameContainer, FormFragment.newInstance(ticketType,divisioType)).commit();
+    fragmentTransaction.add(R.id.frameContainer, FormFragment.newInstance(ticketType,divisioType,divisionName)).commit();
+    getFragmentManager().addOnBackStackChangedListener(this);
+  }
+
+  public void navigateToFormComplaint(String ticketType){
+    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+    fragmentTransaction.addToBackStack(null);
+    fragmentTransaction.add(R.id.frameContainer, FormFragment.newInstanceFormComplaint(ticketType)).commit();
     getFragmentManager().addOnBackStackChangedListener(this);
   }
 

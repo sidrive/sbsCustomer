@@ -18,11 +18,11 @@ import retrofit2.adapter.rxjava.HttpException;
 public class ErrorHelper {
 
   // We had non-200 http error
-  public static boolean httpException(Throwable throwable) {
+  private static boolean httpException(Throwable throwable) {
     return throwable instanceof HttpException;
   }
 
-  public static boolean unknownHostException(Throwable throwable) {
+  private static boolean unknownHostException(Throwable throwable) {
     return throwable instanceof UnknownHostException;
   }
 

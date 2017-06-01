@@ -12,6 +12,7 @@ public class Ticket extends Responses implements Parcelable {
   @SerializedName("id") private String id;
   @SerializedName("ticket_type_id") private String ticketTypeId;
   @SerializedName("division_id") private String divisionId;
+  @SerializedName("department_id") private String departmentId;
   @SerializedName("priority") private String priority;
   @SerializedName("description") private String description;
   @SerializedName("staff_name") private String staffName;
@@ -25,6 +26,7 @@ public class Ticket extends Responses implements Parcelable {
     id = in.readString();
     ticketTypeId = in.readString();
     divisionId = in.readString();
+    departmentId = in.readString();
     priority = in.readString();
     description = in.readString();
     staffName = in.readString();
@@ -35,6 +37,7 @@ public class Ticket extends Responses implements Parcelable {
     dest.writeString(id);
     dest.writeString(ticketTypeId);
     dest.writeString(divisionId);
+    dest.writeString(departmentId);
     dest.writeString(priority);
     dest.writeString(description);
     dest.writeString(staffName);
@@ -77,6 +80,14 @@ public class Ticket extends Responses implements Parcelable {
 
   public void setDivisionId(String divisionId) {
     this.divisionId = divisionId;
+  }
+
+  public String getDepartmentId() {
+    return departmentId;
+  }
+
+  public void setDepartmentId(String departmentId) {
+    this.departmentId = departmentId;
   }
 
   public String getPriority() {

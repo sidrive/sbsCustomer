@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:text="support1@example.com"
+        android:text="user_1@example.com"
         />
   </android.support.design.widget.TextInputLayout>
 

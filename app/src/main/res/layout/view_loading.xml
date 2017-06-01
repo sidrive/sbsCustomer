@@ -5,10 +5,9 @@
     >
 
   <TextView
-      android:id="@id/txtNoContent"
+      android:id="@id/txtContentAvailable"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Tidak ada Data"
       android:layout_centerInParent="true"
       android:visibility="gone"
       />

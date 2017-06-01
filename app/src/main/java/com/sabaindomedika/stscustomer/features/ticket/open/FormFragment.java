@@ -9,15 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
+import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.Toasts;
+import java.util.List;
 
 import static butterknife.ButterKnife.bind;
 
@@ -31,15 +37,26 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   @Bind(R.id.inpName) EditText inpName;
   @Bind(R.id.inpPhone) EditText inpPhone;
   @Bind(R.id.spnPriority) Spinner spnPriority;
-
+  @Bind(R.id.lyRadioContainer) LinearLayout lyRadioContainer;
   String priority;
   String ticketType;
   String divisionType;
+  String divisionName;
+  String departmentType;
 
-  public static FormFragment newInstance(String ticketType, String divisioType) {
+  public static FormFragment newInstance(String ticketType, String divisioType, String divisionName) {
     Bundle bundle = new Bundle();
     bundle.putString(Ticket.class.getSimpleName(), ticketType);
     bundle.putString(Division.class.getSimpleName(), divisioType);
+    bundle.putString(String.class.getSimpleName(), divisionName);
+    FormFragment fragment = new FormFragment();
+    fragment.setArguments(bundle);
+    return fragment;
+  }
+
+  public static FormFragment newInstanceFormComplaint(String ticketType) {
+    Bundle bundle = new Bundle();
+    bundle.putString(Ticket.class.getSimpleName(), ticketType);
     FormFragment fragment = new FormFragment();
     fragment.setArguments(bundle);
     return fragment;
@@ -71,21 +88,55 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     priority = spnPriority.getSelectedItem().toString();
     ticketType = bundle.getString(Ticket.class.getSimpleName());
     divisionType = bundle.getString(Division.class.getSimpleName());
+    divisionName = bundle.getString(String.class.getSimpleName());
+
+    /* Check for Complaint Ticket*/
+    if (divisionType == null){
+      presenter.loadDepartment();
+    }
   }
 
   private void setupToolbar() {
     getBaseActivity().setSupportActionBar(toolbar);
     getBaseActivity().getSupportActionBar().setDisplayShowTitleEnabled(false);
+    toolbar.setTitle("Request to ".concat(getTitleToolbar()));
     toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
     toolbar.setNavigationOnClickListener(v -> {
       getBaseActivity().onBackPressed();
     });
   }
 
+  private String getTitleToolbar(){
+    if (ticketType.equals("3")){
+      return "Complaint";
+    } else {
+      return divisionName;
+    }
+  }
+
   @Override public void statusOpenTicket(boolean success) {
     if (success) {
       Toasts.show("Open Tiket Sukses");
       getBaseActivity().finish();
+    }
+  }
+
+  @Override public void showRequestDivision() {
+
+  }
+
+  @Override public void showDepartment(List<Department> departments) {
+
+    for (int i = 0; i < departments.size(); i++) {
+      Department department = departments.get(i);
+
+      View view = LayoutInflater.from(context)
+          .inflate(R.layout.list_item_radio_button, lyRadioContainer, false);
+      RadioButton radio = ButterKnife.findById(view, R.id.radio);
+      TextView txtRadio = ButterKnife.findById(view, R.id.txtRadio);
+
+      txtRadio.setText(department.getName());
+      lyRadioContainer.addView(view, i);
     }
   }
 
@@ -96,7 +147,11 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
 
     Ticket ticket = new Ticket();
     ticket.setTicketTypeId(ticketType);
-    ticket.setDivisionId(divisionType);
+    if (departmentType != null) {
+      ticket.setDepartmentId(departmentType);
+    } else {
+      ticket.setDivisionId(divisionType);
+    }
     ticket.setDescription(inpDescription.getText().toString().trim());
     ticket.setPriority(priority);
     ticket.setStaffPhoneNumber(inpPhone.getText().toString().trim());
@@ -126,6 +181,4 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   @OnItemSelected(R.id.spnPriority) public void onSpinnerPriority(Spinner spinner, int position) {
     priority = spinner.getSelectedItem().toString();
   }
-
-
 }

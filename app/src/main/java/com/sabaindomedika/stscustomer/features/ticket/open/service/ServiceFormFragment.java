@@ -9,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.Bind;
 import com.sabaindomedika.stscustomer.R;
-import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormPresenter;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormView;
+import com.sabaindomedika.stscustomer.model.Department;
+import java.util.List;
 
 import static butterknife.ButterKnife.bind;
 
@@ -57,6 +58,14 @@ public class ServiceFormFragment extends BaseMvpFragment<FormView,FormPresenter>
   }
 
   @Override public void statusOpenTicket(boolean status) {
+
+  }
+
+  @Override public void showRequestDivision() {
+
+  }
+
+  @Override public void showDepartment(List<Department> departments) {
 
   }
 }
