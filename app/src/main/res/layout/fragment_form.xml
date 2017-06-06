@@ -2,27 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     >
+
   <include layout="@layout/toolbar"/>
+
   <ScrollView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="@dimen/padding_32"
         >
 
-      <LinearLayout
-          android:id="@+id/lyRadioContainer"
+      <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:orientation="vertical"
-          />
+          android:layout_marginBottom="16dp"
+          >
+
+          <RadioGroup
+            android:id="@+id/radioContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            />
+
+
+      <include layout="@layout/view_loading"
+          android:layout_height="wrap_content"
+          android:layout_width="wrap_content"/>
+
+      </RelativeLayout>
 
       <EditText
           android:id="@id/inpDescription"
@@ -70,6 +86,7 @@
           android:layout_marginBottom="16dp"
           android:background="@drawable/bg_rounded_border_black"
           >
+
         <Spinner
             android:id="@id/spnPriority"
             android:layout_width="match_parent"
@@ -79,6 +96,7 @@
             android:spinnerMode="dropdown"
             android:textAppearance="?android:attr/textAppearanceLarge"
             />
+
       </RelativeLayout>
 
       <Button
@@ -91,6 +109,9 @@
           android:textAppearance="?android:attr/textAppearanceMedium"
           style="@style/ButtonMain"
           />
+
     </LinearLayout>
+
   </ScrollView>
+
 </LinearLayout>

@@ -52,16 +52,15 @@ public class ProfileActivity extends BaseActivity {
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object -> {
-            if (object == null){
+            if (object == null) {
               return;
             }
             Preferences.setUserProfile(object.getData());
             showContent();
           }, error -> {
-            ErrorHelper.thrown(error);
+            if (!isFinishing()) ErrorHelper.thrown(error);
           });
-    }
-    else {
+    } else {
       showContent();
     }
   }

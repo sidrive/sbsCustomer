@@ -81,7 +81,7 @@ public class DivisionTypeFragment extends BaseFragment {
             setupDivision();
           }, error -> {
             setupLoading(false);
-            ErrorHelper.thrown(error);
+            if (isVisible()) ErrorHelper.thrown(error);
           });
     } else {
       setupLoading(true);

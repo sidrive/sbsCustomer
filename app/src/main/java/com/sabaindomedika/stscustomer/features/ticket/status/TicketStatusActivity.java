@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
 import com.sabaindomedika.stscustomer.model.Ticket;
-import com.sabaindomedika.stscustomer.model.TicketOld;
+import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.util.List;
 
 /**
@@ -58,6 +58,16 @@ public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, Tick
 
   @Override public void showContent(List<Ticket> tickets) {
       adapter.pushData(tickets);
+  }
+
+  @Override public void showLoading(boolean firstLoad, boolean isRefresh) {
+
+  }
+
+  @Override public void showError(Throwable throwable) {
+    if (!isFinishing()){
+      ErrorHelper.thrown(throwable);
+    }
   }
 
   /* Menu */

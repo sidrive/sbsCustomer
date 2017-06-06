@@ -4,7 +4,6 @@ import android.content.Context;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
-import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -33,7 +32,7 @@ public class TicketStatusPresenter extends MvpNullObjectBasePresenter<TicketStat
           }
 
         }, error -> {
-          ErrorHelper.thrown(error);
+          getView().showError(error);
         });
   }
 }

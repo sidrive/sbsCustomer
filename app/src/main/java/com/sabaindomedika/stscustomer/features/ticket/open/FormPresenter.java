@@ -48,16 +48,35 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
         });
   }
 
-  public void loadRequestDivisions(String divisionId) {
+  public void loadData(String ticketTypeId,String divisionId){
+    switch (ticketTypeId){
+      case "2":
+        loadRequestDivisions(divisionId);
+        break;
+      case "3":
+        loadDepartment();
+        break;
+      default:
+        getView().showLoading(false);
+        break;
+    }
+  }
+  private void loadRequestDivisions(String divisionId) {
+    getView().showLoading(true);
     apiService.getRequestDivisions(divisionId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(listResponses -> {
+        .subscribe(object -> {
+          getView().showRequestDivision(object.getData());
+          getView().showLoading(false);
         }, error -> {
+          getView().showLoading(false);
+          getView().showError(error);
         });
   }
 
-  public void loadDepartment() {
+  private void loadDepartment() {
+    getView().showLoading(true);
     if (Preferences.getDepartment() == null) {
       apiService.getDepartments()
           .subscribeOn(Schedulers.io())
@@ -65,11 +84,14 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
           .subscribe(object -> {
             Preferences.setDepartment(object.getData());
             getView().showDepartment(object.getData());
+            getView().showLoading(false);
           }, error -> {
-            ErrorHelper.thrown(error);
+            getView().showLoading(false);
+            getView().showError(error);
           });
     } else {
       getView().showDepartment(Preferences.getDepartment());
+      getView().showLoading(false);
     }
   }
 }

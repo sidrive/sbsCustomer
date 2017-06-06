@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface TicketStatusView extends MvpView {
   void showContent(List<Ticket> ticket);
+  void showLoading(boolean firstLoad,boolean isRefresh);
+  void showError(Throwable throwable);
 }

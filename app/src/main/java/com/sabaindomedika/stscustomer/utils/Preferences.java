@@ -76,7 +76,7 @@ public class Preferences {
 
   public static void setDepartment(List<Department> departments) {
     Gson gson = new Gson();
-    getEditor().putString(Division.class.getSimpleName(), gson.toJson(departments)).apply();
+    getEditor().putString(Department.class.getSimpleName(), gson.toJson(departments)).apply();
   }
 
   public static <T> T returnObjectOrNull(Class<T> clazz, String data) {

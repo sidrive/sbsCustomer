@@ -4,6 +4,7 @@ import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.model.Auth;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
+import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.Token;
@@ -34,7 +35,7 @@ public interface ApiService {
   Observable<Responses<List<Division>>> getDivisions();
 
   @GET(URLCons.URL_REQUEST_DIVISIONS)
-  Observable<Responses<List<Division>>> getRequestDivisions(@Path("division_id") String divisionID);
+  Observable<Responses<List<RequestDivision>>> getRequestDivisions(@Path("division_id") String divisionID);
 
   @GET(URLCons.URL_DEPARTMENTS)
   Observable<Responses<List<Department>>> getDepartments();
