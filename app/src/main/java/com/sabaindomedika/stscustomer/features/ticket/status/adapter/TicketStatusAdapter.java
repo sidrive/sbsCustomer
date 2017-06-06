@@ -13,6 +13,7 @@ import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
 import com.sabaindomedika.stscustomer.basecommon.BaseViewHolder;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.model.Ticket;
+import com.sabaindomedika.stscustomer.utils.Strings;
 
 /**
  * Created by Fajar Rianda on 04/05/2017.
@@ -37,6 +38,7 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
     Ticket ticket = listData.get(position);
     viewHolder.txtTicketId.setText(ticket.getId());
     viewHolder.txtContent.setText(ticket.getDescription());
+    viewHolder.txtDate.setText(Strings.getDate(ticket.getTimes().getDate()));
     viewHolder.spnContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -60,6 +62,7 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
 
     @Bind(R.id.txtTicketId) TextView txtTicketId;
     @Bind(R.id.txtContent) TextView txtContent;
+    @Bind(R.id.txtDate) TextView txtDate;
     @Bind(R.id.spnContent) Spinner spnContent;
 
     public TicketStatusViewHolder(View view) {

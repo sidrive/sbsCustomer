@@ -27,7 +27,6 @@ public class OpenTicketStatusFragment
   @Bind(R.id.lvContent) ListView lvContent;
   TicketStatusAdapter adapter;
 
-
   @Override public void onAttach(Context context) {
     super.onAttach(context);
   }
@@ -48,6 +47,8 @@ public class OpenTicketStatusFragment
   private void init() {
     adapter = new TicketStatusAdapter(context,getBaseFragmentManager());
     lvContent.setAdapter(adapter);
+    lvContent.setDivider(null);
+    lvContent.setDividerHeight(0);
 
     presenter.loadData();
   }

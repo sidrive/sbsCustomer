@@ -197,6 +197,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         instrumentId = instruments.get(position).getId();
+        Toasts.show(instruments.get(position).getInstrumentType().getData().getName() + instruments.get(position).getInstrumentCategory().getData().getName());
       }
 
       @Override public void onNothingSelected(AdapterView<?> parent) {

@@ -47,6 +47,8 @@ public class HistoryTicketStatusFragment
   private void init() {
     adapter = new TicketStatusAdapter(context,getBaseFragmentManager());
     lvContent.setAdapter(adapter);
+    lvContent.setDivider(null);
+    lvContent.setDividerHeight(0);
 
     presenter.loadData();
   }

@@ -20,6 +20,10 @@ public class Ticket implements Parcelable {
   @SerializedName("description") private String description;
   @SerializedName("staff_name") private String staffName;
   @SerializedName("staff_phone_number") private String staffPhoneNumber;
+  @SerializedName("created_at") private Times times;
+  @SerializedName("department") private Content<Department> department;
+  @SerializedName("division") private Content<Division> division;
+  @SerializedName("ticketType") private Content<TicketType> ticketType;
 
   public Ticket() {
 
@@ -37,6 +41,32 @@ public class Ticket implements Parcelable {
     description = in.readString();
     staffName = in.readString();
     staffPhoneNumber = in.readString();
+    times = in.readParcelable(Times.class.getClassLoader());
+    department = in.readParcelable(Content.class.getClassLoader());
+    division = in.readParcelable(Content.class.getClassLoader());
+    ticketType = in.readParcelable(Content.class.getClassLoader());
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(id);
+    dest.writeString(ticketTypeId);
+    dest.writeString(divisionId);
+    dest.writeString(requestId);
+    dest.writeString(instrumentId);
+    dest.writeString(departmentId);
+    dest.writeString(deviceName);
+    dest.writeString(priority);
+    dest.writeString(description);
+    dest.writeString(staffName);
+    dest.writeString(staffPhoneNumber);
+    dest.writeParcelable(times, flags);
+    dest.writeParcelable(department, flags);
+    dest.writeParcelable(division, flags);
+    dest.writeParcelable(ticketType, flags);
+  }
+
+  @Override public int describeContents() {
+    return 0;
   }
 
   public static final Creator<Ticket> CREATOR = new Creator<Ticket>() {
@@ -137,21 +167,35 @@ public class Ticket implements Parcelable {
     this.ticketTypeId = ticketTypeId;
   }
 
-  @Override public int describeContents() {
-    return 0;
+  public Times getTimes() {
+    return times;
   }
 
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(id);
-    dest.writeString(ticketTypeId);
-    dest.writeString(divisionId);
-    dest.writeString(requestId);
-    dest.writeString(instrumentId);
-    dest.writeString(departmentId);
-    dest.writeString(deviceName);
-    dest.writeString(priority);
-    dest.writeString(description);
-    dest.writeString(staffName);
-    dest.writeString(staffPhoneNumber);
+  public void setTimes(Times times) {
+    this.times = times;
+  }
+
+  public Content<Department> getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Content<Department> department) {
+    this.department = department;
+  }
+
+  public Content<TicketType> getTicketType() {
+    return ticketType;
+  }
+
+  public void setTicketType(Content<TicketType> ticketType) {
+    this.ticketType = ticketType;
+  }
+
+  public Content<Division> getDivision() {
+    return division;
+  }
+
+  public void setDivision(Content<Division> division) {
+    this.division = division;
   }
 }
