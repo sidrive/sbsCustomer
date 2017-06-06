@@ -48,21 +48,44 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
         });
   }
 
-  public void loadData(String ticketTypeId,String divisionId){
-    switch (ticketTypeId){
-      case "2":
-        loadRequestDivisions(divisionId);
-        break;
-      case "3":
-        loadDepartment();
-        break;
-      default:
+  public void loadData(String ticketTypeId, String divisionId) {
+    getView().showLoading(true);
+    if (ticketTypeId.equals("1")) {
+      if (divisionId.equals("3")) {
+        getView().showDeviceName();
         getView().showLoading(false);
-        break;
+      } else {
+        loadInstrumentCategory(divisionId.equals("4")
+            ? "2"
+            : "1");
+      }
+      return;
+    }
+
+    if (ticketTypeId.equals("2")) {
+      loadRequestDivisions(divisionId);
+      return;
+    }
+
+    if (ticketTypeId.equals("3")) {
+      loadDepartment();
     }
   }
+
+  private void loadInstrumentCategory(String categoryId) {
+    apiService.getInstrumentCategory(categoryId)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          getView().showInstrument(object.getData());
+          getView().showLoading(false);
+        }, error -> {
+          getView().showLoading(false);
+          getView().showError(error);
+        });
+  }
+
   private void loadRequestDivisions(String divisionId) {
-    getView().showLoading(true);
     apiService.getRequestDivisions(divisionId)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -76,7 +99,7 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
   }
 
   private void loadDepartment() {
-    getView().showLoading(true);
+
     if (Preferences.getDepartment() == null) {
       apiService.getDepartments()
           .subscribeOn(Schedulers.io())

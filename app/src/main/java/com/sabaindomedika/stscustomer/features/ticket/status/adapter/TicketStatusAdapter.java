@@ -1,4 +1,4 @@
-package com.sabaindomedika.stscustomer.features.ticket.status;
+package com.sabaindomedika.stscustomer.features.ticket.status.adapter;
 
 import android.app.FragmentManager;
 import android.content.Context;
@@ -17,11 +17,11 @@ import com.sabaindomedika.stscustomer.model.Ticket;
 /**
  * Created by Fajar Rianda on 04/05/2017.
  */
-public class TicketStatusAdapater extends BaseListAdapter<Ticket> {
+public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
 
   FragmentManager fragmentManager;
 
-  public TicketStatusAdapater(Context context, FragmentManager fragmentManager) {
+  public TicketStatusAdapter(Context context, FragmentManager fragmentManager) {
     super(context);
     this.fragmentManager = fragmentManager;
   }

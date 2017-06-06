@@ -7,6 +7,8 @@ import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.DivisionTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormPresenter;
+import com.sabaindomedika.stscustomer.features.ticket.status.HistoryTicketStatusFragment;
+import com.sabaindomedika.stscustomer.features.ticket.status.OpenTicketStatusFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusPresenter;
 import dagger.Component;
 
@@ -27,4 +29,8 @@ public interface NetworkComponent {
   void inject(ProfileActivity profileActivity);
 
   void inject(DivisionTypeFragment divisionTypeFragment);
+
+  void inject(OpenTicketStatusFragment openTicketStatusFragment);
+
+  void inject(HistoryTicketStatusFragment historyTicketStatusFragment);
 }

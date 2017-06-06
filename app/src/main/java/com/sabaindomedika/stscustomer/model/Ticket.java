@@ -7,13 +7,15 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Fajar Rianda on 18/05/2017.
  */
-public class Ticket extends Responses implements Parcelable {
+public class Ticket implements Parcelable {
 
   @SerializedName("id") private String id;
   @SerializedName("ticket_type_id") private String ticketTypeId;
   @SerializedName("division_id") private String divisionId;
   @SerializedName("request_id") private String requestId;
+  @SerializedName("instrument_id") private String instrumentId;
   @SerializedName("department_id") private String departmentId;
+  @SerializedName("device") private String deviceName;
   @SerializedName("priority") private String priority;
   @SerializedName("description") private String description;
   @SerializedName("staff_name") private String staffName;
@@ -28,27 +30,13 @@ public class Ticket extends Responses implements Parcelable {
     ticketTypeId = in.readString();
     divisionId = in.readString();
     requestId = in.readString();
+    instrumentId = in.readString();
     departmentId = in.readString();
+    deviceName = in.readString();
     priority = in.readString();
     description = in.readString();
     staffName = in.readString();
     staffPhoneNumber = in.readString();
-  }
-
-  @Override public void writeToParcel(Parcel dest, int flags) {
-    dest.writeString(id);
-    dest.writeString(ticketTypeId);
-    dest.writeString(divisionId);
-    dest.writeString(requestId);
-    dest.writeString(departmentId);
-    dest.writeString(priority);
-    dest.writeString(description);
-    dest.writeString(staffName);
-    dest.writeString(staffPhoneNumber);
-  }
-
-  @Override public int describeContents() {
-    return 0;
   }
 
   public static final Creator<Ticket> CREATOR = new Creator<Ticket>() {
@@ -61,12 +49,12 @@ public class Ticket extends Responses implements Parcelable {
     }
   };
 
-  public String getId() {
-    return id;
+  public String getDepartmentId() {
+    return departmentId;
   }
 
-  public void setId(String id) {
-    this.id = id;
+  public void setDepartmentId(String departmentId) {
+    this.departmentId = departmentId;
   }
 
   public String getDescription() {
@@ -77,6 +65,14 @@ public class Ticket extends Responses implements Parcelable {
     this.description = description;
   }
 
+  public String getDeviceName() {
+    return deviceName;
+  }
+
+  public void setDeviceName(String deviceName) {
+    this.deviceName = deviceName;
+  }
+
   public String getDivisionId() {
     return divisionId;
   }
@@ -85,20 +81,20 @@ public class Ticket extends Responses implements Parcelable {
     this.divisionId = divisionId;
   }
 
-  public String getRequestId() {
-    return requestId;
+  public String getId() {
+    return id;
   }
 
-  public void setRequestId(String requestId) {
-    this.requestId = requestId;
+  public void setId(String id) {
+    this.id = id;
   }
 
-  public String getDepartmentId() {
-    return departmentId;
+  public String getInstrumentId() {
+    return instrumentId;
   }
 
-  public void setDepartmentId(String departmentId) {
-    this.departmentId = departmentId;
+  public void setInstrumentId(String instrumentId) {
+    this.instrumentId = instrumentId;
   }
 
   public String getPriority() {
@@ -107,6 +103,14 @@ public class Ticket extends Responses implements Parcelable {
 
   public void setPriority(String priority) {
     this.priority = priority;
+  }
+
+  public String getRequestId() {
+    return requestId;
+  }
+
+  public void setRequestId(String requestId) {
+    this.requestId = requestId;
   }
 
   public String getStaffName() {
@@ -131,5 +135,23 @@ public class Ticket extends Responses implements Parcelable {
 
   public void setTicketTypeId(String ticketTypeId) {
     this.ticketTypeId = ticketTypeId;
+  }
+
+  @Override public int describeContents() {
+    return 0;
+  }
+
+  @Override public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(id);
+    dest.writeString(ticketTypeId);
+    dest.writeString(divisionId);
+    dest.writeString(requestId);
+    dest.writeString(instrumentId);
+    dest.writeString(departmentId);
+    dest.writeString(deviceName);
+    dest.writeString(priority);
+    dest.writeString(description);
+    dest.writeString(staffName);
+    dest.writeString(staffPhoneNumber);
   }
 }

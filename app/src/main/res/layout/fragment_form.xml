@@ -26,17 +26,53 @@
           android:layout_marginBottom="16dp"
           >
 
-          <RadioGroup
+        <RelativeLayout
+            android:id="@+id/spnInstrumentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_border_black"
+            android:visibility="gone"
+            >
+
+          <Spinner
+              android:id="@+id/spnInstrument"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="4dp"
+              android:spinnerMode="dropdown"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              />
+        </RelativeLayout>
+
+        <!-- For Ticket 5-9 -->
+        <RadioGroup
             android:id="@+id/radioContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:visibility="gone"
             />
 
 
-      <include layout="@layout/view_loading"
-          android:layout_height="wrap_content"
-          android:layout_width="wrap_content"/>
+        <!--For Ticket 3-->
+        <EditText
+            android:id="@+id/inpDeviceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_rounded_border_black"
+            android:gravity="top|left"
+            android:hint="@string/device_name"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="gone"
+            />
+
+        <include
+            layout="@layout/view_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
 
       </RelativeLayout>
 

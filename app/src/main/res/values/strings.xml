@@ -8,4 +8,6 @@
   <string name="nama_analisis_dokter">Nama Analisis / Dokter</string>
   <string name="no_hp_analisis">No HP Analisis</string>
   <string name="refresh">Silahkan Refresh Kembali</string>
+  <string name="device_name">Device Name</string>
+
 </resources>

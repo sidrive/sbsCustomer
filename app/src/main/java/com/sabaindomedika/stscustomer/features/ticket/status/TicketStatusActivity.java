@@ -3,27 +3,25 @@ package com.sabaindomedika.stscustomer.features.ticket.status;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
-import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
-import com.sabaindomedika.stscustomer.model.Ticket;
-import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
-import java.util.List;
+import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
+import com.sabaindomedika.stscustomer.features.ticket.status.adapter.TicketStatusPagerAdapter;
 
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
-public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, TicketStatusPresenter>
-    implements TicketStatusView {
+public class TicketStatusActivity extends BaseActivity {
 
+  TicketStatusPagerAdapter adapter;
   @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.lvContent) ListView lvContent;
-  TicketStatusAdapater adapter;
+  @Bind(R.id.tabLayout) TabLayout tabLayout;
+  @Bind(R.id.pager) ViewPager viewPager;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, TicketStatusActivity.class);
@@ -34,8 +32,15 @@ public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, Tick
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_ticket_status);
     ButterKnife.bind(this);
-    init();
     setupToolbar();
+    init();
+  }
+
+  private void init() {
+    adapter = new TicketStatusPagerAdapter(getBaseFragmentManager());
+    viewPager.setAdapter(adapter);
+    viewPager.setOffscreenPageLimit(2);
+    tabLayout.setupWithViewPager(viewPager);
   }
 
   private void setupToolbar() {
@@ -43,31 +48,6 @@ public class TicketStatusActivity extends BaseMvpActivity<TicketStatusView, Tick
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setDisplayShowTitleEnabled(false);
     toolbar.setTitle("Status Tiket");
-  }
-
-  private void init() {
-    adapter = new TicketStatusAdapater(this,getBaseFragmentManager());
-    lvContent.setAdapter(adapter);
-    presenter.loadData();
-  }
-
-  /* Presenter */
-  @NonNull @Override public TicketStatusPresenter createPresenter() {
-    return new TicketStatusPresenter(this);
-  }
-
-  @Override public void showContent(List<Ticket> tickets) {
-      adapter.pushData(tickets);
-  }
-
-  @Override public void showLoading(boolean firstLoad, boolean isRefresh) {
-
-  }
-
-  @Override public void showError(Throwable throwable) {
-    if (!isFinishing()){
-      ErrorHelper.thrown(throwable);
-    }
   }
 
   /* Menu */

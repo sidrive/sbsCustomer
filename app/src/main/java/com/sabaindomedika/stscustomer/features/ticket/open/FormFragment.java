@@ -14,10 +14,13 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -27,10 +30,12 @@ import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
+import com.sabaindomedika.stscustomer.model.Instrument;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.Toasts;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
+import java.util.ArrayList;
 import java.util.List;
 
 import static butterknife.ButterKnife.bind;
@@ -46,6 +51,9 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   @Bind(R.id.inpPhone) EditText inpPhone;
   @Bind(R.id.spnPriority) Spinner spnPriority;
   @Bind(R.id.radioContainer) RadioGroup lyRadioContainer;
+  @Bind(R.id.spnInstrument) Spinner spnInstrument;
+  @Bind(R.id.spnInstrumentContainer) RelativeLayout spnInstrumentContainer;
+  @Bind(R.id.inpDeviceName) EditText inpDeviceName;
 
   @Bind(R.id.progressBar) ProgressBar progressBar;
   @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
@@ -53,10 +61,13 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   String ticketTypeId;
   String divisionId;
   String divisionName;
-  String departmentId;
+  String instrumentId;
   String requestDivisionId;
+  String departmentId;
+  String deviceName;
 
-  public static FormFragment newInstance(String ticketTypeId, String divisioType, String divisionName) {
+  public static FormFragment newInstance(String ticketTypeId, String divisioType,
+      String divisionName) {
     Bundle bundle = new Bundle();
     bundle.putString(Ticket.class.getSimpleName(), ticketTypeId);
     bundle.putString(Division.class.getSimpleName(), divisioType);
@@ -102,7 +113,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     divisionId = bundle.getString(Division.class.getSimpleName());
     divisionName = bundle.getString(String.class.getSimpleName());
 
-    presenter.loadData(ticketTypeId,divisionId);
+    presenter.loadData(ticketTypeId, divisionId);
   }
 
   private void setupToolbar() {
@@ -115,8 +126,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     });
   }
 
-  private String getTitleToolbar(){
-    if (ticketTypeId.equals("3")){
+  private String getTitleToolbar() {
+    if (ticketTypeId.equals("3")) {
       return "Complaint";
     } else {
       return divisionName;
@@ -131,15 +142,16 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   }
 
   @Override public void showRequestDivision(List<RequestDivision> requestDivisions) {
+    lyRadioContainer.setVisibility(View.VISIBLE);
 
     for (int i = 0; i < requestDivisions.size(); i++) {
       RequestDivision requestDivision = requestDivisions.get(i);
 
       RadioButton radio = new RadioButton(context);
       radio.setText(requestDivision.getName());
-      radio.setHighlightColor(ContextCompat.getColor(context,R.color.colorPrimary));
+      radio.setHighlightColor(ContextCompat.getColor(context, R.color.colorPrimary));
       radio.setOnCheckedChangeListener((buttonView, isChecked) -> {
-        if (isChecked){
+        if (isChecked) {
           requestDivisionId = requestDivision.getId();
         }
       });
@@ -148,15 +160,16 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   }
 
   @Override public void showDepartment(List<Department> departments) {
+    lyRadioContainer.setVisibility(View.VISIBLE);
 
     for (int i = 0; i < departments.size(); i++) {
       Department department = departments.get(i);
 
-     RadioButton radio = new RadioButton(context);
+      RadioButton radio = new RadioButton(context);
       radio.setText(department.getName());
-      radio.setHighlightColor(ContextCompat.getColor(context,R.color.colorPrimary));
+      radio.setHighlightColor(ContextCompat.getColor(context, R.color.colorPrimary));
       radio.setOnCheckedChangeListener((buttonView, isChecked) -> {
-        if (isChecked){
+        if (isChecked) {
           departmentId = department.getId();
         }
       });
@@ -164,8 +177,42 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     }
   }
 
+  @Override public void showInstrument(List<Instrument> instruments) {
+    spnInstrumentContainer.setVisibility(View.VISIBLE);
+    List<String> list = new ArrayList<>();
+
+    for (Instrument instrument : instruments) {
+      list.add(instrument.getInstrumentCategory()
+          .getData()
+          .getName()
+          .concat("-")
+          .concat(instrument.getSerialNumber()));
+    }
+    ArrayAdapter<String> adapter =
+        new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, list);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spnInstrument.setAdapter(adapter);
+
+    spnInstrument.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        instrumentId = instruments.get(position).getId();
+      }
+
+      @Override public void onNothingSelected(AdapterView<?> parent) {
+
+      }
+    });
+  }
+
+  @Override public void showDeviceName() {
+    inpDeviceName.setVisibility(View.VISIBLE);
+  }
+
   @Override public void showLoading(boolean firstLoad) {
-      progressBar.setVisibility(!firstLoad ? View.GONE : View.VISIBLE);
+    progressBar.setVisibility(!firstLoad
+        ? View.GONE
+        : View.VISIBLE);
   }
 
   @Override public void showError(Throwable throwable) {
@@ -177,7 +224,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     stringBuilder.append(getString(R.string.refresh));
     stringBuilder.setSpan(new ClickableSpan() {
       @Override public void onClick(View widget) {
-       presenter.loadData(ticketTypeId,divisionId);
+        presenter.loadData(ticketTypeId, divisionId);
         txtContentAvailable.setVisibility(View.GONE);
       }
     }, 0, getString(R.string.refresh).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -196,14 +243,25 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
 
     Ticket ticket = new Ticket();
     ticket.setTicketTypeId(ticketTypeId);
+
+    if (!TextUtils.isEmpty(inpDeviceName.getText().toString().trim())) {
+      deviceName = inpDeviceName.getText().toString().trim();
+      ticket.setDeviceName(deviceName);
+    }
+
+    if (instrumentId != null) {
+      ticket.setInstrumentId(instrumentId);
+    }
+
     if (departmentId != null) {
       ticket.setDepartmentId(departmentId);
     } else {
       ticket.setDivisionId(divisionId);
-      if (requestDivisionId != null){
+      if (requestDivisionId != null) {
         ticket.setRequestId(requestDivisionId);
       }
     }
+
     ticket.setDescription(inpDescription.getText().toString().trim());
     ticket.setPriority(priority);
     ticket.setStaffPhoneNumber(inpPhone.getText().toString().trim());

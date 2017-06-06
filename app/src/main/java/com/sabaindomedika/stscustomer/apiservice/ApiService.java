@@ -4,6 +4,7 @@ import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.model.Auth;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
+import com.sabaindomedika.stscustomer.model.Instrument;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
 import com.sabaindomedika.stscustomer.model.Ticket;
@@ -15,6 +16,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -36,6 +38,10 @@ public interface ApiService {
 
   @GET(URLCons.URL_REQUEST_DIVISIONS)
   Observable<Responses<List<RequestDivision>>> getRequestDivisions(@Path("division_id") String divisionID);
+
+  @GET(URLCons.URL_INSTRUMENT_CATEGORY)
+  Observable<Responses<List<Instrument>>> getInstrumentCategory(@Query("instrument_category_id") String instrument_category_id);
+
 
   @GET(URLCons.URL_DEPARTMENTS)
   Observable<Responses<List<Department>>> getDepartments();

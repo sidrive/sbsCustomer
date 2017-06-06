@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Fajar Rianda on 17/05/2017.
  */
-public class Auth extends Responses implements Parcelable {
+public class Auth implements Parcelable {
 
   public static final Creator<Auth> CREATOR = new Creator<Auth>() {
     @Override public Auth createFromParcel(Parcel in) {
