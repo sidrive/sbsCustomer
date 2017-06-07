@@ -182,10 +182,10 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     List<String> list = new ArrayList<>();
 
     for (Instrument instrument : instruments) {
-      list.add(instrument.getInstrumentCategory()
+      list.add(instrument.getInstrumentType()
           .getData()
           .getName()
-          .concat("-")
+          .concat(" - Serial Number: ")
           .concat(instrument.getSerialNumber()));
     }
     ArrayAdapter<String> adapter =
@@ -197,7 +197,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         instrumentId = instruments.get(position).getId();
-        Toasts.show(instruments.get(position).getInstrumentType().getData().getName() + instruments.get(position).getInstrumentCategory().getData().getName());
+        // Toasts.show(instruments.get(position).getInstrumentType().getData().getName() + instruments.get(position).getInstrumentCategory().getData().getName());
       }
 
       @Override public void onNothingSelected(AdapterView<?> parent) {
