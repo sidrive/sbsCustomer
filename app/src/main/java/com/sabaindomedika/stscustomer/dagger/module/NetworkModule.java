@@ -1,10 +1,12 @@
 package com.sabaindomedika.stscustomer.dagger.module;
 
 import android.content.Context;
+import com.sabaindomedika.stscustomer.BuildConfig;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
 import com.sabaindomedika.stscustomer.utils.helper.network.CustomAuthenticator;
+import com.sabaindomedika.stscustomer.utils.helper.network.CustomInterceptor;
 import com.sabaindomedika.stscustomer.utils.helper.network.HttpLoggingInterceptor;
 import dagger.Module;
 import dagger.Provides;
@@ -35,8 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
           .writeTimeout(60, TimeUnit.SECONDS)
           .connectTimeout(60, TimeUnit.SECONDS)
           .authenticator(new CustomAuthenticator(context))
-          .addInterceptor(
-              new HttpLoggingInterceptor(context).setLevel(HttpLoggingInterceptor.Level.BODY))
+          .addInterceptor(BuildConfig.DEBUG ?
+              new HttpLoggingInterceptor(context).setLevel(HttpLoggingInterceptor.Level.BODY) : new CustomInterceptor())
           .build();
     } catch (Exception e) {
       e.printStackTrace();

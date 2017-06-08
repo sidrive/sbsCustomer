@@ -106,21 +106,11 @@ public final class HttpLoggingInterceptor implements Interceptor {
     this.logger = Logger.DEFAULT;
   }
 
-  public HttpLoggingInterceptor(Context context,boolean isTokenGenerate) {
-    this(context, Logger.DEFAULT,isTokenGenerate);
-  }
-
-  public HttpLoggingInterceptor(Context context,Logger logger, boolean isTokenGenerate) {
-    this.mContext = context;
-    this.logger = logger;
-    this.isTokenGenerate = isTokenGenerate;
-  }
-
   private final Logger logger;
 
   private volatile Level level = Level.NONE;
-  private boolean isTokenGenerate = false;
   private Context mContext;
+
   /** Change the level at which this interceptor logs. */
   public HttpLoggingInterceptor setLevel(Level level) {
     if (level == null) throw new NullPointerException("level == null. Use Level.NONE instead.");
@@ -316,34 +306,4 @@ public final class HttpLoggingInterceptor implements Interceptor {
     return contentEncoding != null && !contentEncoding.equalsIgnoreCase("identity");
   }
 
-  private void setToken(Response response) {
-    //Headers headerss = response.headers();
-    //if (Preferences.getTokenHeader() == null || isTokenGenerate ) {
-    //  for (int i = 0, count = headerss.size(); i < count; i++) {
-    //    //logger.log(headerss.name(i) + ": " + headerss.value(i));
-    //    if (headerss.name(i).contains("Authorization") || headerss.name(i)
-    //        .contains("authorization")) {
-    //      logger.log("Response " + headerss.name(i) + ": " + headerss.value(i));
-    //      logger.log(
-    //          "Token :" + headerss.value(i).substring(headerss.value(i).lastIndexOf(" ") + 1));
-    //      Preferences.setTokenHeader(
-    //          headerss.value(i).substring(headerss.value(i).lastIndexOf(" ") + 1));
-    //      logger.log("Set Token");
-    //    }
-    //  }
-    //}
-  }
-
-  private void handleInvalidKey() {
-    //Preferences.setSessionExpired(true);
-    ////NewQlueClient.cancelRequest();
-    //NetworkComponent component = DaggerInitializer.networkComponent(mContext);
-    //component.inject(this);
-    //component.client().dispatcher().cancelAll();
-    //
-    //QlueClient.cancel(mContext);
-    //CacheHelper.get().clear();
-    //Preferences.clear();
-    //VideoCache.getInstance(mContext).clearCache();
-  }
 }

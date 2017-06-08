@@ -1,7 +1,7 @@
 package com.sabaindomedika.stscustomer;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -33,5 +33,11 @@ public class MainActivity extends BaseActivity {
 
   @OnClick(R.id.txtProfile) public void onProfile(){
     ProfileActivity.start(this);
+  }
+
+  public static void start(Context context){
+    Intent intent = new Intent(context, MainActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    context.startActivity(intent);
   }
 }

@@ -1,6 +1,7 @@
 package com.sabaindomedika.stscustomer;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -31,6 +32,11 @@ public class LoginActivity extends BaseActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    /* Check User Login*/
+    if (Preferences.getToken() != null){
+      MainActivity.start(this);
+    }
+    
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
     DaggerInit.networkComponent(this).inject(this);
@@ -73,9 +79,7 @@ public class LoginActivity extends BaseActivity {
         .subscribe(token -> {
           Preferences.setToken(token);
           progressDialog.dismiss();
-          Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-          intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-          startActivity(intent);
+          MainActivity.start(this);
           finish();
         }, throwable -> {
           progressDialog.dismiss();
@@ -85,5 +89,11 @@ public class LoginActivity extends BaseActivity {
             ErrorHelper.thrown(throwable);
           }
         });
+  }
+
+  public static void start(Context context) {
+    Intent intent = new Intent(context, LoginActivity.class);
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    context.startActivity(intent);
   }
 }

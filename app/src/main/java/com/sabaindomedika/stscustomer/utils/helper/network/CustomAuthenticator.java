@@ -3,11 +3,11 @@ package com.sabaindomedika.stscustomer.utils.helper.network;
 import android.content.Context;
 import android.util.Log;
 import com.google.gson.Gson;
+import com.sabaindomedika.stscustomer.LoginActivity;
 import com.sabaindomedika.stscustomer.constant.ErrorCons;
 import com.sabaindomedika.stscustomer.model.Responses;
 import com.sabaindomedika.stscustomer.utils.Logger;
 import com.sabaindomedika.stscustomer.utils.Preferences;
-import com.sabaindomedika.stscustomer.utils.Toasts;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import okhttp3.Authenticator;
@@ -32,17 +32,43 @@ public class CustomAuthenticator implements Authenticator {
   @Override public Request authenticate(Route route, Response response) throws IOException {
 
     String error = getError(response);
+
     if (error.equals(ErrorCons.INVALID_CREDENTIAL)){
       return null;
     }
 
+    if (error.equalsIgnoreCase(ErrorCons.UNAUTHENTICATED)){
+      logout();
+      return null;
+    }
+
+    if (responseCount(response) > 5) {
+      return null;
+    }
+
+   /* For Retry Request */
     return response.request()
         .newBuilder()
         .removeHeader("Authorization")
+        .removeHeader("Accept")
         .addHeader("Authorization", Preferences.getToken() != null
             ? "Bearer ".concat(Preferences.getToken().getAccessToken())
             : "Bearer ")
+        .addHeader("Accept","application/json")
         .build();
+  }
+
+  private void logout() {
+    Preferences.clear();
+    LoginActivity.start(context);
+  }
+
+  private int responseCount(Response response) {
+    int result = 1;
+    while ((response = response.priorResponse()) != null) {
+      result++;
+    }
+    return result;
   }
 
   private String getError(Response responses) {
