@@ -3,10 +3,13 @@ package com.sabaindomedika.stscustomer.features.ticket.status;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import butterknife.Bind;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
@@ -21,10 +24,14 @@ import static butterknife.ButterKnife.bind;
 /**
  * Created by Fajar Rianda on 06/06/2017.
  */
-public class HistoryTicketStatusFragment
+public class TicketStatusHistoryFragment
     extends BaseMvpFragment<TicketStatusView, TicketStatusPresenter> implements TicketStatusView {
 
   @Bind(R.id.lvContent) ListView lvContent;
+  @Bind(R.id.progressBar) ProgressBar progressBar;
+  @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
+  @Bind(R.id.swipeRefresh) SwipeRefreshLayout swipeRefresh;
+
   TicketStatusAdapter adapter;
 
   @Override public void onAttach(Context context) {
@@ -45,12 +52,17 @@ public class HistoryTicketStatusFragment
   }
 
   private void init() {
-    adapter = new TicketStatusAdapter(context,getBaseFragmentManager());
+    adapter = new TicketStatusAdapter(context, this);
     lvContent.setAdapter(adapter);
     lvContent.setDivider(null);
     lvContent.setDividerHeight(0);
 
-    presenter.loadData();
+    presenter.loadDataHistory();
+    swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        presenter.loadDataHistory();
+      }
+    });
   }
 
   @NonNull @Override public TicketStatusPresenter createPresenter() {
@@ -58,17 +70,24 @@ public class HistoryTicketStatusFragment
   }
 
   @Override public void showContent(List<Ticket> tickets) {
+    txtContentAvailable.setVisibility(tickets.isEmpty()
+        ? View.VISIBLE
+        : View.GONE);
     adapter.pushData(tickets);
   }
 
   @Override public void showLoading(boolean firstLoad, boolean isRefresh) {
 
+    if (!firstLoad && isRefresh) {
+      swipeRefresh.setRefreshing(false);
+    }
+
+    if (!firstLoad) progressBar.setVisibility(View.GONE);
   }
 
   @Override public void showError(Throwable throwable) {
-    if (isVisible()){
+    if (isVisible()) {
       ErrorHelper.thrown(throwable);
     }
-
   }
 }

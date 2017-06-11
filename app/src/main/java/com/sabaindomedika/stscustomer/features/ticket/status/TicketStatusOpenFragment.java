@@ -1,16 +1,21 @@
 package com.sabaindomedika.stscustomer.features.ticket.status;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import butterknife.Bind;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
+import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.adapter.TicketStatusAdapter;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
@@ -21,10 +26,14 @@ import static butterknife.ButterKnife.bind;
 /**
  * Created by Fajar Rianda on 06/06/2017.
  */
-public class OpenTicketStatusFragment
+public class TicketStatusOpenFragment
     extends BaseMvpFragment<TicketStatusView, TicketStatusPresenter> implements TicketStatusView {
 
   @Bind(R.id.lvContent) ListView lvContent;
+  @Bind(R.id.progressBar) ProgressBar progressBar;
+  @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
+  @Bind(R.id.swipeRefresh) SwipeRefreshLayout swipeRefresh;
+
   TicketStatusAdapter adapter;
 
   @Override public void onAttach(Context context) {
@@ -45,12 +54,18 @@ public class OpenTicketStatusFragment
   }
 
   private void init() {
-    adapter = new TicketStatusAdapter(context,getBaseFragmentManager());
+    adapter = new TicketStatusAdapter(context, this);
     lvContent.setAdapter(adapter);
     lvContent.setDivider(null);
     lvContent.setDividerHeight(0);
 
-    presenter.loadData();
+    presenter.loadDataOpen();
+
+    swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override public void onRefresh() {
+        presenter.loadDataOpen();
+      }
+    });
   }
 
   @NonNull @Override public TicketStatusPresenter createPresenter() {
@@ -58,17 +73,34 @@ public class OpenTicketStatusFragment
   }
 
   @Override public void showContent(List<Ticket> tickets) {
+    txtContentAvailable.setVisibility(tickets.isEmpty()
+        ? View.VISIBLE
+        : View.GONE);
     adapter.pushData(tickets);
   }
 
   @Override public void showLoading(boolean firstLoad, boolean isRefresh) {
 
+    if (!firstLoad && isRefresh) {
+      swipeRefresh.setRefreshing(false);
+    }
+
+    if (!firstLoad) progressBar.setVisibility(View.GONE);
   }
 
   @Override public void showError(Throwable throwable) {
-    if (isVisible()){
+    if (isVisible()) {
       ErrorHelper.thrown(throwable);
     }
+  }
 
+  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (resultCode == getBaseActivity().RESULT_OK
+        && requestCode == CloseTicketFragment.DIALOG_REQUEST_CODE) {
+      int position = data.getIntExtra(int.class.getSimpleName(), 0);
+      adapter.remove(position);
+    }
+
+    super.onActivityResult(requestCode, resultCode, data);
   }
 }

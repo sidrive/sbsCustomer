@@ -3,8 +3,8 @@ package com.sabaindomedika.stscustomer.features.ticket.status.adapter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
-import com.sabaindomedika.stscustomer.features.ticket.status.HistoryTicketStatusFragment;
-import com.sabaindomedika.stscustomer.features.ticket.status.OpenTicketStatusFragment;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusHistoryFragment;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusOpenFragment;
 
 /**
  * Created by Fajar Rianda on 06/06/2017.
@@ -18,9 +18,9 @@ public class TicketStatusPagerAdapter extends FragmentPagerAdapter {
   @Override public Fragment getItem(int position) {
     switch (position) {
       case 0:
-        return new OpenTicketStatusFragment();
+        return new TicketStatusOpenFragment();
       default:
-        return new HistoryTicketStatusFragment();
+        return new TicketStatusHistoryFragment();
     }
   }
 

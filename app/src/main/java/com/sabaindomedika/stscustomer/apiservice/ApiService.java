@@ -50,8 +50,11 @@ public interface ApiService {
   Observable<Responses<Ticket>> postOpenTicket(@Body Ticket ticket);
 
   @PUT(URLCons.URL_CLOSE_TICKET)
-  Observable<Responses<Ticket>> closeTicket();
+  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId);
 
-  @GET(URLCons.URL_STATUS_TICKET)
-  Observable<Responses<List<Ticket>>> getStatusTicket();
+  @GET(URLCons.URL_TICKET_STATUS)
+  Observable<Responses<List<Ticket>>> getTicketStatusOpen();
+
+  @GET(URLCons.URL_TICKET_STATUS)
+  Observable<Responses<List<Ticket>>> getTicketStatusHistory(@Query("is_closed") String isClosed);
 }

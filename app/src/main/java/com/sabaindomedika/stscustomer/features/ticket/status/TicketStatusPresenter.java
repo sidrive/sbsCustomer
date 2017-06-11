@@ -19,19 +19,36 @@ public class TicketStatusPresenter extends MvpNullObjectBasePresenter<TicketStat
     DaggerInit.networkComponent(context).inject(this);
   }
 
-  public void loadData() {
-    apiService.getStatusTicket()
+  public void loadDataOpen() {
+    getView().showLoading(true, true);
+    apiService.getTicketStatusOpen()
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(object ->{
-          if (object == null){
-           return;
+        .subscribe(object -> {
+          if (object == null) {
+            return;
           }
-          if (object.getData() != null){
-            getView().showContent(object.getData());
-          }
-
+          getView().showLoading(false, true);
+          getView().showContent(object.getData());
         }, error -> {
+          getView().showLoading(false, true);
+          getView().showError(error);
+        });
+  }
+
+  public void loadDataHistory() {
+    getView().showLoading(true, true);
+    apiService.getTicketStatusHistory("1")
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          if (object == null) {
+            return;
+          }
+          getView().showLoading(false, true);
+          getView().showContent(object.getData());
+        }, error -> {
+          getView().showLoading(false, true);
           getView().showError(error);
         });
   }

@@ -1,6 +1,5 @@
 package com.sabaindomedika.stscustomer.features.ticket.status.adapter;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.sabaindomedika.stscustomer.R;
+import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
 import com.sabaindomedika.stscustomer.basecommon.BaseViewHolder;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
@@ -20,11 +20,11 @@ import com.sabaindomedika.stscustomer.utils.Strings;
  */
 public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
 
-  FragmentManager fragmentManager;
+  BaseFragment fragment;
 
-  public TicketStatusAdapter(Context context, FragmentManager fragmentManager) {
+  public TicketStatusAdapter(Context context, BaseFragment fragment) {
     super(context);
-    this.fragmentManager = fragmentManager;
+    this.fragment = fragment;
   }
 
   @Override public View getView(int position, View convertView, ViewGroup parent) {
@@ -41,12 +41,13 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
     viewHolder.txtDate.setText(Strings.getDate(ticket.getTimes().getDate()));
     viewHolder.spnContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
       @Override
-      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+      public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
         
         String ticketId = getItem(position).getId();
-        if (position == 1) {
-          CloseTicketFragment closeTicketFragment = CloseTicketFragment.newInstance();
-          closeTicketFragment.show(fragmentManager, CloseTicketFragment.class.getSimpleName());
+        if (spinnerPosition == 1) {
+          CloseTicketFragment closeTicketFragment = CloseTicketFragment.newInstance(ticketId,position);
+          closeTicketFragment.setTargetFragment(fragment,CloseTicketFragment.DIALOG_REQUEST_CODE);
+          closeTicketFragment.show(fragment.getBaseFragmentManager(), CloseTicketFragment.class.getSimpleName());
         }
       }
 
