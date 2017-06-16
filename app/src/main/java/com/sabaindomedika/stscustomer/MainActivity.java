@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
@@ -12,10 +15,17 @@ import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
 
 public class MainActivity extends BaseActivity {
-
+  private FirebaseAnalytics mFirebaseAnalytics;
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+      @Override
+      public void uncaughtException(Thread t, Throwable e) {
+        FirebaseCrash.report(e);
+      }
+    });
     ButterKnife.bind(this);
   }
 
