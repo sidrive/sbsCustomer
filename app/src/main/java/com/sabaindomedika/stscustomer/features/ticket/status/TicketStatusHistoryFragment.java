@@ -7,10 +7,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.OnItemClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
@@ -52,7 +54,7 @@ public class TicketStatusHistoryFragment
   }
 
   private void init() {
-    adapter = new TicketStatusAdapter(context, this);
+    adapter = new TicketStatusAdapter(context, this, true);
     lvContent.setAdapter(adapter);
     lvContent.setDivider(null);
     lvContent.setDividerHeight(0);
@@ -89,5 +91,10 @@ public class TicketStatusHistoryFragment
     if (isVisible()) {
       ErrorHelper.thrown(throwable);
     }
+  }
+
+  @OnItemClick(R.id.lvContent)
+  public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    TicketStatusDetailActivity.start(context, adapter.getItem(i));
   }
 }

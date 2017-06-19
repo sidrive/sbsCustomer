@@ -10,7 +10,9 @@ import com.google.gson.annotations.SerializedName;
 public class Ticket implements Parcelable {
 
   @SerializedName("id") private String id;
+  @SerializedName("number") private String number;
   @SerializedName("ticket_type_id") private String ticketTypeId;
+  @SerializedName("status") private String status;
   @SerializedName("division_id") private String divisionId;
   @SerializedName("request_id") private String requestId;
   @SerializedName("instrument_id") private String instrumentId;
@@ -25,6 +27,10 @@ public class Ticket implements Parcelable {
   @SerializedName("division") private Content<Division> division;
   @SerializedName("ticketType") private Content<TicketType> ticketType;
 
+  /* For Close Ticket */
+  @SerializedName("rating") private float rating;
+  @SerializedName("comment") private String comment;
+
   public Ticket() {
 
   }
@@ -32,6 +38,7 @@ public class Ticket implements Parcelable {
   protected Ticket(Parcel in) {
     id = in.readString();
     ticketTypeId = in.readString();
+    status = in.readString();
     divisionId = in.readString();
     requestId = in.readString();
     instrumentId = in.readString();
@@ -45,11 +52,15 @@ public class Ticket implements Parcelable {
     department = in.readParcelable(Content.class.getClassLoader());
     division = in.readParcelable(Content.class.getClassLoader());
     ticketType = in.readParcelable(Content.class.getClassLoader());
+    rating = in.readFloat();
+    comment = in.readString();
   }
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(id);
+    dest.writeString(number);
     dest.writeString(ticketTypeId);
+    dest.writeString(status);
     dest.writeString(divisionId);
     dest.writeString(requestId);
     dest.writeString(instrumentId);
@@ -63,6 +74,8 @@ public class Ticket implements Parcelable {
     dest.writeParcelable(department, flags);
     dest.writeParcelable(division, flags);
     dest.writeParcelable(ticketType, flags);
+    dest.writeFloat(rating);
+    dest.writeString(comment);
   }
 
   @Override public int describeContents() {
@@ -119,6 +132,14 @@ public class Ticket implements Parcelable {
     this.id = id;
   }
 
+  public String getNumber() {
+    return number;
+  }
+
+  public void setNumber(String number) {
+    this.number = number;
+  }
+
   public String getInstrumentId() {
     return instrumentId;
   }
@@ -167,6 +188,14 @@ public class Ticket implements Parcelable {
     this.ticketTypeId = ticketTypeId;
   }
 
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
   public Times getTimes() {
     return times;
   }
@@ -197,5 +226,21 @@ public class Ticket implements Parcelable {
 
   public void setDivision(Content<Division> division) {
     this.division = division;
+  }
+
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
+  public float getRating() {
+    return rating;
+  }
+
+  public void setRating(float rating) {
+    this.rating = rating;
   }
 }

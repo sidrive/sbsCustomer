@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    >
+
+  <include layout="@layout/toolbar"/>
+
+  <TextView
+      android:id="@id/txtTicketNumber"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="W20170050"
+      />
+
+  <TextView
+      android:id="@id/txtDate"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="20/05/2017"
+      />
+
+  <TextView
+      android:id="@+id/txtTicketType"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="Jenis Tiket"
+      />
+
+  <TextView
+      android:id="@id/txtName"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="Nama Analis"
+      />
+
+  <TextView
+      android:id="@id/txtPhoneNumber"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="HP Analis"
+      />
+
+  <TextView
+      android:id="@id/txtDescription"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      tools:text="Lorem Ipsum"
+      />
+</LinearLayout>

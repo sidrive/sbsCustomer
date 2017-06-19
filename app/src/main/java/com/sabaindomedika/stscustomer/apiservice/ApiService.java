@@ -42,7 +42,6 @@ public interface ApiService {
   @GET(URLCons.URL_INSTRUMENT_CATEGORY)
   Observable<Responses<List<Instrument>>> getInstrumentCategory(@Query("instrument_category_id") String instrument_category_id);
 
-
   @GET(URLCons.URL_DEPARTMENTS)
   Observable<Responses<List<Department>>> getDepartments();
 
@@ -50,7 +49,10 @@ public interface ApiService {
   Observable<Responses<Ticket>> postOpenTicket(@Body Ticket ticket);
 
   @PUT(URLCons.URL_CLOSE_TICKET)
-  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId);
+  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId,@Body Ticket ticket);
+
+  @PUT(URLCons.URL_CANCEL_TICKET)
+  Observable<Responses<Ticket>> cancelTicket(@Path("ticket") String ticketId);
 
   @GET(URLCons.URL_TICKET_STATUS)
   Observable<Responses<List<Ticket>>> getTicketStatusOpen();

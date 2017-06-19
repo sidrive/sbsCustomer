@@ -4,12 +4,14 @@ import com.sabaindomedika.stscustomer.LoginActivity;
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
 import com.sabaindomedika.stscustomer.dagger.module.NetworkModule;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
+import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.features.ticket.DivisionTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormPresenter;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusHistoryFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusOpenFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusPresenter;
+import com.sabaindomedika.stscustomer.features.ticket.status.adapter.TicketStatusAdapter;
 import dagger.Component;
 
 /**
@@ -33,4 +35,8 @@ public interface NetworkComponent {
   void inject(TicketStatusOpenFragment ticketStatusOpenFragment);
 
   void inject(TicketStatusHistoryFragment ticketStatusHistoryFragment);
+
+  void inject(CloseTicketFragment closeTicketFragment);
+
+  void inject(TicketStatusAdapter ticketStatusAdapter);
 }

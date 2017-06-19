@@ -10,7 +10,11 @@
   <item name="swipeRefresh" type="id"/>
   <item name="lvContent" type="id"/>
   <item name="txtContent" type="id"/>
+  <item name="txtDescription" type="id"/>
   <item name="txtTicketId" type="id"/>
+  <item name="txtTicketNumber" type="id"/>
+  <item name="txtPhoneNumber" type="id"/>
+  <item name="txtDate" type="id"/>
   <item name="spnPriority" type="id"/>
   <item name="spnContent" type="id"/>
 </resources>

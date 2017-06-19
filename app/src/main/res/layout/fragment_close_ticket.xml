@@ -25,9 +25,10 @@
         />
   </android.support.design.widget.TextInputLayout>
   <RatingBar
-      android:id="@+id/RatingBar"
+      android:id="@+id/ratingBar"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:stepSize="0.5"
       />
 
   <Button

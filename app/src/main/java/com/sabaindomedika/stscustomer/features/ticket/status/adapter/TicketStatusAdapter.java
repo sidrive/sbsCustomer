@@ -1,19 +1,30 @@
 package com.sabaindomedika.stscustomer.features.ticket.status.adapter;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Spinner;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.Bind;
 import com.sabaindomedika.stscustomer.R;
+import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
 import com.sabaindomedika.stscustomer.basecommon.BaseViewHolder;
+import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
+import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.Strings;
+import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Fajar Rianda on 04/05/2017.
@@ -21,10 +32,14 @@ import com.sabaindomedika.stscustomer.utils.Strings;
 public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
 
   BaseFragment fragment;
+  @Inject ApiService apiService;
+  boolean isHistory;
 
-  public TicketStatusAdapter(Context context, BaseFragment fragment) {
+  public TicketStatusAdapter(Context context, BaseFragment fragment, boolean isHistory) {
     super(context);
     this.fragment = fragment;
+    this.isHistory = isHistory;
+    DaggerInit.networkComponent(context).inject(this);
   }
 
   @Override public View getView(int position, View convertView, ViewGroup parent) {
@@ -36,35 +51,87 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
       viewHolder = (TicketStatusViewHolder) convertView.getTag();
     }
     Ticket ticket = listData.get(position);
-    viewHolder.txtTicketId.setText(ticket.getId());
+    viewHolder.txtTicketNumber.setText(ticket.getNumber());
     viewHolder.txtContent.setText(ticket.getDescription());
     viewHolder.txtDate.setText(Strings.getDate(ticket.getTimes().getDate()));
-    viewHolder.spnContent.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-      @Override
-      public void onItemSelected(AdapterView<?> parent, View view, int spinnerPosition, long id) {
-        
-        String ticketId = getItem(position).getId();
-        if (spinnerPosition == 1) {
-          CloseTicketFragment closeTicketFragment = CloseTicketFragment.newInstance(ticketId,position);
-          closeTicketFragment.setTargetFragment(fragment,CloseTicketFragment.DIALOG_REQUEST_CODE);
-          closeTicketFragment.show(fragment.getBaseFragmentManager(), CloseTicketFragment.class.getSimpleName());
-        }
-      }
+    viewHolder.txtStatusTicket.setText(ticket.getStatus());
 
-      @Override public void onNothingSelected(AdapterView<?> parent) {
+    if (isHistory) {
+      RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.txtStatusTicket.getLayoutParams();
+      params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+      params.addRule(RelativeLayout.ALIGN_PARENT_END);
+    }
+    viewHolder.imgAction.setVisibility(isHistory
+        ? View.GONE
+        : View.VISIBLE);
 
-      }
-    });
+    viewHolder.imgAction.setOnClickListener(v -> showAction(ticket, position));
 
     return convertView;
   }
 
+  private void showAction(Ticket ticket, int position) {
+    List<String> itemAction = new ArrayList<>();
+
+    if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.NEW)) {
+      itemAction.add("Cancel");
+    } else if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.DONE)) {
+      itemAction.add("Close");
+    }
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setItems(itemAction.toArray(new String[itemAction.size()]), (dialog, index) -> {
+      switch (itemAction.get(0)) {
+        case "Cancel":
+          AlertDialog.Builder cancelDialogBuilder = new AlertDialog.Builder(context);
+          cancelDialogBuilder.setMessage("Anda yakin membatalkan tiket ini ?");
+          cancelDialogBuilder.setPositiveButton("Ya", (dialog1, which) -> {
+            cancelTicket(ticket.getId(), position);
+          });
+          cancelDialogBuilder.setNegativeButton("Tidak", (dialog1, which) -> {
+            dialog1.dismiss();
+          });
+          AlertDialog cancelDialog = cancelDialogBuilder.create();
+          cancelDialog.show();
+          break;
+        case "Close":
+          CloseTicketFragment closeTicketFragment =
+              CloseTicketFragment.newInstance(ticket.getId(), position);
+          closeTicketFragment.setTargetFragment(fragment, CloseTicketFragment.DIALOG_REQUEST_CODE);
+          closeTicketFragment.show(fragment.getBaseFragmentManager(),
+              CloseTicketFragment.class.getSimpleName());
+          break;
+      }
+    });
+    AlertDialog dialog = builder.create();
+    dialog.show();
+  }
+
+  private void cancelTicket(String id, int position) {
+    ProgressDialog dialog = new ProgressDialog(context);
+    dialog.setMessage("Cancel Tiket...");
+    dialog.show();
+    apiService.cancelTicket(id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          if (object.getData().getStatus().equalsIgnoreCase(StatusTicketCons.CANCEL)) {
+            dialog.dismiss();
+            remove(position);
+          }
+        }, error -> {
+          dialog.dismiss();
+          ErrorHelper.thrown(error);
+        });
+  }
+
   static class TicketStatusViewHolder extends BaseViewHolder {
 
-    @Bind(R.id.txtTicketId) TextView txtTicketId;
+    @Bind(R.id.txtTicketNumber) TextView txtTicketNumber;
     @Bind(R.id.txtContent) TextView txtContent;
+    @Bind(R.id.txtStatusTicket) TextView txtStatusTicket;
     @Bind(R.id.txtDate) TextView txtDate;
-    @Bind(R.id.spnContent) Spinner spnContent;
+    @Bind(R.id.imgAction) ImageView imgAction;
 
     public TicketStatusViewHolder(View view) {
       super(view);
