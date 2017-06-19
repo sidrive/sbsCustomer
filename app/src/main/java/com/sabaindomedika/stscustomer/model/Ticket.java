@@ -37,6 +37,7 @@ public class Ticket implements Parcelable {
 
   protected Ticket(Parcel in) {
     id = in.readString();
+    number = in.readString();
     ticketTypeId = in.readString();
     status = in.readString();
     divisionId = in.readString();

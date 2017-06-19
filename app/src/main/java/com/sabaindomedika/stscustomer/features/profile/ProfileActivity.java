@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
+import com.sabaindomedika.stscustomer.model.User;
 import com.sabaindomedika.stscustomer.utils.Preferences;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import javax.inject.Inject;
@@ -24,6 +26,8 @@ public class ProfileActivity extends BaseActivity {
 
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Inject ApiService apiService;
+  @Bind(R.id.txtId) TextView txtId;
+  @Bind(R.id.txtName) TextView txtName;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, ProfileActivity.class);
@@ -56,16 +60,18 @@ public class ProfileActivity extends BaseActivity {
               return;
             }
             Preferences.setUserProfile(object.getData());
-            showContent();
+            showContent(object.getData());
           }, error -> {
             if (!isFinishing()) ErrorHelper.thrown(error);
           });
     } else {
-      showContent();
+      showContent(Preferences.getUserProfile());
     }
   }
 
-  private void showContent() {
+  private void showContent(User user) {
+    txtId.setText(user.getId());
+    txtName.setText(user.getName());
   }
 
   /* Menu */

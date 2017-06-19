@@ -3,7 +3,6 @@ package com.sabaindomedika.stscustomer.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
-import com.sabaindomedika.stscustomer.R;
 
 /**
  * Created by Fajar Rianda on 21/05/2017.
@@ -44,5 +43,45 @@ public class User implements Parcelable{
     dest.writeString(name);
     dest.writeString(phone);
     dest.writeString(client);
+  }
+
+  public String getClient() {
+    return client;
+  }
+
+  public void setClient(String client) {
+    this.client = client;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public void setPhone(String phone) {
+    this.phone = phone;
   }
 }
