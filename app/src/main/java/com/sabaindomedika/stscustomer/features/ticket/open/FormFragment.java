@@ -185,7 +185,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
       list.add(instrument.getInstrumentType()
           .getData()
           .getName()
-          .concat(" - Serial Number: ")
+          .concat(" - SN: ")
           .concat(instrument.getSerialNumber()));
     }
     ArrayAdapter<String> adapter =
