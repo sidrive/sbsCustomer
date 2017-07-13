@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@drawable/bg_main"
     android:orientation="vertical"
     >
 
   <include layout="@layout/toolbar"/>
 
-  <ScrollView
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
@@ -30,7 +30,6 @@
             android:id="@+id/spnInstrumentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_border_black"
             android:visibility="gone"
             >
 
@@ -39,6 +38,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:padding="4dp"
+              style="@android:style/Widget.Holo.Light.Spinner"
               android:spinnerMode="dropdown"
               android:textAppearance="?android:attr/textAppearanceLarge"
               />
@@ -53,20 +53,21 @@
             android:visibility="gone"
             />
 
-
-        <!--For Ticket 3-->
-        <EditText
-            android:id="@+id/inpDeviceName"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_rounded_border_black"
-            android:gravity="top|left"
-            android:hint="@string/device_name"
-            android:padding="4dp"
-            android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="gone"
-            />
+            android:layout_height="wrap_content">
+          <EditText
+              android:id="@+id/inpDeviceName"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="top|left"
+              android:hint="@string/device_name"
+              android:padding="4dp"
+              android:singleLine="true"
+              android:visibility="gone"
+              />
+        </android.support.design.widget.TextInputLayout>
+        <!--For Ticket 3-->
 
         <include
             layout="@layout/view_loading"
@@ -75,63 +76,69 @@
             />
 
       </RelativeLayout>
-
-      <EditText
-          android:id="@id/inpDescription"
+      <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:background="@drawable/bg_rounded_border_black"
-          android:gravity="top|left"
-          android:hint="@string/memo"
-          android:minLines="6"
-          android:padding="4dp"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          />
-
-      <EditText
-          android:id="@id/inpName"
+          android:layout_height="match_parent">
+        <EditText
+            android:id="@id/inpDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="top|left"
+            android:hint="@string/memo"
+            android:minLines="6"
+            />
+      </android.support.design.widget.TextInputLayout>
+      <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:background="@drawable/bg_rounded_border_black"
-          android:hint="@string/nama_analisis_dokter"
-          android:inputType="textPersonName"
-          android:padding="4dp"
-          android:singleLine="true"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          />
+          android:layout_height="match_parent">
+        <EditText
+            android:id="@id/inpName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/nama_analisis_dokter"
+            android:inputType="textPersonName"
+            android:singleLine="true"
 
-      <EditText
-          android:id="@id/inpPhone"
+            />
+      </android.support.design.widget.TextInputLayout>
+      <android.support.design.widget.TextInputLayout
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="16dp"
-          android:background="@drawable/bg_rounded_border_black"
-          android:hint="@string/no_hp_analisis"
-          android:inputType="phone"
-          android:maxLength="13"
-          android:padding="4dp"
-          android:singleLine="true"
-          android:textAppearance="?android:attr/textAppearanceMedium"
-          />
+          android:layout_height="match_parent">
+
+        <EditText
+            android:id="@id/inpPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/no_hp_analisis"
+            android:inputType="phone"
+            android:maxLength="13"
+
+            android:singleLine="true"
+            />
+      </android.support.design.widget.TextInputLayout>
+
+
+
 
       <RelativeLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="16dp"
-          android:background="@drawable/bg_rounded_border_black"
           >
-
         <Spinner
-            android:id="@id/spnPriority"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/priority"
-            android:padding="4dp"
-            android:spinnerMode="dropdown"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            />
+          android:id="@id/spnPriority"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:entries="@array/priority"
+          android:padding="4dp"
+          style="@android:style/Widget.Holo.Light.Spinner"
+          android:spinnerMode="dropdown"
+          android:textAppearance="?android:attr/textAppearanceLarge"
+          />
+
 
       </RelativeLayout>
 
@@ -148,6 +155,6 @@
 
     </LinearLayout>
 
-  </ScrollView>
+  </LinearLayout>
 
 </LinearLayout>

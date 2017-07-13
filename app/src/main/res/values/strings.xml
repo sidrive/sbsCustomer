@@ -1,8 +1,8 @@
 <resources>
   <string name="app_name">Saba Customer Care</string>
   <string name="client_id">2</string>
-  <string name="client_secret">vtZ9MvXWRI1TgPoobusL9Eajh4eEgPPfrd7bJDvV</string>
-
+  <!--<string name="client_secret">vtZ9MvXWRI1TgPoobusL9Eajh4eEgPPfrd7bJDvV</string>-->
+  <string name="client_secret">6CmJhovvjrfbl9tvOnsbFa7XeFdFLyPlXog3ROwc</string>
   <string name="open_tiket">Open Tiket</string>
   <string name="memo">Memo</string>
   <string name="nama_analisis_dokter">Nama Analisis / Dokter</string>
