@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_main"
+    android:background="@drawable/bg_main_"
     tools:context="com.sabaindomedika.stscustomer.MainActivity"
     >
 
@@ -56,4 +56,17 @@
         style="@style/ButtonMain"
         />
   </LinearLayout>
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+      android:textColor="#000"
+      android:layout_marginBottom="100dp"
+      android:layout_alignParentBottom="true"
+      android:layout_marginTop="@dimen/cardview_default_radius"
+      android:gravity="center"
+      android:text="@string/scc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content" />
+  </RelativeLayout>
 </LinearLayout>

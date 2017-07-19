@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/bg_main"
+    android:background="@drawable/bg_main_"
     android:padding="@dimen/padding_16"
     >
 
