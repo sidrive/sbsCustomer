@@ -5,6 +5,8 @@ import android.content.Context;
 import com.hannesdorfmann.mosby.mvp.MvpNullObjectBasePresenter;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
+import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.Preferences;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
@@ -55,7 +57,7 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
         getView().showDeviceName();
         getView().showLoading(false);
       } else {
-        loadInstrumentCategory(divisionId.equals("4")
+        loadInstrument(divisionId.equals("4")
             ? "2"
             : "1");
       }
@@ -72,30 +74,49 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
     }
   }
 
-  private void loadInstrumentCategory(String categoryId) {
-    apiService.getInstrumentCategory(categoryId)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(object -> {
-          getView().showInstrument(object.getData());
-          getView().showLoading(false);
-        }, error -> {
-          getView().showLoading(false);
-          getView().showError(error);
-        });
+  private void loadInstrument(String categoryId) {
+    if (Preferences.getHashMapInstrument() != null && Preferences.getHashMapInstrument()
+        .containsKey(Instrument.class.getSimpleName().concat(categoryId))) {
+      getView().showInstrument(
+          Preferences.getInstrument(Instrument.class.getSimpleName().concat(categoryId)));
+      getView().showLoading(false);
+    } else {
+      apiService.getInstrument(categoryId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(object -> {
+            getView().showInstrument(object.getData());
+            Preferences.setInstrument(Instrument.class.getSimpleName().concat(categoryId),
+                object.getData());
+
+            getView().showLoading(false);
+          }, error -> {
+            getView().showLoading(false);
+            getView().showError(error);
+          });
+    }
   }
 
   private void loadRequestDivisions(String divisionId) {
-    apiService.getRequestDivisions(divisionId)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(object -> {
-          getView().showRequestDivision(object.getData());
-          getView().showLoading(false);
-        }, error -> {
-          getView().showLoading(false);
-          getView().showError(error);
-        });
+    if (Preferences.getHashMapRequest() != null && Preferences.getHashMapRequest()
+        .containsKey(RequestDivision.class.getSimpleName().concat(divisionId))) {
+      getView().showRequestDivision(
+          Preferences.getRequestDivision(RequestDivision.class.getSimpleName().concat(divisionId)));
+      getView().showLoading(false);
+    } else {
+      apiService.getRequestDivisions(divisionId)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(object -> {
+            getView().showRequestDivision(object.getData());
+            Preferences.setRequestDvision(RequestDivision.class.getSimpleName().concat(divisionId),
+                object.getData());
+            getView().showLoading(false);
+          }, error -> {
+            getView().showLoading(false);
+            getView().showError(error);
+          });
+    }
   }
 
   private void loadDepartment() {

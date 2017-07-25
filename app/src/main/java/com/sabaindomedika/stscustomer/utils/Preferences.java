@@ -6,15 +6,21 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
+import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.User;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by Fajar Rianda on 08/05/2017.
  */
 public class Preferences {
+
+  private static HashMap<String, List<Instrument>> hashMapInstrument = new HashMap<>();
+  private static HashMap<String, List<RequestDivision>> hashMapRequest = new HashMap<>();
 
   /* --------------------------------------------------- */
   /* > Convenience */
@@ -38,6 +44,59 @@ public class Preferences {
   /* --------------------------------------------------- */
   /* > End Convenience */
   /* --------------------------------------------------- */
+
+  /* Instrument */
+
+  public static HashMap<String, List<Instrument>> getHashMapInstrument() {
+    HashMap<String, List<Instrument>> map =
+        returnListOrNull(new TypeToken<HashMap<String, List<Instrument>>>() {
+        }.getType(), getPreferences().getString(Instrument.class.getSimpleName(), null));
+    return map;
+  }
+
+  public static void setInstrument(String key, List<Instrument> value) {
+    hashMapInstrument = getHashMapInstrument() == null
+        ? new HashMap<>()
+        : getHashMapInstrument();
+
+    hashMapInstrument.put(key, value);
+
+    getEditor().putString(Instrument.class.getSimpleName(), new Gson().toJson(hashMapInstrument))
+        .apply();
+  }
+
+  public static List<Instrument> getInstrument(String key) {
+    return getHashMapInstrument().get(key);
+  }
+
+  /* End Instrument */
+
+  /* Request Division */
+
+  public static HashMap<String, List<RequestDivision>> getHashMapRequest() {
+    HashMap<String, List<RequestDivision>> map =
+        returnListOrNull(new TypeToken<HashMap<String, List<RequestDivision>>>() {
+        }.getType(), getPreferences().getString(RequestDivision.class.getSimpleName(), null));
+    return map;
+  }
+
+  public static void setRequestDvision(String key, List<RequestDivision> value) {
+
+    hashMapRequest = getHashMapRequest() == null
+        ? new HashMap<>()
+        : getHashMapRequest();
+
+    hashMapRequest.put(key, value);
+
+    getEditor().putString(RequestDivision.class.getSimpleName(), new Gson().toJson(hashMapRequest))
+        .apply();
+  }
+
+  public static List<RequestDivision> getRequestDivision(String key) {
+    return getHashMapRequest().get(key);
+  }
+
+  /* End Request Division */
 
   public static Token getToken() {
     return returnObjectOrNull(Token.class,

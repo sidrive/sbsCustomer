@@ -39,8 +39,8 @@ public interface ApiService {
   @GET(URLCons.URL_REQUEST_DIVISIONS)
   Observable<Responses<List<RequestDivision>>> getRequestDivisions(@Path("division_id") String divisionID);
 
-  @GET(URLCons.URL_INSTRUMENT_CATEGORY)
-  Observable<Responses<List<Instrument>>> getInstrumentCategory(@Query("instrument_category_id") String instrument_category_id);
+  @GET(URLCons.URL_INSTRUMENT)
+  Observable<Responses<List<Instrument>>> getInstrument(@Query("instrument_category_id") String instrument_category_id);
 
   @GET(URLCons.URL_DEPARTMENTS)
   Observable<Responses<List<Department>>> getDepartments();

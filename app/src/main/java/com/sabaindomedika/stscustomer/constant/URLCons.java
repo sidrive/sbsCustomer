@@ -10,7 +10,7 @@ public class URLCons {
   public static final String URL_DEPARTMENTS = URL_BASE + "api/departments";
   public static final String URL_DIVISIONS = URL_BASE + "api/divisions";
   public static final String URL_REQUEST_DIVISIONS = URL_BASE + "api/requests/{division_id}";
-  public static final String URL_INSTRUMENT_CATEGORY = URL_BASE + "api/customer/instruments";
+  public static final String URL_INSTRUMENT = URL_BASE + "api/customer/instruments";
 
   public static final String URL_LOGIN = URL_BASE + "oauth/token";
   public static final String URL_PROFILE = URL_BASE + "api/me";
