@@ -10,6 +10,7 @@ import com.sabaindomedika.stscustomer.features.notification.NotificationActivity
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
+import com.sabaindomedika.stscustomer.utils.Preferences;
 
 public class MainActivity extends BaseActivity {
 
@@ -39,5 +40,10 @@ public class MainActivity extends BaseActivity {
 
   @OnClick(R.id.txtProfile) public void onProfile() {
     ProfileActivity.start(this);
+  }
+
+  @OnClick(R.id.btnLogout) public void onLogout() {
+    Preferences.clear();
+    LoginActivity.start(this);
   }
 }

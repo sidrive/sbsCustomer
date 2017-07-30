@@ -53,8 +53,19 @@
         android:layout_height="wrap_content"
         android:text="Profile"
         tools:ignore="ContentDescription"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         style="@style/ButtonMain"
         />
+
+    <TextView
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        tools:ignore="ContentDescription"
+        style="@style/ButtonMain"
+        />
+
   </LinearLayout>
   <RelativeLayout
     android:layout_width="match_parent"
