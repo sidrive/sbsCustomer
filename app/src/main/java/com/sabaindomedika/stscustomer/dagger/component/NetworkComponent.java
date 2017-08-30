@@ -1,6 +1,7 @@
 package com.sabaindomedika.stscustomer.dagger.component;
 
 import com.sabaindomedika.stscustomer.LoginActivity;
+import com.sabaindomedika.stscustomer.MainActivity;
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
 import com.sabaindomedika.stscustomer.dagger.module.NetworkModule;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
@@ -39,4 +40,6 @@ public interface NetworkComponent {
   void inject(CloseTicketFragment closeTicketFragment);
 
   void inject(TicketStatusAdapter ticketStatusAdapter);
+
+  void inject(MainActivity mainActivity);
 }

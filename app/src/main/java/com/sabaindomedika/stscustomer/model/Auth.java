@@ -20,10 +20,10 @@ public class Auth implements Parcelable {
   };
   @SerializedName("username") private String username;
   @SerializedName("password") private String password;
-  @SerializedName("grant_type") private String grantType;
+  /*@SerializedName("grant_type") private String grantType;
   @SerializedName("client_id") private String clientId;
   @SerializedName("client_secret") private String clientSecret;
-  @SerializedName("scope") private String scope;
+  @SerializedName("scope") private String scope;*/
 
   public Auth() {
 
@@ -32,13 +32,13 @@ public class Auth implements Parcelable {
   protected Auth(Parcel in) {
     username = in.readString();
     password = in.readString();
-    grantType = in.readString();
+    /*grantType = in.readString();
     clientId = in.readString();
     clientSecret = in.readString();
-    scope = in.readString();
+    scope = in.readString();*/
   }
 
-  public String getClientId() {
+ /* public String getClientId() {
     return clientId;
   }
 
@@ -60,7 +60,7 @@ public class Auth implements Parcelable {
 
   public void setGrantType(String grantType) {
     this.grantType = grantType;
-  }
+  }*/
 
   public String getPassword() {
     return password;
@@ -70,13 +70,13 @@ public class Auth implements Parcelable {
     this.password = password;
   }
 
-  public String getScope() {
+  /*public String getScope() {
     return scope;
   }
 
   public void setScope(String scope) {
     this.scope = scope;
-  }
+  }*/
 
   public String getUsername() {
     return username;
@@ -89,10 +89,10 @@ public class Auth implements Parcelable {
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(username);
     dest.writeString(password);
-    dest.writeString(grantType);
+    /*dest.writeString(grantType);
     dest.writeString(clientId);
     dest.writeString(clientSecret);
-    dest.writeString(scope);
+    dest.writeString(scope);*/
   }
 
   @Override public int describeContents() {

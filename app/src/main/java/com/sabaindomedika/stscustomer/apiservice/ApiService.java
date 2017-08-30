@@ -4,15 +4,19 @@ import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.model.Auth;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
+import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.model.Instrument;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.User;
+import com.sabaindomedika.stscustomer.model.auth.ResponseLogin;
 import java.util.List;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -28,7 +32,11 @@ public interface ApiService {
   Observable<String> getData(@Path("user_id") String userId);
 
   @POST(URLCons.URL_LOGIN)
-  Observable<Token> login(@Body Auth auth);
+  Observable<ResponseLogin> login(@Body Auth auth);
+
+  @Headers("Content-Type: application/json")
+  @PUT(URLCons.URL_FCM)
+  Observable<Responses<User>> updateFcm(@Body FcmToken fcm_token);
 
   @GET(URLCons.URL_PROFILE)
   Observable<Responses<User>> getUserProfile();

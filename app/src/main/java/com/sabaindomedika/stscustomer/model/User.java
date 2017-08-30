@@ -14,6 +14,7 @@ public class User implements Parcelable{
   @SerializedName("name") private String name;
   @SerializedName("phone_number") private String phone;
   @SerializedName("type") private String client;
+  @SerializedName("fcm_token") private String fcm_token;
 
   protected User(Parcel in) {
     id = in.readString();
@@ -21,6 +22,7 @@ public class User implements Parcelable{
     name = in.readString();
     phone = in.readString();
     client = in.readString();
+    fcm_token = in.readString();
   }
 
   public static final Creator<User> CREATOR = new Creator<User>() {
@@ -43,6 +45,7 @@ public class User implements Parcelable{
     dest.writeString(name);
     dest.writeString(phone);
     dest.writeString(client);
+    dest.writeString(fcm_token);
   }
 
   public String getClient() {
@@ -83,5 +86,13 @@ public class User implements Parcelable{
 
   public void setPhone(String phone) {
     this.phone = phone;
+  }
+
+  public String getFcm_token() {
+    return fcm_token;
+  }
+
+  public void setFcm_token(String fcm_token) {
+    this.fcm_token = fcm_token;
   }
 }

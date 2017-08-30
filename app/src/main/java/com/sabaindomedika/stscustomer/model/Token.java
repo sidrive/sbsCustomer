@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Token {
 
-  @SerializedName("token_type") private String tokenType;
+  //@SerializedName("token_type") private String tokenType;
   @SerializedName("access_token") private String accessToken;
-  @SerializedName("refresh_token") private String refreshToken;
-  @SerializedName("grant_type") private String grantType;
+  //@SerializedName("refresh_token") private String refreshToken;
+  //@SerializedName("grant_type") private String grantType;
   @SerializedName("fcm_token") private String fcm_token;
 
-  public String getTokenType() {
+  /*public String getTokenType() {
     return tokenType;
   }
 
   public void setTokenType(String tokenType) {
     this.tokenType = tokenType;
-  }
+  }*/
 
   public String getAccessToken() {
     return accessToken;
@@ -29,7 +29,7 @@ public class Token {
     this.accessToken = accessToken;
   }
 
-  public String getRefreshToken() {
+  /*public String getRefreshToken() {
     return refreshToken;
   }
 
@@ -43,7 +43,7 @@ public class Token {
 
   public void setGrantType(String grantType) {
     this.grantType = grantType;
-  }
+  }*/
 
   public String getFcm_token() {
     return fcm_token;
