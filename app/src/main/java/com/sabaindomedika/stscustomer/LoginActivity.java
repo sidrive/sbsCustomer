@@ -12,16 +12,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
-import com.sabaindomedika.stscustomer.constant.ErrorCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.model.Auth;
 import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.auth.ResponseLogin;
 import com.sabaindomedika.stscustomer.utils.Preferences;
-import com.sabaindomedika.stscustomer.utils.Toasts;
-import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
-import com.sabaindomedika.stscustomer.utils.helper.preferences.GlobalPreferences;
-import com.sabaindomedika.stscustomer.utils.helper.preferences.PrefKey;
+
 import javax.inject.Inject;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,7 +31,7 @@ public class LoginActivity extends BaseActivity {
   @Bind(R.id.inpUsername) EditText inpUsername;
   @Bind(R.id.inpPassword) EditText inpPassword;
   @Inject ApiService apiService;
-  GlobalPreferences globalPreferences;
+
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -46,7 +42,6 @@ public class LoginActivity extends BaseActivity {
     
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
-    globalPreferences = new GlobalPreferences(getApplicationContext());
     DaggerInit.networkComponent(this).inject(this);
   }
 
@@ -116,8 +111,6 @@ public class LoginActivity extends BaseActivity {
             token.setAccessToken(responseLogin.getData().getAccessToken());
             token.setFcm_token(responseLogin.getData().getFcmToken());
             Preferences.setToken(token);
-            globalPreferences.write(PrefKey.accessToken,responseLogin.getData().getAccessToken(),String.class);
-            Log.e("login", "LoginActivity" + responseLogin.getData().getAccessToken());
             progressDialog.dismiss();
             MainActivity.start(LoginActivity.this);
             finish();

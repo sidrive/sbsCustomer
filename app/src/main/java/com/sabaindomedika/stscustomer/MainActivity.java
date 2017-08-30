@@ -16,12 +16,9 @@ import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
 import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.model.Responses;
-import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.User;
 import com.sabaindomedika.stscustomer.utils.Preferences;
-import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
-import com.sabaindomedika.stscustomer.utils.helper.preferences.GlobalPreferences;
-import com.sabaindomedika.stscustomer.utils.helper.preferences.PrefKey;
+
 import javax.inject.Inject;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,7 +27,6 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends BaseActivity {
   @Inject
   ApiService apiService;
-  GlobalPreferences globalPreferences;
   public static void start(Context context) {
     Intent intent = new Intent(context, MainActivity.class);
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -44,14 +40,11 @@ public class MainActivity extends BaseActivity {
     ButterKnife.bind(this);
     DaggerInit.networkComponent(this).inject(this);
     String fcm_token = FirebaseInstanceId.getInstance().getToken();
-    globalPreferences = new GlobalPreferences(getApplicationContext());
-    String bearer = "Bearer "+globalPreferences.read(PrefKey.accessToken,String.class);
-    Log.e("onCreate", "bearer" + bearer);
-    updateFCMToken(bearer,fcm_token);
+    updateFCMToken(fcm_token);
 
   }
 
-  private void updateFCMToken(String bearer, String fcm_token) {
+  private void updateFCMToken(String fcm_token) {
     Log.e("updateFCMToken", "MainActivity" + fcm_token);
     FcmToken fcm = new FcmToken();
     fcm.setFcmToken(fcm_token);
