@@ -11,6 +11,7 @@ public class Token {
   @SerializedName("access_token") private String accessToken;
   @SerializedName("refresh_token") private String refreshToken;
   @SerializedName("grant_type") private String grantType;
+  @SerializedName("fcm_token") private String fcm_token;
 
   public String getTokenType() {
     return tokenType;
@@ -42,5 +43,13 @@ public class Token {
 
   public void setGrantType(String grantType) {
     this.grantType = grantType;
+  }
+
+  public String getFcm_token() {
+    return fcm_token;
+  }
+
+  public void setFcm_token(String fcm_token) {
+    this.fcm_token = fcm_token;
   }
 }
