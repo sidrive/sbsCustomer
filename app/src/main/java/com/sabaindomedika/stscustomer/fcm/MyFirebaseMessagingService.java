@@ -12,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.sabaindomedika.stscustomer.MainActivity;
 import com.sabaindomedika.stscustomer.R;
+import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 
 /**
  * Created by GeekGarden on 30/08/2017.
@@ -28,15 +29,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     if (remoteMessage.getNotification()!=null){
 
       Log.e("onMessageReceived", "body" + remoteMessage.getNotification().getBody());
-
       String body = remoteMessage.getNotification().getBody();
-
-      handleNotification(body);
+      String title = remoteMessage.getNotification().getTitle();
+      handleNotification(title,body);
     }
   }
 
-  private void handleNotification(String body) {
-    Intent intent = new Intent(this, MainActivity.class);
+  private void handleNotification(String title, String body) {
+    Intent intent = new Intent(this, NotificationActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
     PendingIntent pendingIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis() /* Request code */, intent,
@@ -45,7 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
         .setSmallIcon(R.mipmap.ic_launcher)
-        .setContentTitle("Title Notification")
+        .setContentTitle(title)
         .setContentText(body)
         .setAutoCancel(true)
         .setSound(defaultSoundUri)
