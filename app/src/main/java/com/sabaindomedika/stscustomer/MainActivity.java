@@ -3,8 +3,10 @@ package com.sabaindomedika.stscustomer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
@@ -18,6 +20,7 @@ public class MainActivity extends BaseActivity {
     Intent intent = new Intent(context, MainActivity.class);
     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
     context.startActivity(intent);
+    Log.e("start", "MainActivity" + FirebaseInstanceId.getInstance().getToken());
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
