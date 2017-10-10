@@ -6,6 +6,7 @@ package com.sabaindomedika.stscustomer.constant;
 public class StatusTicketCons {
 
   public static final String NEW = "new";
+  public static final String CONFIRM = "confirmed";
   public static final String DONE = "done";
   public static final String CANCEL = "cancelled";
   public static final String CLOSE = "closed";

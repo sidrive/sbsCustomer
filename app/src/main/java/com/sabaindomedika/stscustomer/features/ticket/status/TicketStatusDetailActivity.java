@@ -1,32 +1,59 @@
 package com.sabaindomedika.stscustomer.features.ticket.status;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.R;
+import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
+import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
+import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
+import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.TicketType;
 import com.sabaindomedika.stscustomer.utils.Strings;
+import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Fajar Rianda on 18/06/2017.
  */
 public class TicketStatusDetailActivity extends BaseActivity {
-
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.txtTicketNumber) TextView txtTicketNumber;
-  @Bind(R.id.txtDate) TextView txtDate;
-  @Bind(R.id.txtTicketType) TextView txtTicketType;
-  @Bind(R.id.txtName) TextView txtName;
-  @Bind(R.id.txtPhoneNumber) TextView txtPhoneNumber;
-  @Bind(R.id.txtDescription) TextView txtDescription;
+  String id_ticket;
+  @Inject
+  ApiService apiService;
+  @Bind(R.id.toolbar)
+  Toolbar toolbar;
+  @Bind(R.id.txtTicketNumber)
+  TextView txtTicketNumber;
+  @Bind(R.id.txtDate)
+  TextView txtDate;
+  @Bind(R.id.txtTicketType)
+  TextView txtTicketType;
+  @Bind(R.id.txtName)
+  TextView txtName;
+  @Bind(R.id.txtPhoneNumber)
+  TextView txtPhoneNumber;
+  @Bind(R.id.txtDescription)
+  TextView txtDescription;
+  @Bind(R.id.btncancel)
+  Button btncancel;
 
   public static void start(Context context, Ticket ticket) {
     Bundle bundle = new Bundle();
@@ -37,12 +64,14 @@ public class TicketStatusDetailActivity extends BaseActivity {
     context.startActivity(intent);
   }
 
-  public static void start(Context context) {
-    Intent intent = new Intent(context, TicketStatusDetailActivity.class);
-    context.startActivity(intent);
+  @Override
+  protected void onStart() {
+    super.onStart();
+    DaggerInit.networkComponent(this).inject(this);
   }
 
-  @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_ticket_status_detail);
     ButterKnife.bind(this);
@@ -54,7 +83,48 @@ public class TicketStatusDetailActivity extends BaseActivity {
     Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
     TicketType ticketType = getIntent().getExtras().getParcelable(TicketType.class.getSimpleName());
     txtTicketType.setText(ticketType.getName());
+    id_ticket = ticket.getId();
+    if (ticket.getStatus().equals("new")){
+      btncancel.setVisibility(View.VISIBLE);
+    }
+    if (ticket.getStatus().equals("confirmed")){
+      btncancel.setVisibility(View.VISIBLE);
+    }else{
+      btncancel.setVisibility(View.GONE);
+    }
+    Log.e("init", "TicketStatusDetailActivity" + id_ticket);
     showContent(ticket);
+  }
+
+  @OnClick(R.id.btncancel) public void onTicketStatus(){
+    Log.e("onTicketStatus", "TicketStatusDetailActivity" + id_ticket);
+          AlertDialog.Builder cancelDialogBuilder = new AlertDialog.Builder(this);
+          cancelDialogBuilder.setMessage("Anda yakin membatalkan tiket ini ?");
+          cancelDialogBuilder.setPositiveButton("Ya", (dialog1, which) -> {
+            apiService.cancelTicket(id_ticket)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object -> {
+                  if (object.getData().getStatus().equalsIgnoreCase(StatusTicketCons.CANCEL)) {
+                    dialog1.dismiss();
+                    dismiss();
+                  }
+                }, error -> {
+                  dialog1.dismiss();
+                  ErrorHelper.thrown(error);
+                });
+          });
+          cancelDialogBuilder.setNegativeButton("Tidak", (dialog1, which) -> {
+            dialog1.dismiss();
+          });
+          AlertDialog cancelDialog = cancelDialogBuilder.create();
+          cancelDialog.show();
+  }
+
+    public void dismiss() {
+    Intent i = new Intent(getApplicationContext(),TicketStatusActivity.class);
+    startActivity(i);
+    finish();
   }
 
   private void showContent(Ticket ticket) {
@@ -72,7 +142,8 @@ public class TicketStatusDetailActivity extends BaseActivity {
     toolbar.setTitle("Status Tiket");
   }
 
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
         finish();

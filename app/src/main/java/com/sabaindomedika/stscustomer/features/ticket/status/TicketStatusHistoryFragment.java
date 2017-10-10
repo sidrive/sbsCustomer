@@ -79,7 +79,7 @@ public class TicketStatusHistoryFragment
   }
 
   @Override public void showLoading(boolean firstLoad, boolean isRefresh) {
-
+https://repo.komuri.co.id/saba-indomedika/sts-android-customer.git
     if (!firstLoad && isRefresh) {
       swipeRefresh.setRefreshing(false);
     }

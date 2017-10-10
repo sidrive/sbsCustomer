@@ -13,6 +13,7 @@
   <item name="txtDescription" type="id"/>
   <item name="txtTicketId" type="id"/>
   <item name="txtTicketNumber" type="id"/>
+  <item name="btncancel" type="id"/>
   <item name="txtPhoneNumber" type="id"/>
   <item name="txtDate" type="id"/>
   <item name="spnPriority" type="id"/>

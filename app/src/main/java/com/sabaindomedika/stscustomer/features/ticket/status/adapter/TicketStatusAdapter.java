@@ -3,8 +3,10 @@ package com.sabaindomedika.stscustomer.features.ticket.status.adapter;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -61,12 +63,9 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
       params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
       params.addRule(RelativeLayout.ALIGN_PARENT_END);
     }
-    viewHolder.imgAction.setVisibility(isHistory
-        ? View.GONE
-        : View.VISIBLE);
+    viewHolder.imgAction.setVisibility(View.INVISIBLE);
 
     viewHolder.imgAction.setOnClickListener(v -> showAction(ticket, position));
-
     return convertView;
   }
 
@@ -75,7 +74,9 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
 
     if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.NEW)) {
       itemAction.add("Cancel");
-    } else if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.DONE)) {
+    }else if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.CONFIRM)){
+      itemAction.add("Cancel");
+    }else if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.DONE)) {
       itemAction.add("Close");
     }
 

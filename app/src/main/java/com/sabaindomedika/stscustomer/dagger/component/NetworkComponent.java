@@ -9,6 +9,7 @@ import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.features.ticket.DivisionTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormPresenter;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusDetailActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusHistoryFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusOpenFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusPresenter;
@@ -42,4 +43,6 @@ public interface NetworkComponent {
   void inject(TicketStatusAdapter ticketStatusAdapter);
 
   void inject(MainActivity mainActivity);
+
+  void inject(TicketStatusDetailActivity ticketStatusDetailActivity);
 }
