@@ -84,14 +84,6 @@ public class TicketStatusDetailActivity extends BaseActivity {
     TicketType ticketType = getIntent().getExtras().getParcelable(TicketType.class.getSimpleName());
     txtTicketType.setText(ticketType.getName());
     id_ticket = ticket.getId();
-    if (ticket.getStatus().equals("new")){
-      btncancel.setVisibility(View.VISIBLE);
-    }
-    if (ticket.getStatus().equals("confirmed")){
-      btncancel.setVisibility(View.VISIBLE);
-    }else{
-      btncancel.setVisibility(View.GONE);
-    }
     Log.e("init", "TicketStatusDetailActivity" + id_ticket);
     showContent(ticket);
   }
@@ -128,6 +120,19 @@ public class TicketStatusDetailActivity extends BaseActivity {
   }
 
   private void showContent(Ticket ticket) {
+    Boolean is_true = false;
+    Log.e("showContent", "TicketStatusDetailActivity" + ticket.getStatus());
+    if (ticket.getStatus().equals("new")){
+      is_true = true;
+    }
+    if (ticket.getStatus().equals("confirmed")){
+      is_true = true;
+    }else{
+
+    }
+    if (is_true == true){
+      btncancel.setVisibility(View.VISIBLE);
+    }
     txtTicketNumber.setText(ticket.getNumber());
     txtDate.setText(Strings.getDate(ticket.getTimes().getDate()));
     txtName.setText(ticket.getStaffName());
