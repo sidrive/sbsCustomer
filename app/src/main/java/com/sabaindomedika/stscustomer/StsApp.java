@@ -25,12 +25,9 @@ public class StsApp extends MultiDexApplication {
 
   private void setupFirebase() {
     FirebaseAnalytics.getInstance(this);
-    Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-      @Override
-      public void uncaughtException(Thread t, Throwable e) {
-        Logger.log(Log.DEBUG,"error message" + e.getMessage());
-        FirebaseCrash.report(e);
-      }
+    Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+      Logger.log(Log.DEBUG,"error message" + e.getMessage());
+      FirebaseCrash.report(e);
     });
   }
 

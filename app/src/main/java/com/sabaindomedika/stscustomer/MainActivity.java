@@ -15,12 +15,9 @@ import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
 import com.sabaindomedika.stscustomer.model.FcmToken;
-import com.sabaindomedika.stscustomer.model.Responses;
-import com.sabaindomedika.stscustomer.model.User;
 import com.sabaindomedika.stscustomer.utils.Preferences;
 
 import javax.inject.Inject;
-import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -51,23 +48,7 @@ public class MainActivity extends BaseActivity {
     apiService.updateFcm(fcm)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(new Observer<Responses<User>>() {
-          @Override
-          public void onCompleted() {
-
-          }
-
-          @Override
-          public void onError(Throwable e) {
-            Log.e("onError", "MainActivity" + e.getCause());
-          }
-
-          @Override
-          public void onNext(Responses<User> userResponses) {
-            Log.e("onNext", " " +userResponses.getData().getFcm_token() );
-
-          }
-        });
+        .subscribe(userResponses -> {},throwable -> {});
   }
 
   @OnClick(R.id.txtOpenTicket) public void onOpenTicket() {

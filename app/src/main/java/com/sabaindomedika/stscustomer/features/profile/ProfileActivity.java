@@ -24,17 +24,26 @@ import rx.schedulers.Schedulers;
  */
 public class ProfileActivity extends BaseActivity {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Inject ApiService apiService;
-  @Bind(R.id.txtId) TextView txtId;
-  @Bind(R.id.txtName) TextView txtName;
+  @Bind(R.id.toolbar)
+  Toolbar toolbar;
+  @Inject
+  ApiService apiService;
+  @Bind(R.id.txtId)
+  TextView txtId;
+  @Bind(R.id.txtName)
+  TextView txtName;
+  @Bind(R.id.txtLocation)
+  TextView txtLocation;
+  @Bind(R.id.txtListTool)
+  TextView txtListTool;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, ProfileActivity.class);
     context.startActivity(intent);
   }
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_profile);
     ButterKnife.bind(this);
@@ -62,7 +71,9 @@ public class ProfileActivity extends BaseActivity {
             Preferences.setUserProfile(object.getData());
             showContent(object.getData());
           }, error -> {
-            if (!isFinishing()) ErrorHelper.thrown(error);
+            if (!isFinishing()) {
+              ErrorHelper.thrown(error);
+            }
           });
     } else {
       showContent(Preferences.getUserProfile());
@@ -75,7 +86,8 @@ public class ProfileActivity extends BaseActivity {
   }
 
   /* Menu */
-  @Override public boolean onOptionsItemSelected(MenuItem item) {
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case android.R.id.home:
         finish();

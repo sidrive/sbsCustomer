@@ -9,7 +9,7 @@ public class URLCons {
   public static final String URL_TICKET_TYPES = URL_BASE + "api/ticket_types/";
   public static final String URL_DEPARTMENTS = URL_BASE + "api/departments";
   public static final String URL_DIVISIONS = URL_BASE + "api/divisions";
-  public static final String URL_REQUEST_DIVISIONS = URL_BASE + "api/requests/{division_id}";
+  public static final String URL_REQUEST_DIVISIONS = URL_BASE + "api/requests/{division_id}/customer";
   public static final String URL_INSTRUMENT = URL_BASE + "api/customer/instruments";
 
   //public static final String URL_LOGIN = URL_BASE + "oauth/token";
