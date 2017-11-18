@@ -79,5 +79,14 @@
       android:text="Cancel"
       android:textColor="@color/cardview_light_background"
       android:background="@drawable/bg_blue_rounded"/>
+    <Button
+      android:id="@+id/btnclose"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/padding_20"
+      android:background="@drawable/bg_blue_rounded"
+      android:text="Close"
+      android:textColor="@color/cardview_light_background"
+      android:visibility="gone"/>
   </LinearLayout>
 </LinearLayout>

@@ -97,7 +97,7 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
           break;
         case "Close":
           CloseTicketFragment closeTicketFragment =
-              CloseTicketFragment.newInstance(ticket.getId(), position);
+              CloseTicketFragment.newInstance(ticket.getId());
           closeTicketFragment.setTargetFragment(fragment, CloseTicketFragment.DIALOG_REQUEST_CODE);
           closeTicketFragment.show(fragment.getBaseFragmentManager(),
               CloseTicketFragment.class.getSimpleName());

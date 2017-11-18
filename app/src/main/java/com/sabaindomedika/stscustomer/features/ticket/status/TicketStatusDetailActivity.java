@@ -1,7 +1,7 @@
 package com.sabaindomedika.stscustomer.features.ticket.status;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,15 +18,14 @@ import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
-import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
+import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
+import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.TicketType;
 import com.sabaindomedika.stscustomer.utils.Strings;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -35,9 +34,11 @@ import rx.schedulers.Schedulers;
  * Created by Fajar Rianda on 18/06/2017.
  */
 public class TicketStatusDetailActivity extends BaseActivity {
+
   String id_ticket;
   @Inject
   ApiService apiService;
+  BaseFragment fragment;
   @Bind(R.id.toolbar)
   Toolbar toolbar;
   @Bind(R.id.txtTicketNumber)
@@ -54,6 +55,8 @@ public class TicketStatusDetailActivity extends BaseActivity {
   TextView txtDescription;
   @Bind(R.id.btncancel)
   Button btncancel;
+  @Bind(R.id.btnclose)
+  Button btnclose;
 
   public static void start(Context context, Ticket ticket) {
     Bundle bundle = new Bundle();
@@ -88,50 +91,64 @@ public class TicketStatusDetailActivity extends BaseActivity {
     showContent(ticket);
   }
 
-  @OnClick(R.id.btncancel) public void onTicketStatus(){
-    Log.e("onTicketStatus", "TicketStatusDetailActivity" + id_ticket);
-          AlertDialog.Builder cancelDialogBuilder = new AlertDialog.Builder(this);
-          cancelDialogBuilder.setMessage("Anda yakin membatalkan tiket ini ?");
-          cancelDialogBuilder.setPositiveButton("Ya", (dialog1, which) -> {
-            apiService.cancelTicket(id_ticket)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object -> {
-                  if (object.getData().getStatus().equalsIgnoreCase(StatusTicketCons.CANCEL)) {
-                    dialog1.dismiss();
-                    dismiss();
-                  }
-                }, error -> {
-                  dialog1.dismiss();
-                  ErrorHelper.thrown(error);
-                });
-          });
-          cancelDialogBuilder.setNegativeButton("Tidak", (dialog1, which) -> {
+  @OnClick(R.id.btncancel)
+  public void onCancel() {
+    Builder cancelDialogBuilder = new Builder(this);
+    cancelDialogBuilder.setMessage("Anda yakin membatalkan tiket ini ?");
+    cancelDialogBuilder.setPositiveButton("Ya", (dialog1, which) -> {
+      apiService.cancelTicket(id_ticket)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe(object -> {
+            if (object.getData().getStatus().equalsIgnoreCase(StatusTicketCons.CANCEL)) {
+              dialog1.dismiss();
+              dismiss();
+            }
+          }, error -> {
             dialog1.dismiss();
+            ErrorHelper.thrown(error);
           });
-          AlertDialog cancelDialog = cancelDialogBuilder.create();
-          cancelDialog.show();
+    });
+    cancelDialogBuilder.setNegativeButton("Tidak", (dialog1, which) -> {
+      dialog1.dismiss();
+    });
+    AlertDialog cancelDialog = cancelDialogBuilder.create();
+    cancelDialog.show();
   }
 
-    public void dismiss() {
-    Intent i = new Intent(getApplicationContext(),TicketStatusActivity.class);
+  @OnClick(R.id.btnclose)
+  public void onClose() {
+    Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
+    CloseTicketFragment closeTicketFragment =
+        CloseTicketFragment.newInstance(ticket.getId());
+    closeTicketFragment.setTargetFragment(fragment, CloseTicketFragment.DIALOG_REQUEST_CODE);
+    closeTicketFragment.show(fragment.getBaseFragmentManager(),
+        CloseTicketFragment.class.getSimpleName());
+  }
+  public void dismiss() {
+    Intent i = new Intent(getApplicationContext(), TicketStatusActivity.class);
     startActivity(i);
     finish();
   }
 
   private void showContent(Ticket ticket) {
     Boolean is_true = false;
+    Boolean is_true_close = false;
     Log.e("showContent", "TicketStatusDetailActivity" + ticket.getStatus());
-    if (ticket.getStatus().equals("new")){
+    if (ticket.getStatus().equals("new")) {
       is_true = true;
     }
-    if (ticket.getStatus().equals("confirmed")){
+    if (ticket.getStatus().equals("confirmed")) {
       is_true = true;
-    }else{
-
     }
-    if (is_true == true){
+    if (ticket.getStatus().equals("done")){
+      is_true_close = true;
+    }
+    if (is_true == true) {
       btncancel.setVisibility(View.VISIBLE);
+    }
+    if (is_true_close == true){
+      btnclose.setVisibility(View.VISIBLE);
     }
     txtTicketNumber.setText(ticket.getNumber());
     txtDate.setText(Strings.getDate(ticket.getTimes().getDate()));

@@ -36,12 +36,10 @@ public class CloseTicketFragment extends BaseDialogFragment {
   @Bind(R.id.ratingBar) RatingBar ratingBar;
   @Inject ApiService apiService;
   String ticketId;
-  int position;
 
-  public static CloseTicketFragment newInstance(String ticketId, int position) {
+  public static CloseTicketFragment newInstance(String ticketId) {
     Bundle bundle = new Bundle();
     bundle.putString(String.class.getSimpleName(), ticketId);
-    bundle.putInt(int.class.getSimpleName(), position);
     CloseTicketFragment closeTicketFragment = new CloseTicketFragment();
     closeTicketFragment.setArguments(bundle);
     return closeTicketFragment;
@@ -70,7 +68,6 @@ public class CloseTicketFragment extends BaseDialogFragment {
   private void init() {
     Bundle bundle = getArguments();
     ticketId = bundle.getString(String.class.getSimpleName());
-    position = bundle.getInt(int.class.getSimpleName());
   }
 
   @OnClick(R.id.btnSubmit) public void closeTicket() {
@@ -102,7 +99,7 @@ public class CloseTicketFragment extends BaseDialogFragment {
   }
 
   @Override public void dismiss() {
-    Intent intent = new Intent().putExtra(int.class.getSimpleName(), position);
+    Intent intent = new Intent();
     getTargetFragment().onActivityResult(getTargetRequestCode(), getBaseActivity().RESULT_OK,
         intent);
     super.dismiss();
