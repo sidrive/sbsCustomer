@@ -13,6 +13,7 @@ import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.User;
 import com.sabaindomedika.stscustomer.model.auth.ResponseLogin;
 import java.util.List;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -67,4 +68,7 @@ public interface ApiService {
 
   @GET(URLCons.URL_TICKET_STATUS)
   Observable<Responses<List<Ticket>>> getTicketStatusHistory(@Query("is_closed") String isClosed);
+
+  @GET(URLCons.URL_TICKET_NOTIFICATION)
+  Observable<Responses<List<Ticket>>> getTicketNotification();
 }

@@ -21,4 +21,5 @@ public class URLCons {
   public static final String URL_CLOSE_TICKET = URL_BASE + "api/customer/ticket/{ticket}/close";
   public static final String URL_CANCEL_TICKET = URL_BASE + "api/customer/ticket/{ticket}/cancel";
   public static final String URL_TICKET_STATUS = URL_BASE + "api/customer/tickets";
+  public static final String URL_TICKET_NOTIFICATION = URL_BASE + "/api/customer/ticket-notifications";
 }

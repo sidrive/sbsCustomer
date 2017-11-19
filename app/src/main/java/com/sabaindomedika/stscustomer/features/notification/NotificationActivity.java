@@ -11,7 +11,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
+import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.model.Notification;
+import com.sabaindomedika.stscustomer.model.Ticket;
 import java.util.List;
 
 /**
@@ -33,6 +35,7 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_notification);
     ButterKnife.bind(this);
+    DaggerInit.networkComponent(getApplicationContext()).inject(this);
     init();
     setupToolbar();
   }
@@ -47,16 +50,16 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
   private void init() {
     adapter = new NotificationAdapter(this);
     lvContent.setAdapter(adapter);
-    presenter.loadData();
+    presenter.loadDataNotification();
   }
 
   /* Presenter */
   @NonNull @Override public NotificationPresenter createPresenter() {
-    return new NotificationPresenter();
+    return new NotificationPresenter(getApplicationContext());
   }
 
-  @Override public void showContent(List<Notification> notification) {
-    adapter.pushData(notification);
+  @Override public void showContent(List<Ticket> tickets) {
+    adapter.pushData(tickets);
   }
 
   @Override public void showLoading(boolean isFirstLoad, boolean isRefresh) {
