@@ -65,11 +65,11 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
     }
     viewHolder.imgAction.setVisibility(View.INVISIBLE);
 
-    viewHolder.imgAction.setOnClickListener(v -> showAction(ticket, position));
+    /*viewHolder.imgAction.setOnClickListener(v -> showAction(ticket, position));*/
     return convertView;
   }
 
-  private void showAction(Ticket ticket, int position) {
+  /*private void showAction(Ticket ticket, int position) {
     List<String> itemAction = new ArrayList<>();
 
     if (ticket.getStatus().equalsIgnoreCase(StatusTicketCons.NEW)) {
@@ -106,7 +106,7 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
     });
     AlertDialog dialog = builder.create();
     dialog.show();
-  }
+  }*/
 
   private void cancelTicket(String id, int position) {
     ProgressDialog dialog = new ProgressDialog(context);

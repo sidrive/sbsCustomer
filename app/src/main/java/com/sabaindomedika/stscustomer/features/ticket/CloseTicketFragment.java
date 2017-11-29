@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -28,6 +30,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Fajar Rianda on 14/05/2017.
  */
+@SuppressLint("ValidFragment")
 public class CloseTicketFragment extends BaseDialogFragment {
 
   public static final int DIALOG_REQUEST_CODE = 0x511;
@@ -35,14 +38,11 @@ public class CloseTicketFragment extends BaseDialogFragment {
   @Bind(R.id.inpDescription) EditText inpDescription;
   @Bind(R.id.ratingBar) RatingBar ratingBar;
   @Inject ApiService apiService;
-  String ticketId;
+  String id;
 
-  public static CloseTicketFragment newInstance(String ticketId) {
-    Bundle bundle = new Bundle();
-    bundle.putString(String.class.getSimpleName(), ticketId);
-    CloseTicketFragment closeTicketFragment = new CloseTicketFragment();
-    closeTicketFragment.setArguments(bundle);
-    return closeTicketFragment;
+  @SuppressLint("ValidFragment")
+  public CloseTicketFragment(String id) {
+    this.id = id;
   }
 
   @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -66,8 +66,7 @@ public class CloseTicketFragment extends BaseDialogFragment {
   }
 
   private void init() {
-    Bundle bundle = getArguments();
-    ticketId = bundle.getString(String.class.getSimpleName());
+    Log.e("init", "CloseTicketFragment" + id);
   }
 
   @OnClick(R.id.btnSubmit) public void closeTicket() {
@@ -83,7 +82,7 @@ public class CloseTicketFragment extends BaseDialogFragment {
     ticket.setRating(ratingBar.getRating());
     ticket.setComment(inpDescription.getText().toString().trim());
 
-    apiService.closeTicket(ticketId, ticket)
+    apiService.closeTicket(id, ticket, dialog)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object -> {

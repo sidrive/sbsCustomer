@@ -1,5 +1,6 @@
 package com.sabaindomedika.stscustomer.apiservice;
 
+import android.app.ProgressDialog;
 import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.model.Auth;
 import com.sabaindomedika.stscustomer.model.Department;
@@ -58,7 +59,8 @@ public interface ApiService {
   Observable<Responses<Ticket>> postOpenTicket(@Body Ticket ticket);
 
   @PUT(URLCons.URL_CLOSE_TICKET)
-  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId,@Body Ticket ticket);
+  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId, @Body Ticket ticket,
+      ProgressDialog dialog);
 
   @PUT(URLCons.URL_CANCEL_TICKET)
   Observable<Responses<Ticket>> cancelTicket(@Path("ticket") String ticketId);

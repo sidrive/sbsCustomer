@@ -66,6 +66,11 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
 
   }
 
+  @Override
+  public void showError(Throwable throwable) {
+
+  }
+
   /* Menu */
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {

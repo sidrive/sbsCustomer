@@ -2,6 +2,7 @@ package com.sabaindomedika.stscustomer.features.ticket.status;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
+import com.sabaindomedika.stscustomer.basecommon.BaseDialogFragment;
 import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
@@ -39,6 +41,7 @@ public class TicketStatusDetailActivity extends BaseActivity {
   @Inject
   ApiService apiService;
   BaseFragment fragment;
+  BaseDialogFragment Dfragment;
   @Bind(R.id.toolbar)
   Toolbar toolbar;
   @Bind(R.id.txtTicketNumber)
@@ -119,11 +122,9 @@ public class TicketStatusDetailActivity extends BaseActivity {
   @OnClick(R.id.btnclose)
   public void onClose() {
     Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
-    CloseTicketFragment closeTicketFragment =
-        CloseTicketFragment.newInstance(ticket.getId());
-    closeTicketFragment.setTargetFragment(fragment, CloseTicketFragment.DIALOG_REQUEST_CODE);
-    closeTicketFragment.show(fragment.getBaseFragmentManager(),
-        CloseTicketFragment.class.getSimpleName());
+    String id = ticket.getId();
+    DialogFragment dialogFragment = new CloseTicketFragment(id);
+    dialogFragment.show(getFragmentManager(), "TAG");
   }
   public void dismiss() {
     Intent i = new Intent(getApplicationContext(), TicketStatusActivity.class);
