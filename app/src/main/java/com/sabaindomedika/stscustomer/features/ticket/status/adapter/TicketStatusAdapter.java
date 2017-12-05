@@ -1,12 +1,9 @@
 package com.sabaindomedika.stscustomer.features.ticket.status.adapter;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,12 +15,9 @@ import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
 import com.sabaindomedika.stscustomer.basecommon.BaseViewHolder;
 import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
-import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.Strings;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -132,7 +126,7 @@ public class TicketStatusAdapter extends BaseListAdapter<Ticket> {
     @Bind(R.id.txtContent) TextView txtContent;
     @Bind(R.id.txtStatusTicket) TextView txtStatusTicket;
     @Bind(R.id.txtDate) TextView txtDate;
-    @Bind(R.id.imgAction) ImageView imgAction;
+    @Bind(R.id.imgNotify) ImageView imgAction;
 
     public TicketStatusViewHolder(View view) {
       super(view);

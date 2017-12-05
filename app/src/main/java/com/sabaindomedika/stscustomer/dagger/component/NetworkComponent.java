@@ -5,6 +5,7 @@ import com.sabaindomedika.stscustomer.MainActivity;
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
 import com.sabaindomedika.stscustomer.dagger.module.NetworkModule;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
+import com.sabaindomedika.stscustomer.features.notification.NotificationDetailActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationPresenter;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
@@ -51,4 +52,6 @@ public interface NetworkComponent {
   void inject(NotificationActivity notificationActivity);
 
   void inject(NotificationPresenter notificationPresenter);
+
+  void inject(NotificationDetailActivity notificationDetailActivity);
 }

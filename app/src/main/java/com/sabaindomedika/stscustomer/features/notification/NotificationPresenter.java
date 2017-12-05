@@ -20,6 +20,7 @@ public class NotificationPresenter extends MvpNullObjectBasePresenter<Notificati
   public NotificationPresenter(Context context)  {
     DaggerInit.networkComponent(context).inject(this);
   }
+
   public void loadDataNotification() {
     getView().showLoading(true, true);
     apiService.getTicketNotification()

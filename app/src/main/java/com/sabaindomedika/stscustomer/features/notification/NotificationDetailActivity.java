@@ -1,4 +1,4 @@
-package com.sabaindomedika.stscustomer.features.ticket.status;
+package com.sabaindomedika.stscustomer.features.notification;
 
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -19,28 +19,22 @@ import butterknife.OnClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
-import com.sabaindomedika.stscustomer.basecommon.BaseDialogFragment;
-import com.sabaindomedika.stscustomer.basecommon.BaseFragment;
 import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
-import com.sabaindomedika.stscustomer.model.Ticket;
-import com.sabaindomedika.stscustomer.model.TicketType;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
+import com.sabaindomedika.stscustomer.model.notification.Data;
+import com.sabaindomedika.stscustomer.model.notification.Datum;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Fajar Rianda on 18/06/2017.
- */
-public class TicketStatusDetailActivity extends BaseActivity {
+public class NotificationDetailActivity extends BaseActivity {
 
-  String id_ticket;
+  int id_ticket;
   @Inject
   ApiService apiService;
-  BaseFragment fragment;
-  BaseDialogFragment Dfragment;
   @Bind(R.id.toolbar)
   Toolbar toolbar;
   @Bind(R.id.txtTicketNumber)
@@ -60,11 +54,11 @@ public class TicketStatusDetailActivity extends BaseActivity {
   @Bind(R.id.btnclose)
   Button btnclose;
 
-  public static void start(Context context, Ticket ticket) {
+  public static void start(Context context, Datum datum) {
     Bundle bundle = new Bundle();
-    bundle.putParcelable(Ticket.class.getSimpleName(), ticket);
-    bundle.putParcelable(TicketType.class.getSimpleName(), ticket.getTicketType().getData());
-    Intent intent = new Intent(context, TicketStatusDetailActivity.class);
+    bundle.putParcelable(Datum.class.getSimpleName(), datum);
+    bundle.putParcelable(Data.class.getSimpleName(), datum.getTicket().getData());
+    Intent intent = new Intent(context, NotificationDetailActivity.class);
     intent.putExtras(bundle);
     context.startActivity(intent);
   }
@@ -85,12 +79,10 @@ public class TicketStatusDetailActivity extends BaseActivity {
   }
 
   private void init() {
-    Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
-    TicketType ticketType = getIntent().getExtras().getParcelable(TicketType.class.getSimpleName());
-    txtTicketType.setText(ticketType.getName());
-    id_ticket = ticket.getId();
+    Datum datum = getIntent().getExtras().getParcelable(Datum.class.getSimpleName());
+    id_ticket = datum.getTicket().getData().getId();
     Log.e("init", "TicketStatusDetailActivity" + id_ticket);
-    showContent(ticket);
+    showContent(datum);
   }
 
   @OnClick(R.id.btncancel)
@@ -98,7 +90,7 @@ public class TicketStatusDetailActivity extends BaseActivity {
     Builder cancelDialogBuilder = new Builder(this);
     cancelDialogBuilder.setMessage("Anda yakin membatalkan tiket ini ?");
     cancelDialogBuilder.setPositiveButton("Ya", (dialog1, which) -> {
-      apiService.cancelTicket(id_ticket)
+      apiService.cancelTicket(String.valueOf(id_ticket))
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object -> {
@@ -120,9 +112,9 @@ public class TicketStatusDetailActivity extends BaseActivity {
 
   @OnClick(R.id.btnclose)
   public void onClose() {
-    Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
-    String id = ticket.getId();
-    DialogFragment dialogFragment = new CloseTicketFragment(id);
+    Datum datum = getIntent().getExtras().getParcelable(Datum.class.getSimpleName());
+    int id = datum.getTicket().getData().getId();
+    DialogFragment dialogFragment = new CloseTicketFragment(String.valueOf(id));
     dialogFragment.show(getFragmentManager(), "TAG");
   }
   public void dismiss() {
@@ -131,17 +123,17 @@ public class TicketStatusDetailActivity extends BaseActivity {
     finish();
   }
 
-  private void showContent(Ticket ticket) {
+  private void showContent(Datum datum) {
     Boolean is_true = false;
     Boolean is_true_close = false;
-    Log.e("showContent", "TicketStatusDetailActivity" + ticket.getStatus());
-    if (ticket.getStatus().equals("new")) {
+    Log.e("showContent", "TicketStatusDetailActivity" + datum.getTicket().getData().getStatus());
+    if (datum.getTicket().getData().getStatus().equals("new")) {
       is_true = true;
     }
-    if (ticket.getStatus().equals("confirmed")) {
+    if (datum.getTicket().getData().getStatus().equals("confirmed")) {
       is_true = true;
     }
-    if (ticket.getStatus().equals("done")){
+    if (datum.getTicket().getData().getStatus().equals("done")){
       is_true_close = true;
     }
     if (is_true == true) {
@@ -150,11 +142,13 @@ public class TicketStatusDetailActivity extends BaseActivity {
     if (is_true_close == true){
       btnclose.setVisibility(View.VISIBLE);
     }
-    txtTicketNumber.setText(ticket.getNumber());
-    txtDate.setText(ticket.getTimes().getDate());
-    txtName.setText(ticket.getStaffName());
-    txtPhoneNumber.setText(ticket.getStaffPhoneNumber());
-    txtDescription.setText(ticket.getDescription());
+    txtTicketNumber.setText(datum.getTicket().getData().getNumber());
+    Log.e("showContent", "NotificationDetailActivity" + datum.getTicket().getData().getStaffName());
+    txtDate.setText(datum.getTicket().getData().getCreatedAt().getDate());
+    txtName.setText(datum.getTicket().getData().getStaffName());
+    txtTicketType.setText(datum.getTicket().getData().getTicketType().getData().getName());
+    txtPhoneNumber.setText(datum.getTicket().getData().getStaffPhoneNumber());
+    txtDescription.setText(datum.getTicket().getData().getDescription());
   }
 
   private void setupToolbar() {
@@ -172,5 +166,12 @@ public class TicketStatusDetailActivity extends BaseActivity {
         break;
     }
     return super.onOptionsItemSelected(item);
+  }
+
+  @Override
+  public void onBackPressed() {
+    this.startActivity(new Intent(this,NotificationActivity.class));
+    finish();
+    return;
   }
 }

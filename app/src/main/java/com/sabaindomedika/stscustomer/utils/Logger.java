@@ -43,7 +43,7 @@ public class Logger {
             tag = "";
 
         if (message.trim().length() == 0)
-            message = "Data Empty";
+            message = "TicketData Empty";
 
         if (ENABLE_LONG_LOG) {
             longLog(mode, tag, message);

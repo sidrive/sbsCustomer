@@ -39,6 +39,10 @@
             android:screenOrientation="portrait"/>
 
         <activity
+          android:name=".features.notification.NotificationDetailActivity"
+          android:screenOrientation="portrait"/>
+
+        <activity
             android:name=".features.ticket.open.OpenTicketActivity"
             android:screenOrientation="portrait"/>
         <activity

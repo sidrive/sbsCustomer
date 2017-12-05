@@ -10,14 +10,12 @@ import com.sabaindomedika.stscustomer.model.Instrument;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
 import com.sabaindomedika.stscustomer.model.Ticket;
-import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.User;
 import com.sabaindomedika.stscustomer.model.auth.ResponseLogin;
+import com.sabaindomedika.stscustomer.model.notification.ResponseNotification;
 import java.util.List;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -72,5 +70,8 @@ public interface ApiService {
   Observable<Responses<List<Ticket>>> getTicketStatusHistory(@Query("is_closed") String isClosed);
 
   @GET(URLCons.URL_TICKET_NOTIFICATION)
-  Observable<Responses<List<Ticket>>> getTicketNotification();
+  Observable<ResponseNotification> getTicketNotification();
+
+  @PUT(URLCons.URL_TICKET_READ)
+  Observable<ResponseNotification> isread(@Path("notification_id") String notification_id);
 }

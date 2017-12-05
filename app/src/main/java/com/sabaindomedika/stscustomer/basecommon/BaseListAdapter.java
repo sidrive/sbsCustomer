@@ -66,7 +66,7 @@ public class BaseListAdapter<T> extends BaseAdapter {
   /* Applying data to list */
   protected void applyData(final List<T> data, int page, boolean reverse) {
     if (data == null) {
-      Logger.log(Log.DEBUG,"Data null pushed");
+      Logger.log(Log.DEBUG,"TicketData null pushed");
       return;
     }
 

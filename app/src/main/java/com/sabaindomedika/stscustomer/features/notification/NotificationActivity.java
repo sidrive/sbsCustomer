@@ -5,16 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import com.sabaindomedika.stscustomer.R;
+import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
-import com.sabaindomedika.stscustomer.model.Notification;
-import com.sabaindomedika.stscustomer.model.Ticket;
+import com.sabaindomedika.stscustomer.model.notification.Datum;
 import java.util.List;
+import javax.inject.Inject;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Fajar Rianda on 01/05/2017.
@@ -25,10 +32,17 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
   @Bind(R.id.toolbar) Toolbar toolbar;
   @Bind(R.id.lvContent) ListView lvContent;
   NotificationAdapter adapter;
+  @Inject ApiService apiService;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, NotificationActivity.class);
     context.startActivity(intent);
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+    DaggerInit.networkComponent(this).inject(this);
   }
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +72,8 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
     return new NotificationPresenter(getApplicationContext());
   }
 
-  @Override public void showContent(List<Ticket> tickets) {
-    adapter.pushData(tickets);
+  @Override public void showContent(List<Datum> notification) {
+    adapter.pushData(notification);
   }
 
   @Override public void showLoading(boolean isFirstLoad, boolean isRefresh) {
@@ -69,6 +83,18 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
   @Override
   public void showError(Throwable throwable) {
 
+  }
+
+  @OnItemClick(R.id.lvContent)
+  public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    String notification_id = adapter.getItem(i).getId();
+    Log.e("onItemClick", "NotificationActivity" + notification_id);
+    apiService.isread(notification_id)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {}, throwable -> {});
+    NotificationDetailActivity.start(this, adapter.getItem(i));
+    finish();
   }
 
   /* Menu */
