@@ -3,6 +3,9 @@ package com.sabaindomedika.stscustomer.features.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -12,9 +15,14 @@ import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
-import com.sabaindomedika.stscustomer.model.User;
-import com.sabaindomedika.stscustomer.utils.Preferences;
+import com.sabaindomedika.stscustomer.features.profile.adapter.EmployeeAdapter;
+import com.sabaindomedika.stscustomer.features.profile.adapter.InstrumentAdapter;
+import com.sabaindomedika.stscustomer.features.profile.adapter.InterfaceAdapter;
+import com.sabaindomedika.stscustomer.model.Profil.Datum;
+import com.sabaindomedika.stscustomer.model.Profil.Datum_;
+import com.sabaindomedika.stscustomer.model.Profil.Support;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
+import java.util.ArrayList;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -22,20 +30,27 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends AppCompatActivity {
 
   @Bind(R.id.toolbar)
   Toolbar toolbar;
   @Inject
   ApiService apiService;
+  InterfaceAdapter adapterinterface;
+  InstrumentAdapter adapterinstrument;
+  EmployeeAdapter adapteremployee;
   @Bind(R.id.txtId)
   TextView txtId;
   @Bind(R.id.txtName)
   TextView txtName;
   @Bind(R.id.txtLocation)
   TextView txtLocation;
-  @Bind(R.id.txtListTool)
-  TextView txtListTool;
+  @Bind(R.id.lvinstrument)
+  RecyclerView lvInstrument;
+  @Bind(R.id.lvinterface)
+  RecyclerView lvInterface;
+  @Bind(R.id.lvEmployee)
+  RecyclerView lvEmployee;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, ProfileActivity.class);
@@ -49,7 +64,23 @@ public class ProfileActivity extends BaseActivity {
     ButterKnife.bind(this);
     DaggerInit.networkComponent(this).inject(this);
     setupToolbar();
+    init();
     loadData();
+  }
+
+  private void init() {
+    adapterinstrument = new InstrumentAdapter(new ArrayList<Datum>(0), getApplicationContext());
+    adapterinterface = new InterfaceAdapter(new ArrayList<Datum_>(0), getApplicationContext());
+    adapteremployee = new EmployeeAdapter(new ArrayList<Support>(0), getApplicationContext());
+    lvEmployee.setHasFixedSize(true);
+    lvEmployee.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    lvEmployee.setAdapter(adapteremployee);
+    lvInstrument.setHasFixedSize(true);
+    lvInstrument.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    lvInstrument.setAdapter(adapterinstrument);
+    lvInterface.setHasFixedSize(true);
+    lvInterface.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    lvInterface.setAdapter(adapterinterface);
   }
 
   private void setupToolbar() {
@@ -60,29 +91,21 @@ public class ProfileActivity extends BaseActivity {
   }
 
   private void loadData() {
-    if (Preferences.getUserProfile() == null) {
-      apiService.getUserProfile()
-          .subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-          .subscribe(object -> {
-            if (object == null) {
-              return;
-            }
-            Preferences.setUserProfile(object.getData());
-            showContent(object.getData());
-          }, error -> {
-            if (!isFinishing()) {
-              ErrorHelper.thrown(error);
-            }
-          });
-    } else {
-      showContent(Preferences.getUserProfile());
-    }
-  }
-
-  private void showContent(User user) {
-    txtId.setText(user.getId());
-    txtName.setText(user.getName());
+    apiService.getUserProfile()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          txtId.setText(object.getData().getCustomer().getData().getName());
+          txtName.setText(object.getData().getName());
+          txtLocation.setText(object.getData().getCustomer().getData().getAddress());
+          adapteremployee.UpdateData(object.getData().getSupports());
+          adapterinterface.UpdateData(object.getData().getInterfaces().getData());
+          adapterinstrument.UpdateData(object.getData().getInstruments().getData());
+        }, error -> {
+          if (!isFinishing()) {
+            ErrorHelper.thrown(error);
+          }
+        });
   }
 
   /* Menu */

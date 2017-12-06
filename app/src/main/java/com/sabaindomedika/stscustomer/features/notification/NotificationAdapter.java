@@ -33,7 +33,7 @@ public class NotificationAdapter extends BaseListAdapter<Datum> {
     viewHolder.txtTicketNumber.setText(notification.getTicket().getData().getNumber());
     viewHolder.txtContent.setText(notification.getTicket().getData().getComment());
     viewHolder.txtDate.setText(notification.getTicket().getData().getCreatedAt().getDate());
-    viewHolder.txtStatusTicket.setText(notification.getTicket().getData().getStatus());
+    viewHolder.txtStatusTicket.setText(notification.getBody());
     if (notification.getIsRead().equals(false)){
       viewHolder.imgNotify.setVisibility(View.VISIBLE);
       viewHolder.lytTicket.setBackgroundResource(R.color.colorBlue);

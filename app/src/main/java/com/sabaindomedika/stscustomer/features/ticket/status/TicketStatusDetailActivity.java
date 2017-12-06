@@ -123,7 +123,7 @@ public class TicketStatusDetailActivity extends BaseActivity {
     Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
     String id = ticket.getId();
     DialogFragment dialogFragment = new CloseTicketFragment(id);
-    dialogFragment.show(getFragmentManager(), "TAG");
+    dialogFragment.show(getFragmentManager(),"TAG");
   }
   public void dismiss() {
     Intent i = new Intent(getApplicationContext(), TicketStatusActivity.class);

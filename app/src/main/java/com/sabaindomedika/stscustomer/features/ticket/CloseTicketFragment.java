@@ -1,6 +1,7 @@
 package com.sabaindomedika.stscustomer.features.ticket;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,7 +21,7 @@ import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseDialogFragment;
 import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
-import com.sabaindomedika.stscustomer.model.Ticket;
+import com.sabaindomedika.stscustomer.model.BodyClose;
 import com.sabaindomedika.stscustomer.utils.Toasts;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import javax.inject.Inject;
@@ -46,10 +47,10 @@ public class CloseTicketFragment extends BaseDialogFragment {
   }
 
   @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-    Dialog dialog = new Dialog(context);
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    dialog.setContentView(getContentView());
-    return dialog;
+    Dialog dialogfrag = new Dialog(context);
+    dialogfrag.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialogfrag.setContentView(getContentView());
+    return dialogfrag;
   }
 
   @SuppressLint("InflateParams") private View getContentView() {
@@ -78,18 +79,17 @@ public class CloseTicketFragment extends BaseDialogFragment {
     ProgressDialog dialog = new ProgressDialog(context);
     dialog.setMessage("Close Tiket...");
     dialog.show();
-    Ticket ticket = new Ticket();
-    ticket.setRating(ratingBar.getRating());
-    ticket.setComment(inpDescription.getText().toString().trim());
-
-    apiService.closeTicket(id, ticket, dialog)
+    BodyClose bodyClose = new BodyClose();
+    bodyClose.setRating(ratingBar.getRating());
+    bodyClose.setComment(inpDescription.getText().toString().trim());
+    apiService.closeTicket(id, bodyClose)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object -> {
           if (object.getData().getStatus().equalsIgnoreCase(StatusTicketCons.CLOSE)) {
             Toasts.show("Close Tiket Sukses");
             dialog.dismiss();
-            dismiss();
+            getDialog().dismiss();
           }
         }, error -> {
           dialog.dismiss();

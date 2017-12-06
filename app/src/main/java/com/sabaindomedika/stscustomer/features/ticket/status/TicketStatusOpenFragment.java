@@ -1,10 +1,13 @@
 package com.sabaindomedika.stscustomer.features.ticket.status;
 
+import static butterknife.ButterKnife.bind;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
@@ -23,33 +27,39 @@ import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.util.List;
 
-import static butterknife.ButterKnife.bind;
-
 /**
  * Created by Fajar Rianda on 06/06/2017.
  */
 public class TicketStatusOpenFragment
     extends BaseMvpFragment<TicketStatusView, TicketStatusPresenter> implements TicketStatusView {
 
-  @Bind(R.id.lvContent) ListView lvContent;
-  @Bind(R.id.progressBar) ProgressBar progressBar;
-  @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
-  @Bind(R.id.swipeRefresh) SwipeRefreshLayout swipeRefresh;
 
   TicketStatusAdapter adapter;
+  @Bind(R.id.lvContent)
+  ListView lvContent;
+  @Bind(R.id.swipeRefresh)
+  SwipeRefreshLayout swipeRefresh;
+  @Bind(R.id.txtContentAvailable)
+  TextView txtContentAvailable;
+  @Bind(R.id.progressBar)
+  ProgressBar progressBar;
 
-  @Override public void onAttach(Context context) {
+  @Override
+  public void onAttach(Context context) {
     super.onAttach(context);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_ticket_status, container, false);
     bind(this, view);
+    ButterKnife.bind(this, view);
     return view;
   }
 
-  @Override public void onActivityCreated(Bundle savedInstanceState) {
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     DaggerInit.networkComponent(context).inject(this);
     init();
@@ -63,34 +73,42 @@ public class TicketStatusOpenFragment
 
     presenter.loadDataOpen();
 
-    swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-      @Override public void onRefresh() {
+    swipeRefresh.setOnRefreshListener(new OnRefreshListener() {
+      @Override
+      public void onRefresh() {
         presenter.loadDataOpen();
       }
     });
   }
 
-  @NonNull @Override public TicketStatusPresenter createPresenter() {
+  @NonNull
+  @Override
+  public TicketStatusPresenter createPresenter() {
     return new TicketStatusPresenter(context);
   }
 
-  @Override public void showContent(List<Ticket> tickets) {
+  @Override
+  public void showContent(List<Ticket> tickets) {
     txtContentAvailable.setVisibility(tickets.isEmpty()
         ? View.VISIBLE
         : View.GONE);
     adapter.pushData(tickets);
   }
 
-  @Override public void showLoading(boolean firstLoad, boolean isRefresh) {
+  @Override
+  public void showLoading(boolean firstLoad, boolean isRefresh) {
 
     if (!firstLoad && isRefresh) {
       swipeRefresh.setRefreshing(false);
     }
 
-    if (!firstLoad) progressBar.setVisibility(View.GONE);
+    if (!firstLoad) {
+      progressBar.setVisibility(View.GONE);
+    }
   }
 
-  @Override public void showError(Throwable throwable) {
+  @Override
+  public void showError(Throwable throwable) {
     if (isVisible()) {
       ErrorHelper.thrown(throwable);
     }
@@ -98,10 +116,11 @@ public class TicketStatusOpenFragment
 
   @OnItemClick(R.id.lvContent)
   public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-     TicketStatusDetailActivity.start(context, adapter.getItem(i));
+    TicketStatusDetailActivity.start(context, adapter.getItem(i));
   }
 
-  @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (resultCode == getBaseActivity().RESULT_OK
         && requestCode == CloseTicketFragment.DIALOG_REQUEST_CODE) {
       int position = data.getIntExtra(int.class.getSimpleName(), 0);
@@ -109,5 +128,11 @@ public class TicketStatusOpenFragment
     }
 
     super.onActivityResult(requestCode, resultCode, data);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
   }
 }

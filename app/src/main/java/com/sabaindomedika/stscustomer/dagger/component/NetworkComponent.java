@@ -54,4 +54,5 @@ public interface NetworkComponent {
   void inject(NotificationPresenter notificationPresenter);
 
   void inject(NotificationDetailActivity notificationDetailActivity);
+
 }

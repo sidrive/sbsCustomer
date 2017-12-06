@@ -7,6 +7,8 @@ import com.google.gson.reflect.TypeToken;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.Profil.Data;
+import com.sabaindomedika.stscustomer.model.Profil.Datum;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Token;
 import com.sabaindomedika.stscustomer.model.User;
@@ -108,14 +110,14 @@ public class Preferences {
     getEditor().putString(Token.class.getSimpleName(), gson.toJson(token)).apply();
   }
 
-  public static User getUserProfile() {
-    return returnObjectOrNull(User.class,
-        getPreferences().getString(User.class.getSimpleName(), null));
+  public static Data getUserProfile() {
+    return returnObjectOrNull(Data.class,
+        getPreferences().getString(Data.class.getSimpleName(), null));
   }
 
-  public static void setUserProfile(User user) {
+  public static void setUserProfile(Data user) {
     Gson gson = new Gson();
-    getEditor().putString(User.class.getSimpleName(), gson.toJson(user)).apply();
+    getEditor().putString(Data.class.getSimpleName(), gson.toJson(user)).apply();
   }
 
   public static List<Division> getDivision() {

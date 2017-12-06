@@ -3,10 +3,12 @@ package com.sabaindomedika.stscustomer.apiservice;
 import android.app.ProgressDialog;
 import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.model.Auth;
+import com.sabaindomedika.stscustomer.model.BodyClose;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.Profil.ResponseProfile;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
 import com.sabaindomedika.stscustomer.model.Ticket;
@@ -39,7 +41,7 @@ public interface ApiService {
   Observable<Responses<User>> updateFcm(@Body FcmToken fcm_token);
 
   @GET(URLCons.URL_PROFILE)
-  Observable<Responses<User>> getUserProfile();
+  Observable<ResponseProfile> getUserProfile();
 
   @GET(URLCons.URL_DIVISIONS)
   Observable<Responses<List<Division>>> getDivisions();
@@ -57,8 +59,7 @@ public interface ApiService {
   Observable<Responses<Ticket>> postOpenTicket(@Body Ticket ticket);
 
   @PUT(URLCons.URL_CLOSE_TICKET)
-  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId, @Body Ticket ticket,
-      ProgressDialog dialog);
+  Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId, @Body BodyClose bodyClose);
 
   @PUT(URLCons.URL_CANCEL_TICKET)
   Observable<Responses<Ticket>> cancelTicket(@Path("ticket") String ticketId);
