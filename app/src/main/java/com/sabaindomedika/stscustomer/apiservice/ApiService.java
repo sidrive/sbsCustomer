@@ -8,6 +8,7 @@ import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.Interface;
 import com.sabaindomedika.stscustomer.model.Profil.ResponseProfile;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
@@ -75,4 +76,7 @@ public interface ApiService {
 
   @PUT(URLCons.URL_TICKET_READ)
   Observable<ResponseNotification> isread(@Path("notification_id") String notification_id);
+
+  @GET(URLCons.URL_INTERFACE)
+  Observable<Responses<List<Interface>>> getInterface();
 }

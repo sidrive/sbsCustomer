@@ -31,6 +31,7 @@ import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.Interface;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.Toasts;
@@ -53,7 +54,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   @Bind(R.id.radioContainer) RadioGroup lyRadioContainer;
   @Bind(R.id.spnInstrument) Spinner spnInstrument;
   @Bind(R.id.spnInstrumentContainer) RelativeLayout spnInstrumentContainer;
-  @Bind(R.id.inpDeviceName) EditText inpDeviceName;
+  @Bind(R.id.spnInterface) Spinner spnInterface;
+  @Bind(R.id.spnInterfaceContainer) RelativeLayout spnInterfaceContainer;
 
   @Bind(R.id.progressBar) ProgressBar progressBar;
   @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
@@ -62,9 +64,9 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   String divisionId;
   String divisionName;
   String instrumentId;
+  int interfaceId;
   String requestDivisionId;
   String departmentId;
-  String deviceName;
 
   public static FormFragment newInstance(String ticketTypeId, String divisioType,
       String divisionName) {
@@ -205,8 +207,28 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     });
   }
 
-  @Override public void showDeviceName() {
-    inpDeviceName.setVisibility(View.VISIBLE);
+  @Override public void showDeviceName(List<Interface> interfacess) {
+    spnInterfaceContainer.setVisibility(View.VISIBLE);
+    List<String> list = new ArrayList<>();
+
+    for (Interface interfaces : interfacess) {
+      list.add(interfaces.getName());
+    }
+    ArrayAdapter<String> adapter =
+        new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, list);
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spnInterface.setAdapter(adapter);
+
+    spnInterface.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override
+      public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        interfaceId = interfacess.get(position).getId();
+      }
+
+      @Override public void onNothingSelected(AdapterView<?> parent) {
+
+      }
+    });
   }
 
   @Override public void showLoading(boolean firstLoad) {
@@ -244,9 +266,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     Ticket ticket = new Ticket();
     ticket.setTicketTypeId(ticketTypeId);
 
-    if (!TextUtils.isEmpty(inpDeviceName.getText().toString().trim())) {
-      deviceName = inpDeviceName.getText().toString().trim();
-      ticket.setDeviceName(deviceName);
+    if (interfaceId != 0) {
+      ticket.setInterfaceid(String.valueOf(interfaceId));
     }
 
     if (instrumentId != null) {

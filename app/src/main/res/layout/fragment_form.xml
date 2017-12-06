@@ -54,20 +54,22 @@
             android:visibility="gone"
             />
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-          <EditText
-              android:id="@+id/inpDeviceName"
+        <RelativeLayout
+          android:id="@+id/spnInterfaceContainer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          >
+          <Spinner
+              android:id="@+id/spnInterface"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:gravity="top|left"
-              android:hint="@string/device_name"
               android:padding="4dp"
-              android:singleLine="true"
-              android:visibility="gone"
+              style="@android:style/Widget.Holo.Light.Spinner"
+              android:spinnerMode="dropdown"
+              android:textAppearance="?android:attr/textAppearanceLarge"
               />
-        </android.support.design.widget.TextInputLayout>
+        </RelativeLayout>
         <!--For Ticket 3-->
 
         <include

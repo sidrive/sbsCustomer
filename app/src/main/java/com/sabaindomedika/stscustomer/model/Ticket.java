@@ -17,7 +17,7 @@ public class Ticket implements Parcelable {
   @SerializedName("request_id") private String requestId;
   @SerializedName("instrument_id") private String instrumentId;
   @SerializedName("department_id") private String departmentId;
-  @SerializedName("device") private String deviceName;
+  @SerializedName("interface_id") private String interfaceid;
   @SerializedName("priority") private String priority;
   @SerializedName("description") private String description;
   @SerializedName("staff_name") private String staffName;
@@ -44,7 +44,7 @@ public class Ticket implements Parcelable {
     requestId = in.readString();
     instrumentId = in.readString();
     departmentId = in.readString();
-    deviceName = in.readString();
+    interfaceid = in.readString();
     priority = in.readString();
     description = in.readString();
     staffName = in.readString();
@@ -66,7 +66,7 @@ public class Ticket implements Parcelable {
     dest.writeString(requestId);
     dest.writeString(instrumentId);
     dest.writeString(departmentId);
-    dest.writeString(deviceName);
+    dest.writeString(interfaceid);
     dest.writeString(priority);
     dest.writeString(description);
     dest.writeString(staffName);
@@ -109,12 +109,12 @@ public class Ticket implements Parcelable {
     this.description = description;
   }
 
-  public String getDeviceName() {
-    return deviceName;
+  public String getInterfaceid() {
+    return interfaceid;
   }
 
-  public void setDeviceName(String deviceName) {
-    this.deviceName = deviceName;
+  public void setInterfaceid(String deviceName) {
+    this.interfaceid = deviceName;
   }
 
   public String getDivisionId() {

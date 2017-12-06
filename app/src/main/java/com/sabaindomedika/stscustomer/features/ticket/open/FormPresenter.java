@@ -54,8 +54,7 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
     getView().showLoading(true);
     if (ticketTypeId.equals("1")) {
       if (divisionId.equals("3")) {
-        getView().showDeviceName();
-        getView().showLoading(false);
+        loadInterface();
       } else {
         loadInstrument(divisionId.equals("4")
             ? "2"
@@ -88,13 +87,23 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
             getView().showInstrument(object.getData());
             Preferences.setInstrument(Instrument.class.getSimpleName().concat(categoryId),
                 object.getData());
-
             getView().showLoading(false);
           }, error -> {
             getView().showLoading(false);
             getView().showError(error);
           });
     }
+  }
+
+  private void loadInterface(){
+    apiService.getInterface()
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          getView().showDeviceName(object.getData());
+          getView().showLoading(false);
+        }, error -> {
+        });
   }
 
   private void loadRequestDivisions(String divisionId) {
