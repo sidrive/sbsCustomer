@@ -1,5 +1,5 @@
 
-package com.sabaindomedika.stscustomer.model.Profil;
+package com.sabaindomedika.stscustomer.model.profile;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

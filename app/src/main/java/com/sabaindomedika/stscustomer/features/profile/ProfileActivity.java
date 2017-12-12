@@ -3,7 +3,6 @@ package com.sabaindomedika.stscustomer.features.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,9 +17,9 @@ import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.profile.adapter.EmployeeAdapter;
 import com.sabaindomedika.stscustomer.features.profile.adapter.InstrumentAdapter;
 import com.sabaindomedika.stscustomer.features.profile.adapter.InterfaceAdapter;
-import com.sabaindomedika.stscustomer.model.Profil.Datum;
-import com.sabaindomedika.stscustomer.model.Profil.Datum_;
-import com.sabaindomedika.stscustomer.model.Profil.Support;
+import com.sabaindomedika.stscustomer.model.profile.Datum;
+import com.sabaindomedika.stscustomer.model.profile.Datum_;
+import com.sabaindomedika.stscustomer.model.profile.Datum__;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.util.ArrayList;
 import javax.inject.Inject;
@@ -30,7 +29,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
   @Bind(R.id.toolbar)
   Toolbar toolbar;
@@ -69,9 +68,9 @@ public class ProfileActivity extends AppCompatActivity {
   }
 
   private void init() {
-    adapterinstrument = new InstrumentAdapter(new ArrayList<Datum>(0), getApplicationContext());
-    adapterinterface = new InterfaceAdapter(new ArrayList<Datum_>(0), getApplicationContext());
-    adapteremployee = new EmployeeAdapter(new ArrayList<Support>(0), getApplicationContext());
+    adapterinstrument = new InstrumentAdapter(new ArrayList<Datum_>(0), getApplicationContext());
+    adapterinterface = new InterfaceAdapter(new ArrayList<Datum__>(0), getApplicationContext());
+    adapteremployee = new EmployeeAdapter(new ArrayList<Datum>(0), getApplicationContext());
     lvEmployee.setHasFixedSize(true);
     lvEmployee.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     lvEmployee.setAdapter(adapteremployee);
@@ -92,13 +91,13 @@ public class ProfileActivity extends AppCompatActivity {
 
   private void loadData() {
     apiService.getUserProfile()
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.newThread())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(object -> {
           txtId.setText(object.getData().getCustomer().getData().getName());
           txtName.setText(object.getData().getName());
           txtLocation.setText(object.getData().getCustomer().getData().getAddress());
-          adapteremployee.UpdateData(object.getData().getSupports());
+          adapteremployee.UpdateData(object.getData().getSupports().getData());
           adapterinterface.UpdateData(object.getData().getInterfaces().getData());
           adapterinstrument.UpdateData(object.getData().getInstruments().getData());
         }, error -> {

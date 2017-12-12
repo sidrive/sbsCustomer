@@ -12,14 +12,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.features.profile.adapter.EmployeeAdapter.ViewHolder;
-import com.sabaindomedika.stscustomer.model.Profil.Support;
+import com.sabaindomedika.stscustomer.model.profile.Datum;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeAdapter extends Adapter<ViewHolder> {
   private Context mContext;
-  private List<Support> mItem;
-  public EmployeeAdapter(ArrayList<Support> items, Context context) {
+  private List<Datum> mItem;
+  public EmployeeAdapter(ArrayList<Datum> items, Context context) {
     this.mContext = context;
     this.mItem = items;
   }
@@ -34,7 +34,7 @@ public class EmployeeAdapter extends Adapter<ViewHolder> {
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    Support checklistItem = getItem(position);
+    Datum checklistItem = getItem(position);
     holder.txtContent.setText(checklistItem.getName());
   }
 
@@ -55,11 +55,11 @@ public class EmployeeAdapter extends Adapter<ViewHolder> {
   }
 
   @Nullable
-  public Support getItem(int position) {
+  public Datum getItem(int position) {
     return mItem.get(position);
   }
 
-  public void UpdateData(List<Support> listarray) {
+  public void UpdateData(List<Datum> listarray) {
     mItem = listarray;
     notifyDataSetChanged();
   }

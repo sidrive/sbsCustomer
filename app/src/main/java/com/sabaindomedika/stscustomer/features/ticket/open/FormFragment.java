@@ -1,5 +1,7 @@
 package com.sabaindomedika.stscustomer.features.ticket.open;
 
+import static butterknife.ButterKnife.bind;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -24,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import com.sabaindomedika.stscustomer.R;
@@ -39,26 +44,35 @@ import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static butterknife.ButterKnife.bind;
-
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
 public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> implements FormView {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.inpDescription) EditText inpDescription;
-  @Bind(R.id.inpName) EditText inpName;
-  @Bind(R.id.inpPhone) EditText inpPhone;
-  @Bind(R.id.spnPriority) Spinner spnPriority;
-  @Bind(R.id.radioContainer) RadioGroup lyRadioContainer;
-  @Bind(R.id.spnInstrument) Spinner spnInstrument;
-  @Bind(R.id.spnInstrumentContainer) RelativeLayout spnInstrumentContainer;
-  @Bind(R.id.spnInterface) Spinner spnInterface;
-  @Bind(R.id.spnInterfaceContainer) RelativeLayout spnInterfaceContainer;
-
-  @Bind(R.id.progressBar) ProgressBar progressBar;
-  @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
+  @Bind(R.id.toolbar)
+  Toolbar toolbar;
+  @Bind(R.id.inpDescription)
+  EditText inpDescription;
+  @Bind(R.id.inpName)
+  EditText inpName;
+  @Bind(R.id.inpPhone)
+  EditText inpPhone;
+  @Bind(R.id.spnPriority)
+  Spinner spnPriority;
+  @Bind(R.id.radioContainer)
+  RadioGroup lyRadioContainer;
+  @Bind(R.id.spnInstrument)
+  Spinner spnInstrument;
+  @Bind(R.id.spnInstrumentContainer)
+  RelativeLayout spnInstrumentContainer;
+  @Bind(R.id.spnInterface)
+  Spinner spnInterface;
+  @Bind(R.id.spnInterfaceContainer)
+  RelativeLayout spnInterfaceContainer;
+  @Bind(R.id.progressBar)
+  ProgressBar progressBar;
+  @Bind(R.id.txtContentAvailable)
+  TextView txtContentAvailable;
   String priority;
   String ticketTypeId;
   String divisionId;
@@ -67,6 +81,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   int interfaceId;
   String requestDivisionId;
   String departmentId;
+  @Bind(R.id.btnSubmit)
+  Button btnSubmit;
 
   public static FormFragment newInstance(String ticketTypeId, String divisioType,
       String divisionName) {
@@ -87,22 +103,28 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     return fragment;
   }
 
-  @Override public void onAttach(Context context) {
+  @Override
+  public void onAttach(Context context) {
     super.onAttach(context);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_form, container, false);
     bind(this, view);
+    ButterKnife.bind(this, view);
     return view;
   }
 
-  @NonNull @Override public FormPresenter createPresenter() {
+  @NonNull
+  @Override
+  public FormPresenter createPresenter() {
     return new FormPresenter(context);
   }
 
-  @Override public void onActivityCreated(Bundle savedInstanceState) {
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     init();
     setupToolbar();
@@ -136,14 +158,16 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     }
   }
 
-  @Override public void statusOpenTicket(boolean success) {
+  @Override
+  public void statusOpenTicket(boolean success) {
     if (success) {
       Toasts.show("Open Tiket Sukses");
       getBaseActivity().finish();
     }
   }
 
-  @Override public void showRequestDivision(List<RequestDivision> requestDivisions) {
+  @Override
+  public void showRequestDivision(List<RequestDivision> requestDivisions) {
     lyRadioContainer.setVisibility(View.VISIBLE);
 
     for (int i = 0; i < requestDivisions.size(); i++) {
@@ -161,7 +185,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     }
   }
 
-  @Override public void showDepartment(List<Department> departments) {
+  @Override
+  public void showDepartment(List<Department> departments) {
     lyRadioContainer.setVisibility(View.VISIBLE);
 
     for (int i = 0; i < departments.size(); i++) {
@@ -179,7 +204,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     }
   }
 
-  @Override public void showInstrument(List<Instrument> instruments) {
+  @Override
+  public void showInstrument(List<Instrument> instruments) {
     spnInstrumentContainer.setVisibility(View.VISIBLE);
     List<String> list = new ArrayList<>();
 
@@ -195,19 +221,21 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnInstrument.setAdapter(adapter);
 
-    spnInstrument.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    spnInstrument.setOnItemSelectedListener(new OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         instrumentId = instruments.get(position).getId();
       }
 
-      @Override public void onNothingSelected(AdapterView<?> parent) {
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) {
 
       }
     });
   }
 
-  @Override public void showDeviceName(List<Interface> interfacess) {
+  @Override
+  public void showDeviceName(List<Interface> interfacess) {
     spnInterfaceContainer.setVisibility(View.VISIBLE);
     List<String> list = new ArrayList<>();
 
@@ -219,33 +247,39 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spnInterface.setAdapter(adapter);
 
-    spnInterface.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    spnInterface.setOnItemSelectedListener(new OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         interfaceId = interfacess.get(position).getId();
       }
 
-      @Override public void onNothingSelected(AdapterView<?> parent) {
+      @Override
+      public void onNothingSelected(AdapterView<?> parent) {
 
       }
     });
   }
 
-  @Override public void showLoading(boolean firstLoad) {
+  @Override
+  public void showLoading(boolean firstLoad) {
     progressBar.setVisibility(!firstLoad
         ? View.GONE
         : View.VISIBLE);
   }
 
-  @Override public void showError(Throwable throwable) {
+  @Override
+  public void showError(Throwable throwable) {
 
-    if (isVisible()) ErrorHelper.thrown(throwable);
+    if (isVisible()) {
+      ErrorHelper.thrown(throwable);
+    }
 
     txtContentAvailable.setVisibility(View.VISIBLE);
     SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
     stringBuilder.append(getString(R.string.refresh));
     stringBuilder.setSpan(new ClickableSpan() {
-      @Override public void onClick(View widget) {
+      @Override
+      public void onClick(View widget) {
         presenter.loadData(ticketTypeId, divisionId);
         txtContentAvailable.setVisibility(View.GONE);
       }
@@ -258,7 +292,8 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     txtContentAvailable.setText(stringBuilder);
   }
 
-  @OnClick(R.id.btnSubmit) public void onOpenTicket() {
+  @OnClick(R.id.btnSubmit)
+  public void onOpenTicket() {
     if (!isValid()) {
       return;
     }
@@ -309,7 +344,14 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     return true;
   }
 
-  @OnItemSelected(R.id.spnPriority) public void onSpinnerPriority(Spinner spinner, int position) {
+  @OnItemSelected(R.id.spnPriority)
+  public void onSpinnerPriority(Spinner spinner, int position) {
     priority = spinner.getSelectedItem().toString();
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
   }
 }

@@ -1,10 +1,13 @@
 
-package com.sabaindomedika.stscustomer.model.Profil;
+package com.sabaindomedika.stscustomer.model.profile;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum {
+public class Datum_ implements Parcelable
+{
 
     @SerializedName("id")
     @Expose
@@ -21,6 +24,33 @@ public class Datum {
     @SerializedName("contract_type")
     @Expose
     private String contractType;
+    public final static Creator<Datum_> CREATOR = new Creator<Datum_>() {
+
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Datum_ createFromParcel(Parcel in) {
+            return new Datum_(in);
+        }
+
+        public Datum_[] newArray(int size) {
+            return (new Datum_[size]);
+        }
+
+    }
+    ;
+
+    protected Datum_(Parcel in) {
+        this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.serialNumber = ((String) in.readValue((String.class.getClassLoader())));
+        this.instrumentTypeId = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.type = ((String) in.readValue((String.class.getClassLoader())));
+        this.contractType = ((String) in.readValue((String.class.getClassLoader())));
+    }
+
+    public Datum_() {
+    }
 
     public Integer getId() {
         return id;
@@ -60,6 +90,18 @@ public class Datum {
 
     public void setContractType(String contractType) {
         this.contractType = contractType;
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(id);
+        dest.writeValue(serialNumber);
+        dest.writeValue(instrumentTypeId);
+        dest.writeValue(type);
+        dest.writeValue(contractType);
+    }
+
+    public int describeContents() {
+        return  0;
     }
 
 }

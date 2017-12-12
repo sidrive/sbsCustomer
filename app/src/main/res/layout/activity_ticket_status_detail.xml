@@ -67,7 +67,6 @@
         android:layout_height="wrap_content"
         tools:text="Lorem Ipsum"
         android:layout_marginTop="@dimen/padding_16"
-
         android:textSize="14sp"
         />
     <Button
@@ -85,8 +84,23 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/padding_20"
       android:background="@drawable/bg_blue_rounded"
+      android:text="Download Pdf"
+      android:textColor="@color/cardview_light_background"
+      android:visibility="gone"/>
+    <Button
+      android:id="@+id/btnpdf"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="@dimen/padding_20"
+      android:background="@drawable/bg_blue_rounded"
       android:text="Close"
       android:textColor="@color/cardview_light_background"
       android:visibility="gone"/>
   </LinearLayout>
+  <include
+    layout="@layout/view_loading"
+    android:layout_gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:visibility="gone"
+    android:layout_height="wrap_content"/>
 </LinearLayout>

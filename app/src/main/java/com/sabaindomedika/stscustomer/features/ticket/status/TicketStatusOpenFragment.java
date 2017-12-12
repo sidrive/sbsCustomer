@@ -23,6 +23,7 @@ import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.adapter.TicketStatusAdapter;
+import com.sabaindomedika.stscustomer.features.ticket.status.detail.TicketStatusDetailActivity;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.util.List;
@@ -62,6 +63,11 @@ public class TicketStatusOpenFragment
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     DaggerInit.networkComponent(context).inject(this);
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
     init();
   }
 
@@ -70,9 +76,7 @@ public class TicketStatusOpenFragment
     lvContent.setAdapter(adapter);
     lvContent.setDivider(null);
     lvContent.setDividerHeight(0);
-
     presenter.loadDataOpen();
-
     swipeRefresh.setOnRefreshListener(new OnRefreshListener() {
       @Override
       public void onRefresh() {

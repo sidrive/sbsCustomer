@@ -12,14 +12,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.features.profile.adapter.InterfaceAdapter.ViewHolder;
-import com.sabaindomedika.stscustomer.model.Profil.Datum_;
+import com.sabaindomedika.stscustomer.model.profile.Datum_;
+import com.sabaindomedika.stscustomer.model.profile.Datum__;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceAdapter extends Adapter<ViewHolder> {
   private Context mContext;
-  private List<Datum_> mItem;
-  public InterfaceAdapter(ArrayList<Datum_> items, Context context) {
+  private List<Datum__> mItem;
+  public InterfaceAdapter(ArrayList<Datum__> items, Context context) {
     this.mContext = context;
     this.mItem = items;
   }
@@ -34,8 +35,8 @@ public class InterfaceAdapter extends Adapter<ViewHolder> {
 
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
-    Datum_ checklistItem = getItem(position);
-    holder.txtContent.setText(checklistItem.getName());
+    Datum__ checklistItem = getItem(position);
+    holder.txtContent.setText(checklistItem.getCode());
   }
 
   @Override
@@ -55,10 +56,10 @@ public class InterfaceAdapter extends Adapter<ViewHolder> {
   }
 
   @Nullable
-  public Datum_ getItem(int position) {
+  public Datum__ getItem(int position) {
     return mItem.get(position);
   }
-  public void UpdateData(List<Datum_> listarray) {
+  public void UpdateData(List<Datum__> listarray) {
     mItem = listarray;
     notifyDataSetChanged();
   }

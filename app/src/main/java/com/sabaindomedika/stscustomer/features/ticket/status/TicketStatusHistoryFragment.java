@@ -17,6 +17,7 @@ import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.ticket.status.adapter.TicketStatusAdapter;
+import com.sabaindomedika.stscustomer.features.ticket.status.detail.TicketStatusDetailActivity;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.util.List;

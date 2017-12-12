@@ -21,6 +21,8 @@ import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseDialogFragment;
 import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusHistoryFragment;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusOpenFragment;
 import com.sabaindomedika.stscustomer.model.BodyClose;
 import com.sabaindomedika.stscustomer.utils.Toasts;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
@@ -90,6 +92,9 @@ public class CloseTicketFragment extends BaseDialogFragment {
             Toasts.show("Close Tiket Sukses");
             dialog.dismiss();
             getDialog().dismiss();
+            getActivity().finish();
+            TicketStatusOpenFragment ticketStatusOpenFragment = new TicketStatusOpenFragment();
+            ticketStatusOpenFragment.onStart();
           }
         }, error -> {
           dialog.dismiss();

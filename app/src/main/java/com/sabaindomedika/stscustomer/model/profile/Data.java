@@ -1,11 +1,13 @@
 
-package com.sabaindomedika.stscustomer.model.Profil;
+package com.sabaindomedika.stscustomer.model.profile;
 
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data {
+public class Data implements Parcelable
+{
 
     @SerializedName("id")
     @Expose
@@ -30,13 +32,45 @@ public class Data {
     private Customer customer;
     @SerializedName("supports")
     @Expose
-    private List<Support> supports = null;
+    private Supports supports;
     @SerializedName("instruments")
     @Expose
     private Instruments instruments;
     @SerializedName("interfaces")
     @Expose
     private Interfaces interfaces;
+    public final static Creator<Data> CREATOR = new Creator<Data>() {
+
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Data createFromParcel(Parcel in) {
+            return new Data(in);
+        }
+
+        public Data[] newArray(int size) {
+            return (new Data[size]);
+        }
+
+    }
+    ;
+
+    protected Data(Parcel in) {
+        this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.email = ((String) in.readValue((String.class.getClassLoader())));
+        this.name = ((String) in.readValue((String.class.getClassLoader())));
+        this.phoneNumber = ((String) in.readValue((String.class.getClassLoader())));
+        this.fcmToken = ((String) in.readValue((String.class.getClassLoader())));
+        this.type = ((String) in.readValue((String.class.getClassLoader())));
+        this.customer = ((Customer) in.readValue((Customer.class.getClassLoader())));
+        this.supports = ((Supports) in.readValue((Supports.class.getClassLoader())));
+        this.instruments = ((Instruments) in.readValue((Instruments.class.getClassLoader())));
+        this.interfaces = ((Interfaces) in.readValue((Interfaces.class.getClassLoader())));
+    }
+
+    public Data() {
+    }
 
     public Integer getId() {
         return id;
@@ -94,11 +128,11 @@ public class Data {
         this.customer = customer;
     }
 
-    public List<Support> getSupports() {
+    public Supports getSupports() {
         return supports;
     }
 
-    public void setSupports(List<Support> supports) {
+    public void setSupports(Supports supports) {
         this.supports = supports;
     }
 
@@ -116,6 +150,23 @@ public class Data {
 
     public void setInterfaces(Interfaces interfaces) {
         this.interfaces = interfaces;
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(id);
+        dest.writeValue(email);
+        dest.writeValue(name);
+        dest.writeValue(phoneNumber);
+        dest.writeValue(fcmToken);
+        dest.writeValue(type);
+        dest.writeValue(customer);
+        dest.writeValue(supports);
+        dest.writeValue(instruments);
+        dest.writeValue(interfaces);
+    }
+
+    public int describeContents() {
+        return  0;
     }
 
 }
