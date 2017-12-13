@@ -10,14 +10,18 @@
     >
 
   <include layout="@layout/toolbar"/>
+  <android.support.v7.widget.AppCompatImageView
+    android:id="@+id/imghead"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:background="@drawable/header"/>
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
       android:gravity="center_horizontal"
-      android:paddingTop="@dimen/padding_8"
-      >
+      android:paddingTop="@dimen/padding_8">
     <LinearLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -94,18 +98,5 @@
         android:text="Logout"
         tools:ignore="ContentDescription"/>
     </LinearLayout>
-
   </LinearLayout>
-  <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-      android:textColor="#000"
-      android:layout_marginBottom="58dp"
-      android:layout_alignParentBottom="true"
-      android:gravity="center"
-      android:text="@string/scc"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content" />
-  </RelativeLayout>
 </LinearLayout>

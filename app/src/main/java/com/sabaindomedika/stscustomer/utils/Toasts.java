@@ -39,4 +39,8 @@ public class Toasts {
     toast.setDuration(Toast.LENGTH_SHORT);
     toast.show();
   }
+
+  public static void showToast (Context context, String Message){
+    Toast.makeText(context,Message,Toast.LENGTH_LONG).show();
+  }
 }

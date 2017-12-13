@@ -1,6 +1,7 @@
 package com.sabaindomedika.stscustomer.features.ticket.open;
 
 import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.sabaindomedika.stscustomer.model.Category;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Instrument;
 import com.sabaindomedika.stscustomer.model.Interface;
@@ -15,7 +16,7 @@ public interface FormView extends MvpView {
   void showRequestDivision(List<RequestDivision> requestDivisions);
   void showDepartment(List<Department> departments);
   void showInstrument(List<Instrument> instruments);
-  void showDeviceName(List<Interface> interfaces);
+  void showDeviceName(List<Category> interfaces);
   void showLoading(boolean firstLoad);
   void showError(Throwable throwable);
 }

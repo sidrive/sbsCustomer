@@ -84,7 +84,7 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/padding_20"
       android:background="@drawable/bg_blue_rounded"
-      android:text="Download Pdf"
+      android:text="Close"
       android:textColor="@color/cardview_light_background"
       android:visibility="gone"/>
     <Button
@@ -93,14 +93,13 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/padding_20"
       android:background="@drawable/bg_blue_rounded"
-      android:text="Close"
+      android:text="Download PDF"
       android:textColor="@color/cardview_light_background"
       android:visibility="gone"/>
+    <include
+      layout="@layout/view_loading"
+      android:layout_gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
   </LinearLayout>
-  <include
-    layout="@layout/view_loading"
-    android:layout_gravity="center_horizontal"
-    android:layout_width="match_parent"
-    android:visibility="gone"
-    android:layout_height="wrap_content"/>
 </LinearLayout>

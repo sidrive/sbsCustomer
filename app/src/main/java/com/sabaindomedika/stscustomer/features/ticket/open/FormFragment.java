@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpFragment;
+import com.sabaindomedika.stscustomer.model.Category;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.Instrument;
@@ -78,7 +79,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   String divisionId;
   String divisionName;
   String instrumentId;
-  int interfaceId;
+  String category;
   String requestDivisionId;
   String departmentId;
   @Bind(R.id.btnSubmit)
@@ -235,12 +236,12 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
   }
 
   @Override
-  public void showDeviceName(List<Interface> interfacess) {
+  public void showDeviceName(List<Category> categories) {
     spnInterfaceContainer.setVisibility(View.VISIBLE);
     List<String> list = new ArrayList<>();
 
-    for (Interface interfaces : interfacess) {
-      list.add(interfaces.getName());
+    for (Category category : categories) {
+      list.add(category.getCategory());
     }
     ArrayAdapter<String> adapter =
         new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, list);
@@ -250,7 +251,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
     spnInterface.setOnItemSelectedListener(new OnItemSelectedListener() {
       @Override
       public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        interfaceId = interfacess.get(position).getId();
+        category = categories.get(position).getCategory();
       }
 
       @Override
@@ -300,11 +301,7 @@ public class FormFragment extends BaseMvpFragment<FormView, FormPresenter> imple
 
     Ticket ticket = new Ticket();
     ticket.setTicketTypeId(ticketTypeId);
-
-    if (interfaceId != 0) {
-      ticket.setInterfaceid(String.valueOf(interfaceId));
-    }
-
+    ticket.setCategory(category);
     if (instrumentId != null) {
       ticket.setInstrumentId(instrumentId);
     }

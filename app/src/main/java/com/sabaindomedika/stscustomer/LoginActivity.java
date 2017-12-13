@@ -39,7 +39,6 @@ public class LoginActivity extends BaseActivity {
     if (Preferences.getToken() != null){
       MainActivity.start(this);
     }
-    
     setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
     DaggerInit.networkComponent(this).inject(this);

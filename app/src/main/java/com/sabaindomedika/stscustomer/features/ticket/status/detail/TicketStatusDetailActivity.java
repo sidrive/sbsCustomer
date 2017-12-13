@@ -116,6 +116,7 @@ public class TicketStatusDetailActivity extends
     TicketType ticketType = getIntent().getExtras().getParcelable(TicketType.class.getSimpleName());
     txtTicketType.setText(ticketType.getName());
     id_ticket = ticket.getId();
+    progressBar.setVisibility(View.GONE);
     Log.e("init", "TicketStatusDetailActivity" + id_ticket);
     showContent(ticket);
   }
@@ -155,6 +156,8 @@ public class TicketStatusDetailActivity extends
 
   @OnClick(R.id.btnpdf)
   public void onPdfDownload() {
+    btnpdf.setVisibility(View.GONE);
+    progressBar.setVisibility(View.VISIBLE);
     presenter.downloadPdf(id_ticket,this);
   }
 
@@ -168,9 +171,9 @@ public class TicketStatusDetailActivity extends
       intent.setDataAndType(path, "application/pdf");
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivity(intent);
+      btnpdf.setVisibility(View.VISIBLE);
       InputStream inputStream = null;
       OutputStream outputStream = null;
-
       try {
         byte[] fileReader = new byte[4096];
 

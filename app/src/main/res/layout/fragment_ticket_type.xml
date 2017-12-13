@@ -8,7 +8,11 @@
     >
 
   <include layout="@layout/toolbar"/>
-
+  <android.support.v7.widget.AppCompatImageView
+    android:id="@+id/imghead"
+    android:layout_width="match_parent"
+    android:layout_height="115dp"
+    android:background="@drawable/header"/>
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -16,34 +20,31 @@
       android:padding="@dimen/padding_32"
       >
     <TextView
-        android:id="@+id/txtService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="Service"
-        tools:ignore="ContentDescription"
-        style="@style/ButtonMain"
-        />
+      android:id="@+id/txtService"
+      style="@style/ButtonMain"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:background="@drawable/ticket_service"
+      tools:ignore="ContentDescription"/>
 
     <TextView
-        android:id="@+id/txtOther"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="Other"
-        tools:ignore="ContentDescription"
-        style="@style/ButtonMain"
-        />
+      android:id="@+id/txtOther"
+      style="@style/ButtonMain"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:background="@drawable/ticket_other"
+      tools:ignore="ContentDescription"/>
 
     <TextView
-        android:id="@+id/txtComplaint"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:text="Complaint"
-        style="@style/ButtonMain"
-        tools:ignore="ContentDescription"
-        />
+      android:id="@+id/txtComplaint"
+      style="@style/ButtonMain"
+      android:layout_width="match_parent"
+      android:layout_height="100dp"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:background="@drawable/ticket_complain"
+      tools:ignore="ContentDescription"/>
 
   </LinearLayout>
 </LinearLayout>

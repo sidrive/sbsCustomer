@@ -1,8 +1,11 @@
 package com.sabaindomedika.stscustomer.features.ticket;
 
+import static butterknife.ButterKnife.bind;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -30,19 +33,23 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static butterknife.ButterKnife.bind;
-
 /**
  * Created by Fajar Rianda on 01/05/2017.
  */
 public class DivisionTypeFragment extends BaseFragment {
 
-  @Bind(R.id.toolbar) Toolbar toolbar;
-  @Bind(R.id.lyDivisionContainer) LinearLayout lyDivisionContainer;
-  @Bind(R.id.txtContentAvailable) TextView txtContentAvailable;
-  @Bind(R.id.progressBar) ProgressBar progressBar;
-
-  @Inject ApiService apiService;
+  @Bind(R.id.toolbar)
+  Toolbar toolbar;
+  @Bind(R.id.lyDivisionContainer)
+  LinearLayout lyDivisionContainer;
+  @Bind(R.id.txtContentAvailable)
+  TextView txtContentAvailable;
+  @Bind(R.id.progressBar)
+  ProgressBar progressBar;
+  @Inject
+  ApiService apiService;
+  @Bind(R.id.imghead)
+  AppCompatImageView imghead;
 
   public static DivisionTypeFragment newInstance(String ticketType) {
     Bundle bundle = new Bundle();
@@ -52,18 +59,22 @@ public class DivisionTypeFragment extends BaseFragment {
     return fragment;
   }
 
-  @Override public void onAttach(Context context) {
+  @Override
+  public void onAttach(Context context) {
     super.onAttach(context);
   }
 
-  @Override public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_division_type, container, false);
     bind(this, view);
+    ButterKnife.bind(this, view);
     return view;
   }
 
-  @Override public void onActivityCreated(Bundle savedInstanceState) {
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     setupToolbar();
     DaggerInit.networkComponent(context).inject(this);
@@ -81,7 +92,9 @@ public class DivisionTypeFragment extends BaseFragment {
             setupDivision();
           }, error -> {
             setupLoading(false);
-            if (isVisible()) ErrorHelper.thrown(error);
+            if (isVisible()) {
+              ErrorHelper.thrown(error);
+            }
           });
     } else {
       setupLoading(true);
@@ -91,20 +104,24 @@ public class DivisionTypeFragment extends BaseFragment {
 
   private void setupDivision() {
     List<Division> divisions = Preferences.getDivision();
-
     for (int i = 0; i < divisions.size(); i++) {
       Division division = divisions.get(i);
-
       View view = LayoutInflater.from(context)
-          .inflate(R.layout.list_item_default, lyDivisionContainer, false);
+          .inflate(R.layout.list_item_engineer, lyDivisionContainer, false);
       TextView txtDivision = ButterKnife.findById(view, R.id.txtId);
-      txtDivision.setText(division.getName());
+      if (division.getId().equals("1")) {
+        view.setBackgroundResource(R.drawable.division_engineer);
+      } else if (division.getId().equals("2")) {
+        view.setBackgroundResource(R.drawable.division_application);
+      } else if (division.getId().equals("3")) {
+        view.setBackgroundResource(R.drawable.division_it);
+      } else if (division.getId().equals("4")) {
+        view.setBackgroundResource(R.drawable.division_hanter);
+      }
       view.setOnClickListener(v -> {
-        navigatetoForm(division.getId(),division.getName());
+        navigatetoForm(division.getId(), division.getName());
       });
-
       lyDivisionContainer.addView(view, i);
-
     }
   }
 
@@ -124,11 +141,11 @@ public class DivisionTypeFragment extends BaseFragment {
       SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
       stringBuilder.append(getString(R.string.refresh));
       stringBuilder.setSpan(new ClickableSpan() {
-        @Override public void onClick(View widget) {
+        @Override
+        public void onClick(View widget) {
           loadDivison();
         }
       }, 0, getString(R.string.refresh).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
       stringBuilder.setSpan(
           new ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorPrimary)), 0,
           getString(R.string.refresh).length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -143,5 +160,11 @@ public class DivisionTypeFragment extends BaseFragment {
     String ticketType = getArguments().getString(String.class.getSimpleName());
     OpenTicketActivity activity = (OpenTicketActivity) getActivity();
     activity.navigateToForm(ticketType, divisionId, divisionName);
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    ButterKnife.unbind(this);
   }
 }

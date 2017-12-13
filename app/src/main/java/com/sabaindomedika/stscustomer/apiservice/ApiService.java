@@ -3,6 +3,7 @@ package com.sabaindomedika.stscustomer.apiservice;
 import com.sabaindomedika.stscustomer.constant.URLCons;
 import com.sabaindomedika.stscustomer.model.Auth;
 import com.sabaindomedika.stscustomer.model.BodyClose;
+import com.sabaindomedika.stscustomer.model.Category;
 import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.FcmToken;
@@ -80,7 +81,7 @@ public interface ApiService {
   Observable<ResponseNotification> isread(@Path("notification_id") String notification_id);
 
   @GET(URLCons.URL_INTERFACE)
-  Observable<Responses<List<Interface>>> getInterface();
+  Observable<Responses<List<Category>>> getInterface();
 
   @Streaming @Headers({"Content-Type: application/json"})
   @GET(URLCons.URL_DOWNLOAD_PDF)

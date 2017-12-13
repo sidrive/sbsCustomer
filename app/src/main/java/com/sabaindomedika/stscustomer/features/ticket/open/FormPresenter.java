@@ -102,8 +102,7 @@ public class FormPresenter extends MvpNullObjectBasePresenter<FormView> {
         .subscribe(object -> {
           getView().showDeviceName(object.getData());
           getView().showLoading(false);
-        }, error -> {
-        });
+        }, error -> {});
   }
 
   private void loadRequestDivisions(String divisionId) {
