@@ -15,6 +15,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class DivisionTypeFragment extends BaseFragment {
   @Inject
   ApiService apiService;
   @Bind(R.id.imghead)
-  AppCompatImageView imghead;
+  ImageView imghead;
 
   public static DivisionTypeFragment newInstance(String ticketType) {
     Bundle bundle = new Bundle();

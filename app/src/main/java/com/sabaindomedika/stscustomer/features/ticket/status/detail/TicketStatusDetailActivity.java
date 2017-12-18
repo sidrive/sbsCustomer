@@ -11,11 +11,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
@@ -30,16 +33,20 @@ import com.sabaindomedika.stscustomer.constant.StatusTicketCons;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
+import com.sabaindomedika.stscustomer.features.ticket.status.adapter.ServiceReportAdapter;
+import com.sabaindomedika.stscustomer.features.ticket.status.adapter.ServiceReportAdapter.onClickButton;
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.TicketType;
+import com.sabaindomedika.stscustomer.model.servicereport.Datum;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -56,6 +63,9 @@ public class TicketStatusDetailActivity extends
   ApiService apiService;
   BaseFragment fragment;
   BaseDialogFragment Dfragment;
+  @Bind(R.id.rcvContent)
+  RecyclerView rcvContent;
+  private ServiceReportAdapter serviceReportAdapter;
   @Bind(R.id.toolbar)
   Toolbar toolbar;
   @Bind(R.id.txtTicketNumber)
@@ -117,8 +127,19 @@ public class TicketStatusDetailActivity extends
     txtTicketType.setText(ticketType.getName());
     id_ticket = ticket.getId();
     progressBar.setVisibility(View.GONE);
-    Log.e("init", "TicketStatusDetailActivity" + id_ticket);
     showContent(ticket);
+    serviceReportAdapter = new ServiceReportAdapter(new ArrayList<Datum>(0),
+        getApplicationContext(), new onClickButton() {
+      @Override
+      public void onClickListener(int id_report) {
+        DialogFragment dialogFragment = new ServiceReportFragment(id_report, id_ticket);
+        dialogFragment.show(getFragmentManager(), "Part View");
+      }
+    });
+    rcvContent.setHasFixedSize(true);
+    rcvContent.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+    rcvContent.setAdapter(serviceReportAdapter);
+    Log.e("init", "TicketStatusDetailActivity" + id_ticket);
   }
 
   @OnClick(R.id.btncancel)
@@ -151,27 +172,25 @@ public class TicketStatusDetailActivity extends
     Ticket ticket = getIntent().getExtras().getParcelable(Ticket.class.getSimpleName());
     String id = ticket.getId();
     DialogFragment dialogFragment = new CloseTicketFragment(id);
-    dialogFragment.show(getFragmentManager(), "TAG");
+    dialogFragment.show(getFragmentManager(), "Sparepart Value");
   }
 
   @OnClick(R.id.btnpdf)
   public void onPdfDownload() {
     btnpdf.setVisibility(View.GONE);
     progressBar.setVisibility(View.VISIBLE);
-    presenter.downloadPdf(id_ticket,this);
+    presenter.downloadPdf(id_ticket, this);
   }
 
   private boolean writeResponseBodyToDisk(ResponseBody body) {
     try {
-      // todo adding stream download data
-      File futureStudioIconFile = new File(
-          getExternalFilesDir(null) + File.separator + "Ticket.pdf");
+      File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Ticket.pdf");
       Uri path = Uri.fromFile(futureStudioIconFile);
+      Uri realpath = Uri.parse(path.toString().replace("file","content"));
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      intent.setDataAndType(path, "application/pdf");
+      intent.setDataAndType(realpath, "application/pdf");
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivity(intent);
-      btnpdf.setVisibility(View.VISIBLE);
       InputStream inputStream = null;
       OutputStream outputStream = null;
       try {
@@ -214,7 +233,7 @@ public class TicketStatusDetailActivity extends
     } catch (IOException e) {
       return false;
     }
-  }
+}
 
   public void dismiss() {
     Intent i = new Intent(getApplicationContext(), TicketStatusActivity.class);
@@ -238,6 +257,10 @@ public class TicketStatusDetailActivity extends
     }
     if (ticket.getStatus().equals("closed")) {
       is_true_closed = true;
+    }
+    if (ticket.getStatus().equals("held")){
+      progressBar.setVisibility(View.VISIBLE);
+      presenter.loadServiceReport(id_ticket, this);
     }
     if (is_true == true) {
       btncancel.setVisibility(View.VISIBLE);
@@ -290,5 +313,10 @@ public class TicketStatusDetailActivity extends
     if (isChild()) {
       ErrorHelper.thrown(throwable);
     }
+  }
+
+  @Override
+  public void showServiceReport(List<Datum> serviceReport) {
+    serviceReportAdapter.UpdateData(serviceReport);
   }
 }

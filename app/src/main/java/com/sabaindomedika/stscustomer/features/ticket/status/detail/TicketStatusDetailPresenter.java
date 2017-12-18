@@ -20,6 +20,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by raka on 12/12/17.
@@ -56,5 +58,18 @@ public class TicketStatusDetailPresenter extends MvpNullObjectBasePresenter<Tick
         Log.d(TAG, "server contact failed");
       }
     });
+  }
+
+  public void loadServiceReport (String idticket,Context context) {
+    apiService.serviceReport(idticket)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(object -> {
+          getView().showServiceReport(object.getData());
+          getView().showLoading(false);
+        }, error -> {
+          getView().showError(error);
+          getView().showLoading(false);
+        } );
   }
 }

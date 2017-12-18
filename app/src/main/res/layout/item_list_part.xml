@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Part No."
+        android:textColor="@color/cardview_dark_background"
+        android:id="@+id/textView16" />
+    <TextView
+        android:id="@+id/tvTipeAlat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView16" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity :"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="35dp" />
+    <TextView
+        android:id="@+id/tvQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/cardview_dark_background" />
+  </RelativeLayout>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Description"
+        android:textColor="@color/cardview_dark_background" />
+  </RelativeLayout>
+  <TextView
+      android:id="@+id/tvDesc"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:maxLines="3"
+      android:padding="5dp"
+      android:text="ipsum_desc"
+      android:layout_gravity="start"
+      android:textColor="@color/cardview_dark_background" />
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remarks"
+        android:textColor="@color/cardview_dark_background"/>
+  </RelativeLayout>
+  <TextView
+      android:id="@+id/tvremarks"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:maxLines="3"
+      android:padding="5dp"
+      android:text="ipsum_desc"
+      android:layout_gravity="start"
+      android:textColor="@color/cardview_dark_background" />
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textColor="@color/cardview_dark_background"/>
+  </RelativeLayout>
+  <TextView
+      android:id="@+id/tvstatus"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:maxLines="3"
+      android:padding="5dp"
+      android:text="ipsum_desc"
+      android:layout_gravity="start"
+      android:textColor="@color/cardview_dark_background" />
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+  </RelativeLayout>
+</LinearLayout>

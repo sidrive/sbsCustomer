@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,7 +31,7 @@ public class TicketTypeFragment extends BaseFragment {
   @Inject
   ApiService apiService;
   @Bind(R.id.imghead)
-  AppCompatImageView imghead;
+  ImageView imghead;
 
   public static TicketTypeFragment newInstance() {
     return new TicketTypeFragment();

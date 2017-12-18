@@ -18,7 +18,8 @@ public class URLCons {
   public static final String URL_FCM = URL_BASE + "api/update-fcm-token";
   public static final String URL_PROFILE = URL_BASE + "api/me";
   public static final String URL_DOWNLOAD_PDF = URL_BASE + "api/invoice/{id}/print";
-
+  public static final String URL_SERVICE_REPORT = URL_BASE + "api/customer/ticket/{ticket}/service-reports";
+  public static final String URL_SERVICE_PART = URL_BASE + "api/customer/ticket/{ticket}/service-reports/{service_report}/parts";
 
   public static final String URL_OPEN_TICKET = URL_BASE + "api/customer/ticket";
   public static final String URL_CLOSE_TICKET = URL_BASE + "api/customer/ticket/{ticket}/close";

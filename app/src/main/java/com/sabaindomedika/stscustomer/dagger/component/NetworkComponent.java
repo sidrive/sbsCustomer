@@ -12,6 +12,8 @@ import com.sabaindomedika.stscustomer.features.ticket.CloseTicketFragment;
 import com.sabaindomedika.stscustomer.features.ticket.DivisionTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.TicketTypeFragment;
 import com.sabaindomedika.stscustomer.features.ticket.open.FormPresenter;
+import com.sabaindomedika.stscustomer.features.ticket.status.adapter.ServiceReportAdapter;
+import com.sabaindomedika.stscustomer.features.ticket.status.detail.ServiceReportFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.detail.TicketStatusDetailActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusHistoryFragment;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusOpenFragment;
@@ -57,4 +59,6 @@ public interface NetworkComponent {
   void inject(NotificationDetailActivity notificationDetailActivity);
 
   void inject(TicketStatusDetailPresenter ticketStatusDetailPresenter);
+
+  void inject(ServiceReportFragment serviceReportFragment);
 }

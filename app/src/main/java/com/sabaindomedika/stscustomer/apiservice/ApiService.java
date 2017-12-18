@@ -8,7 +8,7 @@ import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.model.Instrument;
-import com.sabaindomedika.stscustomer.model.Interface;
+import com.sabaindomedika.stscustomer.model.part.ResponsePart;
 import com.sabaindomedika.stscustomer.model.profile.ResponseProfile;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
 import com.sabaindomedika.stscustomer.model.Responses;
@@ -16,6 +16,7 @@ import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.User;
 import com.sabaindomedika.stscustomer.model.auth.ResponseLogin;
 import com.sabaindomedika.stscustomer.model.notification.ResponseNotification;
+import com.sabaindomedika.stscustomer.model.servicereport.ResponseServiceReport;
 import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -83,7 +84,16 @@ public interface ApiService {
   @GET(URLCons.URL_INTERFACE)
   Observable<Responses<List<Category>>> getInterface();
 
-  @Streaming @Headers({"Content-Type: application/json"})
+  @Streaming
+  @Headers({"Content-Type: application/json"})
   @GET(URLCons.URL_DOWNLOAD_PDF)
   Call<ResponseBody> downloadPdf(@Path("id")String id);
+
+  @GET(URLCons.URL_SERVICE_REPORT)
+  Observable<ResponseServiceReport> serviceReport(@Path("ticket") String TicketId);
+
+  @GET(URLCons.URL_SERVICE_PART)
+  Observable<ResponsePart> servicePart(@Path("ticket") String TicketId, @Path("service_report") Integer service_report);
+
+
 }
