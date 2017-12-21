@@ -26,9 +26,6 @@ import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by Fajar Rianda on 01/05/2017.
- */
 public class ProfileActivity extends BaseActivity {
 
   @Bind(R.id.toolbar)

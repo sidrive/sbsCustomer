@@ -1,49 +1,46 @@
 package com.sabaindomedika.stscustomer;
 
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
-import android.Manifest.permission;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
+import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
 import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusActivity;
+import com.sabaindomedika.stscustomer.features.ticket.status.TicketStatusPresenter;
 import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.utils.Preferences;
+import com.sabaindomedika.stscustomer.utils.Toasts;
+import com.sabaindomedika.stscustomer.utils.helper.DialogListener;
 import java.util.List;
 import javax.inject.Inject;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMvpActivity<DialogListener,MainPresenter> implements DialogListener{
 
   @Inject
   ApiService apiService;
   @Bind(R.id.imghead) ImageView imghead;
-  private static final String[] LOCATION_AND_CONTACTS =
-      {CAMERA,permission.BLUETOOTH, permission.BLUETOOTH_ADMIN, permission.WRITE_EXTERNAL_STORAGE, permission.READ_EXTERNAL_STORAGE};
-  private static final int RC_CAMERA_PERM = 123;
+  private String[] permission = new String[]{
+      android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+  private static final int PERMISSION_CALLBACK_CONSTANT = 100;
 
   public static void start(Context context) {
     Intent intent = new Intent(context, MainActivity.class);
@@ -62,16 +59,43 @@ public class MainActivity extends BaseActivity {
     getPermission();
   }
 
+  @NonNull
+  @Override
+  public MainPresenter createPresenter() {
+    return new MainPresenter(this);
+  }
+
   private void getPermission() {
-    Dexter.withActivity(this)
-        .withPermissions(
-            permission.CAMERA,
-            permission.WRITE_EXTERNAL_STORAGE,
-            permission.READ_EXTERNAL_STORAGE
-        ).withListener(new MultiplePermissionsListener() {
-      @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
-      @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
-    }).check();
+    if (ActivityCompat.checkSelfPermission(this, permission[0]) != PackageManager.PERMISSION_GRANTED
+        || ActivityCompat.checkSelfPermission(this, permission[1])
+        != PackageManager.PERMISSION_GRANTED) {
+      if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission[0])
+          || ActivityCompat.shouldShowRequestPermissionRationale(this, permission[1])){
+      } else {
+        presenter.showDialog(this, this, permission);
+      }
+    }
+  }
+
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+      @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
+      boolean allGrant = false;
+      for (int i = 0; i < grantResults.length; i++) {
+        if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+          allGrant = true;
+        } else {
+          allGrant = false;
+        }
+      }
+      if (allGrant) {
+        Toasts.showToast(this, "ALL GRANTED");
+      } else {
+        getPermission();
+      }
+    }
   }
 
   private void updateFCMToken(String fcm_token) {
@@ -110,5 +134,21 @@ public class MainActivity extends BaseActivity {
   public void onLogout() {
     Preferences.clear();
     LoginActivity.start(this);
+  }
+
+  @Override
+  public void dialogPositive(DialogInterface dialogInterface, String[] permission) {
+    /*dialogInterface.dismiss();*/
+    ActivityCompat.requestPermissions(this, permission, PERMISSION_CALLBACK_CONSTANT);
+  }
+
+  @Override
+  public void dialogNegative(DialogInterface dialogInterface) {
+
+  }
+
+  @Override
+  public void dialogSetting(DialogInterface dialogInterface) {
+
   }
 }

@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.DialogFragment;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,15 +16,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
+import com.github.barteksc.pdfviewer.PDFView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseDialogFragment;
@@ -38,6 +41,7 @@ import com.sabaindomedika.stscustomer.features.ticket.status.adapter.ServiceRepo
 import com.sabaindomedika.stscustomer.model.Ticket;
 import com.sabaindomedika.stscustomer.model.TicketType;
 import com.sabaindomedika.stscustomer.model.servicereport.Datum;
+import com.sabaindomedika.stscustomer.utils.Toasts;
 import com.sabaindomedika.stscustomer.utils.helper.ErrorHelper;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -48,6 +52,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -63,6 +70,8 @@ public class TicketStatusDetailActivity extends
   ApiService apiService;
   BaseFragment fragment;
   BaseDialogFragment Dfragment;
+  @Bind(R.id.pdfView)
+  PDFView pdfView;
   @Bind(R.id.rcvContent)
   RecyclerView rcvContent;
   private ServiceReportAdapter serviceReportAdapter;
@@ -184,15 +193,24 @@ public class TicketStatusDetailActivity extends
 
   private boolean writeResponseBodyToDisk(ResponseBody body) {
     try {
-      File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "Ticket.pdf");
+      File futureStudioIconFile = new File("/sdcard/ticket_customer.pdf");
       Uri path = Uri.fromFile(futureStudioIconFile);
       Uri realpath = Uri.parse(path.toString().replace("file","content"));
       Intent intent = new Intent(Intent.ACTION_VIEW);
       intent.setDataAndType(realpath, "application/pdf");
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-      startActivity(intent);
+      try {
+        startActivity(intent);
+      }
+      catch (ActivityNotFoundException e) {
+        Toast.makeText(this,
+            "No Application Available to View PDF",
+            Toast.LENGTH_SHORT).show();
+        startActivity(intent);
+      }
       InputStream inputStream = null;
       OutputStream outputStream = null;
+
       try {
         byte[] fileReader = new byte[4096];
 
@@ -233,7 +251,7 @@ public class TicketStatusDetailActivity extends
     } catch (IOException e) {
       return false;
     }
-}
+  }
 
   public void dismiss() {
     Intent i = new Intent(getApplicationContext(), TicketStatusActivity.class);
@@ -245,7 +263,6 @@ public class TicketStatusDetailActivity extends
     Boolean is_true = false;
     Boolean is_true_close = false;
     Boolean is_true_closed = false;
-    Log.e("showContent", "TicketStatusDetailActivity" + ticket.getStatus());
     if (ticket.getStatus().equals("new")) {
       is_true = true;
     }

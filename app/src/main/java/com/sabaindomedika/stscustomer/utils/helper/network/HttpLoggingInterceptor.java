@@ -127,7 +127,6 @@ public final class HttpLoggingInterceptor implements Interceptor {
     Request request;
     request = chain.request()
         .newBuilder()
-        .addHeader("Accept","application/json")
         .addHeader("Authorization", Preferences.getToken() != null
             ? "Bearer ".concat(Preferences.getToken().getAccessToken())
                 : "Bearer ")

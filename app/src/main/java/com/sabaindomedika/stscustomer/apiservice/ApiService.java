@@ -35,52 +35,67 @@ import rx.Observable;
  */
 public interface ApiService {
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET("{user_id}")
   Observable<String> getData(@Path("user_id") String userId);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @POST(URLCons.URL_LOGIN)
   Observable<ResponseLogin> login(@Body Auth auth);
 
-  @Headers("Content-Type: application/json")
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT(URLCons.URL_FCM)
   Observable<Responses<User>> updateFcm(@Body FcmToken fcm_token);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_PROFILE)
   Observable<ResponseProfile> getUserProfile();
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_DIVISIONS)
   Observable<Responses<List<Division>>> getDivisions();
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_REQUEST_DIVISIONS)
   Observable<Responses<List<RequestDivision>>> getRequestDivisions(@Path("division_id") String divisionID);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_INSTRUMENT)
   Observable<Responses<List<Instrument>>> getInstrument(@Query("instrument_category_id") String instrument_category_id);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_DEPARTMENTS)
   Observable<Responses<List<Department>>> getDepartments();
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @POST(URLCons.URL_OPEN_TICKET)
   Observable<Responses<Ticket>> postOpenTicket(@Body Ticket ticket);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT(URLCons.URL_CLOSE_TICKET)
   Observable<Responses<Ticket>> closeTicket(@Path("ticket") String ticketId, @Body BodyClose bodyClose);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT(URLCons.URL_CANCEL_TICKET)
   Observable<Responses<Ticket>> cancelTicket(@Path("ticket") String ticketId);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_TICKET_STATUS)
   Observable<Responses<List<Ticket>>> getTicketStatusOpen();
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_TICKET_STATUS)
   Observable<Responses<List<Ticket>>> getTicketStatusHistory(@Query("is_closed") String isClosed);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_TICKET_NOTIFICATION)
   Observable<ResponseNotification> getTicketNotification();
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT(URLCons.URL_TICKET_READ)
   Observable<ResponseNotification> isread(@Path("notification_id") String notification_id);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_INTERFACE)
   Observable<Responses<List<Category>>> getInterface();
 
@@ -89,11 +104,11 @@ public interface ApiService {
   @GET(URLCons.URL_DOWNLOAD_PDF)
   Call<ResponseBody> downloadPdf(@Path("id")String id);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_SERVICE_REPORT)
   Observable<ResponseServiceReport> serviceReport(@Path("ticket") String TicketId);
 
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_SERVICE_PART)
   Observable<ResponsePart> servicePart(@Path("ticket") String TicketId, @Path("service_report") Integer service_report);
-
-
 }
