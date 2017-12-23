@@ -195,12 +195,13 @@ public class TicketStatusDetailActivity extends
     try {
       File futureStudioIconFile = new File("/sdcard/ticket_customer.pdf");
       Uri path = Uri.fromFile(futureStudioIconFile);
-      Uri realpath = Uri.parse(path.toString().replace("file","content"));
+      /*Uri realpath = Uri.parse(path.toString().replace("file","content"));*/
       Intent intent = new Intent(Intent.ACTION_VIEW);
-      intent.setDataAndType(realpath, "application/pdf");
+      intent.setDataAndType(path, "application/pdf");
       intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       try {
         startActivity(intent);
+        btnpdf.setVisibility(View.VISIBLE);
       }
       catch (ActivityNotFoundException e) {
         Toast.makeText(this,

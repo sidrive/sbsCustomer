@@ -17,9 +17,16 @@ buildscript {
 }
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword 'jamban201'
+            storeFile file('/home/raka/Documents/GeekProject/saba/SabaCustomer_Keystore.jks')
+            storePassword 'jamban201'
+        }
+    }
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
-
     defaultConfig {
         applicationId "com.sabaindomedika.stscustomer"
         minSdkVersion 15
@@ -28,14 +35,15 @@ android {
         versionName "1.1"
         multiDexEnabled true
     }
-
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.release
+            versionNameSuffix '1.1'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -48,8 +56,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:appcompat-v7:24.1.0'
     compile 'com.android.support:support-v13:24.1.0'

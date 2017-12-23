@@ -138,7 +138,7 @@ public class MainActivity extends BaseMvpActivity<DialogListener,MainPresenter> 
 
   @Override
   public void dialogPositive(DialogInterface dialogInterface, String[] permission) {
-    /*dialogInterface.dismiss();*/
+    dialogInterface.dismiss();
     ActivityCompat.requestPermissions(this, permission, PERMISSION_CALLBACK_CONSTANT);
   }
 

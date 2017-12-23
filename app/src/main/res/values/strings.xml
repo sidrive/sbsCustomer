@@ -8,8 +8,8 @@
 
     <string name="open_tiket">Open Tiket</string>
     <string name="memo">Memo</string>
-    <string name="nama_analisis_dokter">Nama Analis/Dokter</string>
-    <string name="no_hp_analisis">Nomor HP Analis</string>
+    <string name="nama_analisis_dokter">Nama Customer</string>
+    <string name="no_hp_analisis">Nomor HP Customer</string>
     <string name="refresh">Silahkan Refresh</string>
     <string name="device_name">Device Name</string>
     <string name="rationale_camera">This app needs access to your camera so you can take pictures.</string>
