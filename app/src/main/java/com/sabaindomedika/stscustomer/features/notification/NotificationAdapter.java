@@ -12,6 +12,7 @@ import com.sabaindomedika.stscustomer.R;
 import com.sabaindomedika.stscustomer.basecommon.BaseListAdapter;
 import com.sabaindomedika.stscustomer.basecommon.BaseViewHolder;
 import com.sabaindomedika.stscustomer.model.notification.Datum;
+import com.sabaindomedika.stscustomer.utils.Strings;
 
 public class NotificationAdapter extends BaseListAdapter<Datum> {
 
@@ -32,7 +33,7 @@ public class NotificationAdapter extends BaseListAdapter<Datum> {
     Datum notification = listData.get(position);
     viewHolder.txtTicketNumber.setText(notification.getTicket().getData().getNumber());
     viewHolder.txtContent.setText(notification.getTicket().getData().getComment());
-    viewHolder.txtDate.setText(notification.getTicket().getData().getCreatedAt().getDate());
+    viewHolder.txtDate.setText(Strings.getDate(notification.getTicket().getData().getCreatedAt().getDate()));
     viewHolder.txtStatusTicket.setText(notification.getBody());
     if (notification.getIsRead().equals(false)){
       viewHolder.imgNotify.setVisibility(View.VISIBLE);

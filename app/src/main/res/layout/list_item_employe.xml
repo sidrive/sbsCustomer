@@ -4,6 +4,8 @@
     android:id="@id/txtContent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/padding_8"
+    android:textSize="15dp"
     android:textColor="@color/cardview_dark_background"
     tools:text=" Saba Indomedika Sts Customer"
     android:padding="@dimen/padding_4"

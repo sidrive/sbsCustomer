@@ -17,12 +17,24 @@
     android:layout_marginTop="?actionBarSize"
     android:background="@drawable/header"/>
 
-  <LinearLayout
-      android:id="@+id/lyDivisionContainer"
+  <include
+    layout="@layout/view_loading"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/imghead">
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_below="@+id/imghead"
-      android:orientation="vertical"
-      android:padding="@dimen/padding_20"/>
-  <include layout="@layout/view_loading"/>
+      android:orientation="vertical" >
+      <LinearLayout
+        android:id="@+id/lyDivisionContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_20"
+        android:orientation="vertical" />
+    </LinearLayout>
+  </ScrollView>
 </RelativeLayout>

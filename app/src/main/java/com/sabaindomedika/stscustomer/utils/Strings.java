@@ -12,7 +12,7 @@ public class Strings {
   public static String getDate(String date) {
     try {
       SimpleDateFormat formatIn = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSSSSS");
-      SimpleDateFormat formatOut = new SimpleDateFormat("dd/MM/yyyy");
+      SimpleDateFormat formatOut = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
       Date day = formatIn.parse(date);
       return formatOut.format(day);
     } catch (ParseException e) {

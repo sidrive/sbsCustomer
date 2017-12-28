@@ -279,6 +279,8 @@ public class TicketStatusDetailActivity extends
     if (ticket.getStatus().equals("held")){
       progressBar.setVisibility(View.VISIBLE);
       presenter.loadServiceReport(id_ticket, this);
+    } else {
+      progressBar.setVisibility(View.GONE);
     }
     if (is_true == true) {
       btncancel.setVisibility(View.VISIBLE);
