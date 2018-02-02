@@ -19,6 +19,7 @@ import com.sabaindomedika.stscustomer.apiservice.ApiService;
 import com.sabaindomedika.stscustomer.basecommon.BaseActivity;
 import com.sabaindomedika.stscustomer.basecommon.BaseMvpActivity;
 import com.sabaindomedika.stscustomer.dagger.DaggerInit;
+import com.sabaindomedika.stscustomer.features.broadcast.BroadcastActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.profile.ProfileActivity;
 import com.sabaindomedika.stscustomer.features.ticket.open.OpenTicketActivity;
@@ -134,6 +135,11 @@ public class MainActivity extends BaseMvpActivity<DialogListener,MainPresenter> 
   public void onLogout() {
     Preferences.clear();
     LoginActivity.start(this);
+  }
+
+  @OnClick(R.id.btnbroadcast)
+  public void onBroadcast() {
+    BroadcastActivity.start(this);
   }
 
   @Override

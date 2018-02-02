@@ -4,6 +4,7 @@ import com.sabaindomedika.stscustomer.LoginActivity;
 import com.sabaindomedika.stscustomer.MainActivity;
 import com.sabaindomedika.stscustomer.dagger.PerActivity;
 import com.sabaindomedika.stscustomer.dagger.module.NetworkModule;
+import com.sabaindomedika.stscustomer.features.broadcast.BroadcastActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationDetailActivity;
 import com.sabaindomedika.stscustomer.features.notification.NotificationPresenter;
@@ -61,4 +62,6 @@ public interface NetworkComponent {
   void inject(TicketStatusDetailPresenter ticketStatusDetailPresenter);
 
   void inject(ServiceReportFragment serviceReportFragment);
+
+    void inject(BroadcastActivity broadcastActivity);
 }

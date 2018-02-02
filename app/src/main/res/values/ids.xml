@@ -9,6 +9,7 @@
   <item name="txtContentAvailable" type="id"/>
   <item name="swipeRefresh" type="id"/>
   <item name="lvContent" type="id"/>
+  <item name="lcBroadcast" type="id"/>
   <item name="txtContent" type="id"/>
   <item name="txtDescription" type="id"/>
   <item name="txtTicketId" type="id"/>
@@ -18,4 +19,5 @@
   <item name="txtDate" type="id"/>
   <item name="spnPriority" type="id"/>
   <item name="spnContent" type="id"/>
+  <item name="lvBroadcast" type="id"/>
 </resources>

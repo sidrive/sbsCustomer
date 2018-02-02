@@ -8,6 +8,7 @@ import com.sabaindomedika.stscustomer.model.Department;
 import com.sabaindomedika.stscustomer.model.Division;
 import com.sabaindomedika.stscustomer.model.FcmToken;
 import com.sabaindomedika.stscustomer.model.Instrument;
+import com.sabaindomedika.stscustomer.model.broadcast.ResponseBroadcast;
 import com.sabaindomedika.stscustomer.model.part.ResponsePart;
 import com.sabaindomedika.stscustomer.model.profile.ResponseProfile;
 import com.sabaindomedika.stscustomer.model.RequestDivision;
@@ -90,6 +91,10 @@ public interface ApiService {
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @GET(URLCons.URL_TICKET_NOTIFICATION)
   Observable<ResponseNotification> getTicketNotification();
+
+  @Headers({"Accept: application/json", "Content-Type: application/json"})
+  @GET(URLCons.URL_TICKET_NOTIFICATION_BROADCAST)
+  Observable<ResponseBroadcast> getBroadcast();
 
   @Headers({"Accept: application/json", "Content-Type: application/json"})
   @PUT(URLCons.URL_TICKET_READ)

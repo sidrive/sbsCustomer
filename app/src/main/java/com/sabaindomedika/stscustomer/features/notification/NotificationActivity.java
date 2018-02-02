@@ -84,7 +84,7 @@ public class NotificationActivity extends BaseMvpActivity<NotificationView, Noti
   public void showError(Throwable throwable) {
 
   }
-
+  
   @OnItemClick(R.id.lvContent)
   public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
     String notification_id = adapter.getItem(i).getId();

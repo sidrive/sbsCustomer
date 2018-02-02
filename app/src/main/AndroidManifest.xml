@@ -54,6 +54,9 @@
         <activity
             android:name=".features.notification.NotificationActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".features.broadcast.BroadcastActivity"
+            android:screenOrientation="portrait"/>
         <service
           android:name=".fcm.MyFirebaseInstanceIDService">
             <intent-filter>
