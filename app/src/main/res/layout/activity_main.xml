@@ -106,13 +106,16 @@
           <TextView
               android:id="@+id/btnbroadcast"
               style="@style/ButtonMain"
-              android:layout_width="80dp"
-              android:layout_height="80dp"
+              android:layout_width="130dp"
+              android:layout_height="130dp"
               android:layout_gravity="bottom|left"
               android:layout_weight="1"
-              android:background="@drawable/ic_account_circle_black_24px"
+              android:gravity="bottom|center_horizontal"
+              android:background="@drawable/ic_broadcast_button"
               android:text="broadcast"
               tools:ignore="ContentDescription" />
+
+
         </LinearLayout>
 
 
